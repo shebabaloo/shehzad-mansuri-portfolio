@@ -117,15 +117,15 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
 
       const progress = reducedMotion ? 0.86 : progressRef.current
       const time = reducedMotion ? 0 : frame / 60
-      const paperMix = range(progress, 0.78, 0.98)
+      const paperMix = range(progress, 0.72, 0.95)
       const pointerStrength = finePointer && !reducedMotion ? 1 - range(progress, 0, 0.12) : 0
 
       pointer.x += (pointer.targetX - pointer.x) * 0.075
       pointer.y += (pointer.targetY - pointer.y) * 0.075
 
       const risingPaper = context.createLinearGradient(0, 0, 0, height)
-      risingPaper.addColorStop(0, paperTransition(paperMix * 0.74))
-      risingPaper.addColorStop(0.56, paperTransition(paperMix * 0.9))
+      risingPaper.addColorStop(0, paperTransition(paperMix * 0.9))
+      risingPaper.addColorStop(0.56, paperTransition(paperMix * 0.97))
       risingPaper.addColorStop(1, paperTransition(paperMix))
       context.fillStyle = risingPaper
       context.fillRect(0, 0, width, height)

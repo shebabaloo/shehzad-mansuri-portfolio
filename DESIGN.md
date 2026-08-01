@@ -59,6 +59,11 @@ use long vertical transitions around their shared staff, and the Coda reverses t
 sequence through parchment and sepia into charcoal. Do not interpolate directly
 through neutral gray or apply a generic full-screen crossfade.
 
+The resolved “Personal Score of Shez” hold sits specifically in a pale oatmeal register:
+lighter than parchment and slightly deeper than Movement I ivory. The dark and umber
+phases must finish while the staff is still moving so the held title state already feels
+illuminated.
+
 ## Typography
 
 - Display: a tall editorial serif with pronounced contrast
