@@ -1,38 +1,43 @@
 import { useEffect, useRef } from 'react'
-import { drawNote, NOTE_KINDS, type NoteKind } from '@/lib/notation'
+import { drawNote, type NoteKind } from '@/lib/notation'
 
 /**
- * The seam between Movement III and Movement IV.
+ * The seam between Movement III and Movement IV: a run, played by scrolling.
  *
- * Both sections resolve to paper at this edge, so the join was a plain butt: one movement
- * stopped and the next began. This gives the page a breath between them, and it is the one
- * place on the site where the notation is scroll-driven rather than timed — the notes phase
- * in and out under the reader's own scrolling, so it reads as a passage being traversed
- * rather than an animation playing nearby.
+ * A first version scattered notes and cross-faded them on a wide curve. It read as still,
+ * and for a structural reason rather than a tuning one — when every note is part-way
+ * through a slow fade, nothing has a leading edge, and an effect with no leading edge has
+ * no direction. Motion needs an event, not an average.
  *
- * Ink rather than coral. Coral is the accent that marks what matters, and this marks
- * nothing: it is a rest between two arguments, and it should recede as the reader passes.
+ * So this is a run instead. The notes are ordered into a descending line and lit in
+ * sequence: each snaps on over about three percent of the band and decays behind, which
+ * puts a bright head at the reader's scroll position with a tail of six or so notes
+ * trailing it. Scroll down and the run plays downward; scroll up and it unplays, because
+ * the whole thing is a pure function of scroll position rather than a timeline.
  *
- * Each note holds a phase, and its opacity is a bell curve over the distance between that
- * phase and scroll progress. Notes therefore arrive, hold and leave at staggered points
- * across the band rather than fading as one sheet.
+ * Ink, not coral. Coral marks what matters and this marks nothing — it is a rest between
+ * two arguments, and it should be gone by the time the reader is reading again.
  */
 
-const COUNT = 26
+const COUNT = 34
+/** The head runs slightly past the end so the last notes still get their moment. */
+const HEAD = 1.16
+/** Decay length behind the head, in units of progress. Shorter reads as sharper. */
+const TAIL = 0.2
+/** Attack length. Small enough to snap, long enough not to alias into a flicker. */
+const ATTACK = 0.03
 
 type Note = {
-  x: number       // 0–1 across the band
-  y: number       // 0–1 down the band
-  phase: number   // where in the scroll this note peaks
+  x: number
+  y: number
+  trigger: number
   size: number
   tilt: number
   kind: NoteKind
   flip: boolean
-  drift: number   // vertical travel across its life, in canvas heights
 }
 
-// Deterministic, so the field is identical on every load and between reloads — a layout
-// that reshuffles on refresh reads as noise rather than as design.
+// Deterministic: a field that reshuffles on refresh reads as noise rather than design.
 const mulberry = (seed: number) => () => {
   seed |= 0
   seed = (seed + 0x6d2b79f5) | 0
@@ -41,18 +46,25 @@ const mulberry = (seed: number) => () => {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296
 }
 
+/* A run is stepwise, so these are placed on a path rather than scattered: y descends
+   steadily with the index while x snakes across the band. The jitter is small on purpose —
+   enough that it is not a ruler, not so much that the line stops reading as one gesture. */
 const build = (): Note[] => {
   const rand = mulberry(20260802)
-  return Array.from({ length: COUNT }, () => ({
-    x: 0.04 + rand() * 0.92,
-    y: 0.08 + rand() * 0.84,
-    phase: rand(),
-    size: 4.5 + rand() * 7,
-    tilt: -22 + (rand() - 0.5) * 26,
-    kind: NOTE_KINDS[Math.floor(rand() * NOTE_KINDS.length)],
-    flip: rand() < 0.42,
-    drift: (rand() - 0.5) * 0.16,
-  }))
+  // Eighths dominate, as they would in an actual run; a few quarters and halves break it up.
+  const kinds: NoteKind[] = ['eighth', 'eighth', 'eighth', 'eighth', 'quarter', 'quarter', 'half']
+  return Array.from({ length: COUNT }, (_, i) => {
+    const t = i / (COUNT - 1)
+    return {
+      x: 0.5 + Math.sin(t * Math.PI * 2.1) * 0.3 + (rand() - 0.5) * 0.07,
+      y: 0.05 + t * 0.9 + (rand() - 0.5) * 0.03,
+      trigger: t,
+      size: 5.5 + rand() * 4,
+      tilt: -22 + (rand() - 0.5) * 20,
+      kind: kinds[Math.floor(rand() * kinds.length)],
+      flip: rand() < 0.4,
+    }
+  })
 }
 
 export function MovementTransition() {
@@ -84,18 +96,21 @@ export function MovementTransition() {
 
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
+      const lead = progress * HEAD
+
       for (const note of notes) {
-        // Bell curve around the note's phase: in, held, out. Widened slightly so the band
-        // is never empty mid-scroll.
-        const d = (progress - note.phase) / 0.34
-        const alpha = Math.exp(-d * d) * 0.5
-        if (alpha < 0.004) continue
+        const d = lead - note.trigger
+        if (d < 0) continue
+        const attack = Math.min(1, d / ATTACK)
+        const alpha = attack * Math.exp(-d / TAIL) * 0.62
+        if (alpha < 0.006) continue
 
         ctx.globalAlpha = alpha
         drawNote(ctx, {
           x: note.x * width,
-          y: (note.y + note.drift * (progress - note.phase)) * height,
-          r: note.size,
+          y: note.y * height,
+          // A touch of scale on the attack, so a note lands rather than merely appearing.
+          r: note.size * (0.82 + 0.18 * attack),
           kind: note.kind,
           tilt: note.tilt,
           flip: note.flip,
@@ -105,9 +120,9 @@ export function MovementTransition() {
       ctx.globalAlpha = 1
     }
 
-    // Progress is measured from the band's own position, not from a library — the whole
-    // effect is one scalar, and a ScrollTrigger here would contend with the pinned
-    // Movement II for refresh ordering on every resize.
+    /* Progress comes from the band's own rect. ScrollTrigger would do this too, but it
+       would also join the refresh ordering that the pinned Movement II already owns, and
+       this needs no timeline — it is one scalar read per frame. */
     let queued = 0
     const measure = () => {
       queued = 0
@@ -122,9 +137,18 @@ export function MovementTransition() {
 
     resize()
     if (reduced.matches) {
-      // One still frame at the midpoint: the notes are present, nothing moves.
-      progress = 0.5
-      draw()
+      // The run, written out and held: every note at rest, nothing tied to scrolling.
+      progress = 1 / HEAD
+      ctx.clearRect(0, 0, width, height)
+      for (const note of notes) {
+        ctx.globalAlpha = 0.34
+        drawNote(ctx, {
+          x: note.x * width, y: note.y * height, r: note.size,
+          kind: note.kind, tilt: note.tilt, flip: note.flip,
+          color: 'oklch(24% .02 60)',
+        })
+      }
+      ctx.globalAlpha = 1
       return
     }
 
