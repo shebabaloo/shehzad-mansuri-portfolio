@@ -1,3 +1,4 @@
+import { ARROW_DOWN } from '@/lib/glyphs'
 export function SiteHeader() {
   return (
     <header className="site-header">
@@ -9,7 +10,7 @@ export function SiteHeader() {
         </svg>
       </a>
       <p className="site-credit"><span>The Living Score</span> <i>by</i> Shez</p>
-      <a className="open-score" href="#first-movement">Open the score <span>↓</span></a>
+      <a className="open-score" href="#first-movement">Open the score <span>{ARROW_DOWN}</span></a>
     </header>
   )
 }

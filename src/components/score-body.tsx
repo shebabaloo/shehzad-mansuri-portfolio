@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import { CodaDispersal } from './ui/coda-dispersal'
 import { MailLink } from './ui/mail-link'
 import { PassageToggle } from './ui/passage-toggle'
+import { ARROW_BOTH_WAYS, ARROW_RIGHT, ARROW_UP, ARROW_UP_RIGHT } from '@/lib/glyphs'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -70,7 +71,7 @@ const systems = [
       'So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk.',
       'Twenty minutes of morning assembly became two. Then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     ],
-    principle: 'Context → synthesis → next move',
+    principle: `Context ${ARROW_RIGHT} synthesis ${ARROW_RIGHT} next move`,
     passage: [
       'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative.',
       'It prepares a meeting by answering what changed and what is still unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart.',
@@ -85,7 +86,7 @@ const systems = [
       'So the Third Brain is the same architecture at team scope: a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context is promoted into common ground—decisions, ownership, milestones, risks.',
       'Agendas, briefings, and weekly updates now stand on that rather than on anyone’s memory. The first implementation serves 22 members across 90+ resources and 130+ synchronized decisions.',
     ],
-    principle: 'Individual context ↔ shared clarity',
+    principle: `Individual context ${ARROW_BOTH_WAYS} shared clarity`,
     passage: [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
       'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—and it delivers them on a schedule, into the chats and documents people already work in, so they benefit from it without ever having to operate it themselves.',
@@ -192,7 +193,7 @@ const interests: Interest[] = [
     ],
   },
   {
-    id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
+    id: 'movement', mark: `${ARROW_UP_RIGHT}`, label: 'Movement', title: 'The score needs a pulse.',
     copy: 'The gym most days, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
     listLabel: 'Weekly rotation',
     items: [{ name: 'Volleyball' }, { name: 'Gym' }, { name: 'Cycling' }],
@@ -627,7 +628,7 @@ export function ScoreBody() {
                 <p className="variation__question">{variation.question}</p>
                 {variation.source && (
                   <a className="variation__source" href={variation.source} target="_blank" rel="noreferrer">
-                    {variation.sourceLabel} <span aria-hidden="true">↗</span>
+                    {variation.sourceLabel} <span aria-hidden="true">{ARROW_UP_RIGHT}</span>
                   </a>
                 )}
               </div>
@@ -720,9 +721,9 @@ export function ScoreBody() {
               Coda — label through signature — frame in a single viewport. */}
           <div className="coda__close">
             <nav aria-label="Contact and resume links">
-              <MailLink>Email <span>↗</span></MailLink>
-              <a href="https://www.linkedin.com/in/shehzadmansuri/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
-              <a href="#first-movement">Return to the score <span>↑</span></a>
+              <MailLink>Email <span>{ARROW_UP_RIGHT}</span></MailLink>
+              <a href="https://www.linkedin.com/in/shehzadmansuri/" target="_blank" rel="noreferrer">LinkedIn <span>{ARROW_UP_RIGHT}</span></a>
+              <a href="#first-movement">Return to the score <span>{ARROW_UP}</span></a>
             </nav>
             <strong>— Shez<span>.</span></strong>
           </div>

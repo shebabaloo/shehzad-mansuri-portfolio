@@ -8,6 +8,7 @@ import { SiteHeader } from '@/components/site-header'
 import { OriginBook } from '@/components/ui/origin-book'
 import { ScoreRail, type ScoreRailHandle } from '@/components/ui/score-rail'
 import { SpiralScore, type SpiralScoreHandle } from '@/components/ui/spiral-score'
+import { ARROW_DOWN, ARROW_RIGHT } from '@/lib/glyphs'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -175,7 +176,7 @@ export function App() {
                 and the things that keep the whole score human.
               </p>
               <a className="enter-score" href="#first-movement" onClick={advanceScore}>
-                Set it in motion <span>→</span>
+                Set it in motion <span>{ARROW_RIGHT}</span>
               </a>
             </div>
 
@@ -217,7 +218,7 @@ export function App() {
               <span>Movement I</span>
               <i />
               <strong>A life in progress</strong>
-              <b>↓</b>
+              <b>{ARROW_DOWN}</b>
             </div>
 
             <div className="scroll-cue" aria-hidden="true">
