@@ -10,7 +10,7 @@
    3vw voice. Ratios 1.5, 1.25, 1.28, 1.67 — all at or above the 1.25 minimum. */
 .movement-heading h2 { margin: 0; font: 400 clamp(3.6rem, 6.4vw, 7rem)/.86 var(--display); letter-spacing: -.058em; }
 .movement-heading h2 em { color: var(--coral-display); font-weight: 400; }
-.movement-intro { max-width: 32ch; margin: 0; color: var(--ink-soft); font: 300 1rem/1.75 var(--body); }
+.movement-intro { max-width: 32ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-lg)/1.75 var(--body); }
 
 /* A score brace groups the staves one performer plays. This is notation, not a decorative
    side stripe: it closes with real arms top and bottom, and it spans exactly the block it
@@ -22,7 +22,7 @@
 .ensemble-brace__id > p span { margin: 0 .45rem; color: var(--brass-ink); text-transform: none; }
 .ensemble-brace__id > span { margin-bottom: 1.5rem; color: var(--coral-ink); }
 .ensemble-brace__id h3 { margin: 0; max-width: 12ch; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.045em; }
-.ensemble-brace__note { max-width: 46ch; margin: 0; color: var(--ink-soft); font: 300 .88rem/1.75 var(--body); }
+.ensemble-brace__note { max-width: 46ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-sm)/1.75 var(--body); }
 
 .career-score { width: min(100%, 84rem); margin: 0 auto; }
 /* The progression rail is the conductor's view of Movement II: three measures, one
@@ -42,7 +42,7 @@
 .career-measure__identity h3 { margin: 1.8rem 0 0; max-width: 9ch; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.045em; }
 .career-lead { max-width: 36ch; margin: 0 0 2.5rem; font: 400 clamp(1.25rem, 2vw, 1.8rem)/1.4 var(--body); letter-spacing: -.025em; }
 .career-measure__score ul { padding: 0; margin: 0; list-style: none; border-top: 1px solid oklch(48% .045 60 / .25); }
-.career-measure__score li { position: relative; padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid oklch(48% .045 60 / .18); color: var(--ink-soft); font: 300 .88rem/1.65 var(--body); }
+.career-measure__score li { position: relative; padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid oklch(48% .045 60 / .18); color: var(--ink-soft); font: 300 var(--t-sm)/1.65 var(--body); }
 .career-measure__score li::before { content: ""; position: absolute; left: 0; top: 1.7rem; width: .75rem; height: 1px; background: var(--coral); }
 
 .career-passages { width: min(100%, 84rem); margin: 0 auto; padding-top: clamp(4rem, 7vw, 6rem); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 3vw, 3rem); }
@@ -60,9 +60,12 @@
    Labels align to the top of the content block so tall rows read as one entry. */
 .system-voice { position: relative; z-index: 2; min-height: 11rem; display: grid; grid-template-columns: .35fr 1.15fr 1.45fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; padding: clamp(3.25rem, 5vw, 4.75rem) 0; border-bottom: 1px solid oklch(48% .045 60 / .23); }
 .system-voice__number { color: var(--coral-ink); font: 300 var(--u-lg) var(--utility); }
-.system-voice__body > p { max-width: 52ch; margin: 0; color: var(--ink-soft); font: 300 .86rem/1.7 var(--body); }
+.system-voice__body > p { max-width: 52ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-md)/1.7 var(--body); }
+/* These voices read as one continuous block of prose otherwise — the reason to break them
+   is that each holds a distinct beat: the problem, the build, the result. */
+.system-voice__body > p + p { margin-top: .95rem; }
 .system-voice__body ul { margin: 1.35rem 0 0; padding: 0; list-style: none; }
-.system-voice__body li { position: relative; margin: 0 0 .8rem; padding-left: 1.5rem; color: var(--ink-soft); font: 300 .82rem/1.75 var(--body); }
+.system-voice__body li { position: relative; margin: 0 0 .8rem; padding-left: 1.5rem; color: var(--ink-soft); font: 300 var(--t-sm)/1.75 var(--body); }
 .system-voice__body li:last-child { margin-bottom: 0; }
 .system-voice__body li::before { content: ""; position: absolute; left: 0; top: .68rem; width: .6rem; height: 1px; background: var(--brass); }
 .system-voice__status { margin: 0 0 .55rem; color: var(--brass-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
@@ -80,7 +83,7 @@
 .variation__meta b { margin-top: 1rem; color: var(--coral-ink); font-weight: 400; }
 .variation h3 { margin: 0; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.048em; }
 .variation__question { max-width: 34ch; margin: 2rem 0 0; font: 400 1.15rem/1.62 var(--body); letter-spacing: -.02em; }
-.variation__copy { max-width: 39ch; margin: 1rem 0 0; color: var(--ink-soft); font: 300 .9rem/1.75 var(--body); }
+.variation__copy { max-width: 39ch; margin: 1rem 0 0; color: var(--ink-soft); font: 300 var(--t-md)/1.75 var(--body); }
 .variation__motif { position: absolute; z-index: -1; right: -2rem; bottom: 1.5rem; width: 43%; height: 6rem; opacity: .25; transform: rotate(-3deg); }
 .variation__motif i { display: block; height: 1px; margin: .75rem 0; background: var(--brass); }
 
@@ -93,7 +96,7 @@
 .personal-measure__mark { font: 400 clamp(4rem, 8vw, 9rem)/1 var(--display); color: var(--coral-display); }
 .personal-measure__copy > p { margin: 0 0 1.25rem; color: var(--coral-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .personal-measure__copy h3 { margin: 0; max-width: 12ch; font: 400 clamp(2.7rem, 5vw, 5.6rem)/.9 var(--display); letter-spacing: -.05em; }
-.personal-measure__copy > span { display: block; max-width: 48ch; margin-top: 2rem; color: var(--ink-soft); font: 300 .9rem/1.75 var(--body); }
+.personal-measure__copy > span { display: block; max-width: 48ch; margin-top: 2rem; color: var(--ink-soft); font: 300 var(--t-md)/1.75 var(--body); }
 .personal-measure__list-label { margin: 0 0 .9rem; padding-bottom: .6rem; border-bottom: 1px solid oklch(48% .045 60 / .3); color: var(--brass-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .personal-measure ul { padding: 0; margin: 0; list-style: none; }
 .personal-measure li { padding: 1rem 0; border-bottom: 1px solid oklch(48% .045 60 / .2); font: 400 var(--u-lg) var(--utility); letter-spacing: .06em; }
@@ -125,7 +128,7 @@
 .coda__inner > p:first-child { margin: 0 0 2.25rem; color: var(--coral); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
 .coda h2 { max-width: 11ch; margin: 0; font: 400 clamp(4.2rem, 8vw, 9rem)/.84 var(--display); letter-spacing: -.06em; }
 .coda h2 em { color: var(--coral); font-weight: 400; }
-.coda h2 + p { max-width: 43ch; margin: clamp(1.5rem, 2.4vw, 2.25rem) 0 0; color: oklch(82% .022 78); font: 300 1.05rem/1.7 var(--body); }
+.coda h2 + p { max-width: 43ch; margin: clamp(1.5rem, 2.4vw, 2.25rem) 0 0; color: oklch(82% .022 78); font: 300 var(--t-lg)/1.7 var(--body); }
 /* Links left, signature right, sharing one baseline. */
 .coda__close { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2rem 3rem; margin-top: clamp(2.5rem, 3.6vw, 3.25rem); }
 .coda nav { display: flex; flex-wrap: wrap; gap: clamp(1.75rem, 4vw, 3.25rem); row-gap: 1.25rem; }
@@ -216,7 +219,7 @@
 .passage__inner { overflow: hidden; }
 .passage__inner > p {
   max-width: 67ch; margin: 2rem 0 0; color: var(--ink-soft);
-  font: 300 .94rem/1.85 var(--body);
+  font: 300 var(--t-md)/1.85 var(--body);
   opacity: 0; transform: translateY(.6rem);
   transition: opacity .3s var(--ease-enter) .08s, transform .3s var(--ease-enter) .08s;
 }
@@ -238,14 +241,14 @@
    sentence on the site — hiding it behind a press would cost the readers who do not press. */
 .counterpoint__check {
   width: min(100%, 84rem); max-width: 67ch; margin: clamp(3.5rem, 6vw, 5.5rem) auto 0;
-  color: var(--ink-soft); font: 300 .94rem/1.85 var(--body);
+  color: var(--ink-soft); font: 300 var(--t-md)/1.85 var(--body);
 }
 .counterpoint__check em { color: var(--ink); font-style: normal; }
 
 /* The invitation and the confession do different jobs, so they are separated rather than
    stacked at the same weight. A short brass rule marks this one as an aside — notation,
    not a decorative side stripe: it sits above the text, not alongside it. */
-.coda__honest { position: relative; max-width: 58ch; margin: clamp(2.25rem, 3.2vw, 3rem) 0 0; padding-top: 1.4rem; color: oklch(66% .018 76); font: 300 .88rem/1.75 var(--body); }
+.coda__honest { position: relative; max-width: 58ch; margin: clamp(2.25rem, 3.2vw, 3rem) 0 0; padding-top: 1.4rem; color: oklch(66% .018 76); font: 300 var(--t-sm)/1.75 var(--body); }
 .coda__honest::before { content: ""; position: absolute; top: 0; left: 0; width: 3.25rem; height: 1px; background: var(--brass); opacity: .7; }
 
 /* Source link on a variation. Present only where the claim has a public artifact behind

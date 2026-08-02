@@ -42,6 +42,15 @@
      floor. */
   --u-lg: .72rem;
   --u-md: .655rem;
+
+  /* Body scale. Prose had drifted to seven sizes between .82 and 1.05rem — a 28% spread
+     with no step large enough to read as hierarchy, so it registered as inconsistency
+     instead. Three rungs, each a real step apart: meta, prose, lead-in. The worst symptom
+     was the systems copy, which explained the two flagship builds at the smallest body
+     size on the site. */
+  --t-sm: .88rem;   /* asides, list items, notes */
+  --t-md: .95rem;   /* primary prose and passages */
+  --t-lg: 1.05rem;  /* section intros */
   --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-exit: cubic-bezier(0.64, 0, 0.78, 0);
   color: var(--ink);

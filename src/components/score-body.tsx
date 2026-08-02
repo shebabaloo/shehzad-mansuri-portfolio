@@ -21,10 +21,11 @@ const career = [
       'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
     ],
     passage: [
-      'Six programs across this space in two years. The one I am on now is a data-center site-selection platform, and it did not exist when I arrived—the portfolio lived in sixteen spreadsheets, and no two people read them the same way.',
+      'I have supported six programs in this space over two years. The one I am on now is a data-center site-selection platform, and it did not exist when I arrived: the portfolio lived in sixteen spreadsheets, and no two people read them the same way.',
       'Concept to production took three weeks, which sounds like speed and was really scope discipline: deciding early, and out loud, what the first version would refuse to do. It now carries a $60B+ investment portfolio and peaks near 290 monthly users. The program underneath it was built from zero on the same clock—four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, and a decision log separating MVP from V1.',
       'The year before that was a different problem: a seven-module financial platform tracking $20B+ in spend, where I owned the roadmap, the releases, and the documentation—and covered the client program manager through a ninety-day absence.',
-      'What carries across all six is the practice rather than the subject matter. Proprietary AI tooling to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing—compressing the distance between a question and something real enough to react to.',
+      'The rest were not all platforms. One was a seven-page executive dashboard rebuilt on a new stack at feature parity, with its existing users migrated across automatically. One was a metrics product where a single management table cut engineering reporting support by 80% and took roughly a third off the monthly review prep. One was a data-science team with no intake process at all, which turned into 43 roadmap projects and 450+ closed tasks running on a cadence that finally held.',
+      'What carries across all six is the practice rather than the subject matter. I use proprietary AI tooling to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing—compressing the distance between a question and something real enough to react to.',
     ],
   },
   {
@@ -65,7 +66,11 @@ const career = [
 const systems = [
   {
     number: '01', title: 'Second Brain', status: 'Active pattern',
-    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk. Twenty minutes of morning assembly became two, and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
+    copy: [
+      'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was the reconstruction, performed again at every switch.',
+      'So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk.',
+      'Twenty minutes of morning assembly became two. Then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
+    ],
     principle: 'Context → synthesis → next move',
     passage: [
       'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative.',
@@ -76,7 +81,11 @@ const systems = [
   },
   {
     number: '02', title: 'Team Third Brain', status: 'Active pattern',
-    copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. The Third Brain is the same architecture at team scope—a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context gets promoted into common ground: decisions, ownership, milestones, risks. Agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members across 90+ resources and 130+ synchronized decisions.',
+    copy: [
+      'The personal system made me faster. The team still ran on meetings and hand-maintained documents.',
+      'So the Third Brain is the same architecture at team scope: a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context is promoted into common ground—decisions, ownership, milestones, risks.',
+      'Agendas, briefings, and weekly updates now stand on that rather than on anyone’s memory. The first implementation serves 22 members across 90+ resources and 130+ synchronized decisions.',
+    ],
     principle: 'Individual context ↔ shared clarity',
     passage: [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
@@ -91,9 +100,10 @@ const variations = [
   {
     number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
-    copy: 'Millions of tons of specialty crops go unharvested every year, and the gap is never the robots—it is everything around them. A four-day answer: the problem taken apart, a response scoped, and what execution and financial strategy would have to look like, then pitched.',
+    copy: 'Millions of tons of specialty crops go unharvested every year—labor shortages, rising costs, and harvest windows that keep narrowing—and the value rots in the field. Groundwork OS was our four-day answer.',
     passage: [
-      'A Human-Machine Fleet Intelligence Platform, aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for.',
+      'The shortage is not machinery. Autonomous harvesters exist and they work. What does not exist is everything a farm would need around them: a way to decide which blocks to run and when, an operator who trusts the fleet enough to leave it running, a financial case that survives a bad season, and a workforce being reorganized around equipment nobody asked for.',
+      'So we scoped the platform to that gap rather than to the hardware—a human-machine fleet intelligence layer that advises a deployment, plans the labor around it, and turns one season of field data into a better decision the next.',
       'A concept and an argument, built in a week that did not have one.',
     ],
     // Shehzad's own public LinkedIn post about SUD '26. Tracking parameters stripped:
@@ -139,7 +149,7 @@ const interests: Interest[] = [
       { name: 'Meditations', by: 'Marcus Aurelius' },
     ],
     passage: [
-      'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed. The shelf has.',
+      'My college application essay was about a bookstore—about walking in with no title in mind and waiting to be caught by one. I still choose books that way. The shelf has changed.',
       'What I look for now is a way of thinking I have not met yet. *Meditations* and *The Myth of Sisyphus* argue directly about how to hold a life. *Spring Snow* refuses to argue and simply shows you one. *The Way of Kings* invents an entire world in order to ask the same question somewhere the answer is not already settled.',
       'Each one is another point of view, another gap quietly closed. In this world, I seek to learn.',
     ],
@@ -150,6 +160,7 @@ const interests: Interest[] = [
     listLabel: 'Most memorable video games',
     items: [
       { name: 'The Last of Us' }, { name: 'Ghost of Tsushima' },
+      { name: 'Clair Obscur: Expedition 33' },
       { name: 'Final Fantasy VII' }, { name: 'Destiny 2' },
     ],
     passage: [
@@ -414,7 +425,7 @@ export function ScoreBody() {
               <span className="system-voice__number">{number}</span>
               <div><p className="system-voice__status">{status}</p><h3>{title}</h3></div>
               <div className="system-voice__body">
-                <p>{copy}</p>
+                {copy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                 <PassageToggle
                   id={`system-${number}-passage`}
                   open={openPassage === `system-${number}`}
