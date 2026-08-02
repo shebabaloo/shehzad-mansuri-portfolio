@@ -12,6 +12,12 @@
   --display: "Libre Caslon Display", "Bodoni 72", Didot, serif;
   --body: "Manrope", "Avenir Next", sans-serif;
   --utility: "DM Mono", "IBM Plex Mono", monospace;
+  /* Utility label scale. The body movements previously drifted across eight ad-hoc sizes
+     from .55rem to .75rem; these are the only three permitted. --u-md is the floor for
+     any label a reader is expected to actually read. */
+  --u-lg: .72rem;
+  --u-md: .655rem;
+  --u-sm: .6rem;
   --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-exit: cubic-bezier(0.64, 0, 0.78, 0);
   color: var(--ink);
@@ -45,9 +51,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .site-header > * { pointer-events: auto; }
 .monogram { width: 2rem; height: 2rem; display: block; color: var(--coral); }
 .monogram svg { width: 100%; fill: none; stroke: currentColor; stroke-width: 1; }
-.site-credit { margin: 0; font: 300 .63rem/1 var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+.site-credit { margin: 0; font: 300 var(--u-lg)/1 var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .site-credit i { margin: 0 .45em; color: var(--brass); font-family: var(--display); text-transform: lowercase; }
-.open-score { justify-self: end; display: flex; align-items: center; gap: .65rem; padding: .5rem 0; text-decoration: none; font: 300 .6rem var(--utility); letter-spacing: .12em; text-transform: uppercase; }
+.open-score { justify-self: end; display: flex; align-items: center; gap: .65rem; padding: .5rem 0; text-decoration: none; font: 300 var(--u-lg) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
 .open-score span { color: var(--coral); transition: transform .3s var(--ease-enter); }
 .open-score:hover span { transform: translateY(.2rem); }
 
@@ -110,7 +116,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
 .movement-label {
   position: absolute; z-index: 12; top: 16%; left: 2rem; margin: 0;
-  font: 300 .61rem var(--utility); letter-spacing: .16em; text-transform: uppercase; color: oklch(86% .02 80);
+  font: 300 var(--u-md) var(--utility); letter-spacing: .16em; text-transform: uppercase; color: oklch(86% .02 80);
   opacity: var(--intro-opacity); transform: translateY(var(--intro-y));
 }
 .movement-label span { color: var(--coral); margin: 0 .5rem; }
@@ -120,14 +126,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   color: var(--paper); opacity: var(--intro-opacity); transform: translate(-50%, var(--intro-y));
   will-change: transform, opacity;
 }
-.overture-copy > p:first-child { margin: 0 0 .8rem; font: 300 .62rem var(--utility); letter-spacing: .16em; text-transform: uppercase; color: oklch(78% .025 78); }
-.overture-copy h1 { margin: 0; font: 400 clamp(4rem, 6.6vw, 7rem)/.84 var(--display); letter-spacing: -.052em; }
+.overture-copy > p:first-child { margin: 0 0 .8rem; font: 300 var(--u-lg) var(--utility); letter-spacing: .16em; text-transform: uppercase; color: oklch(78% .025 78); }
+.overture-copy h1 { margin: 0; font: 400 clamp(3.6rem, 6.4vw, 7rem)/.84 var(--display); letter-spacing: -.052em; }
 .overture-copy h1 em { color: var(--coral); font-weight: 400; }
 .overture-copy__note { max-width: 52ch; margin: 1.3rem auto 0; font: 300 .8rem/1.65 var(--body); color: oklch(80% .02 78); }
 .enter-score {
   display: inline-flex; align-items: center; gap: .7rem; margin-top: 1.05rem; padding: .72rem 1.05rem .69rem 1.2rem;
   border: 1px solid oklch(92% .02 80 / .3); border-radius: 999px; color: var(--ink); background: var(--paper);
-  text-decoration: none; font: 400 .6rem var(--utility); letter-spacing: .12em; text-transform: uppercase;
+  text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .12em; text-transform: uppercase;
   box-shadow: 0 10px 36px oklch(4% 0 0 / .24); transition: transform .35s var(--ease-enter), box-shadow .35s var(--ease-enter);
 }
 .enter-score:hover { transform: translateY(-2px); box-shadow: 0 15px 42px oklch(4% 0 0 / .3); }
@@ -168,12 +174,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .origin-book__spine { position: absolute; z-index: 6; left: 50%; top: .25rem; bottom: .25rem; width: 1px; background: var(--coral); transform: translateX(-50%); opacity: var(--origin-open); }
 
 .opening-title { position: absolute; z-index: 10; left: 50%; top: 50%; min-width: min(46rem, 78vw); text-align: center; pointer-events: none; color: color-mix(in oklch, var(--paper), var(--ink) calc(var(--paper-tone) * 100%)); opacity: var(--title-opacity); transform: translate(calc(-50% + var(--title-x)), calc(-50% + var(--title-y))); }
-.opening-title__kicker { margin: 0 0 .5rem; font: 300 .62rem var(--utility); letter-spacing: .17em; text-transform: uppercase; color: var(--brass); }
+.opening-title__kicker { margin: 0 0 .5rem; font: 300 var(--u-lg) var(--utility); letter-spacing: .17em; text-transform: uppercase; color: var(--brass); }
 .opening-title__mask { display: block; overflow: hidden; padding: .08em .12em; }
 .opening-title__name-lockup { display: inline-flex; align-items: center; justify-content: center; gap: clamp(.8rem, 1.8vw, 1.5rem); }
 .opening-title__clef { display: block; color: var(--coral); font: 400 clamp(4.2rem, 9vw, 7.5rem)/.72 "Apple Symbols", "Noto Music", serif; transform: translateY(.06em) rotate(-4deg); }
 .opening-title h2 { margin: 0; font: 400 clamp(5rem, 12vw, 10rem)/.8 var(--display); letter-spacing: -.06em; transform: translateY(calc((1 - var(--title-opacity)) * 115%)); will-change: transform; }
-.opening-title__descriptor { display: flex; justify-content: center; align-items: center; gap: .9rem; margin: 1.6rem 0 0; color: color-mix(in oklch, oklch(82% .02 78), var(--ink-soft) calc(var(--paper-tone) * 100%)); transform: translateY(var(--descriptor-y)); font: 400 .56rem var(--utility); letter-spacing: .1em; text-transform: uppercase; }
+.opening-title__descriptor { display: flex; justify-content: center; align-items: center; gap: .9rem; margin: 1.6rem 0 0; color: color-mix(in oklch, oklch(82% .02 78), var(--ink-soft) calc(var(--paper-tone) * 100%)); transform: translateY(var(--descriptor-y)); font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase; }
 .opening-title__descriptor > span { transform: translateY(.9rem); opacity: 0; will-change: transform, opacity; }
 .opening-title__descriptor--1 { transform: translateY(calc((1 - var(--descriptor-1)) * .9rem)) !important; opacity: var(--descriptor-1) !important; }
 .opening-title__descriptor--2 { transform: translateY(calc((1 - var(--descriptor-2)) * .9rem)) !important; opacity: var(--descriptor-2) !important; }
@@ -195,15 +201,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .paper-score path { fill: none; stroke: oklch(49% .06 69 / .38); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .editorial-shell { width: min(100% - 3rem, 86rem); margin: 0 auto; padding: clamp(3rem, 7vw, 8rem) 0 9rem; display: grid; grid-template-columns: .55fr 2.25fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: start; }
 .folio { padding-top: .6rem; border-top: 1px solid oklch(55% .06 65 / .5); }
-.folio p, .score-index > p, .eyebrow { margin: 0; font: 400 .62rem var(--utility); letter-spacing: .15em; text-transform: uppercase; }
-.folio p { color: var(--coral); }.folio span { display: block; margin-top: .75rem; color: var(--ink-soft); font: 300 .68rem var(--utility); }
+.folio p, .score-index > p, .eyebrow { margin: 0; font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
+.folio p { color: var(--coral); }.folio span { display: block; margin-top: .75rem; color: var(--ink-soft); font: 300 var(--u-md) var(--utility); }
 .eyebrow { color: var(--coral); margin-bottom: 2rem; }
 .landing-copy h2 { margin: 0; max-width: 11ch; font: 400 clamp(4rem, 8vw, 8.2rem)/.82 var(--display); letter-spacing: -.065em; }
 .landing-copy h2 em { font-weight: 400; color: var(--coral); }
 .dek { max-width: 31ch; margin: 3rem 0 1.5rem; font: 400 clamp(1.1rem, 1.6vw, 1.45rem)/1.5 var(--body); letter-spacing: -.025em; }
 .body-copy { max-width: 67ch; margin: 0; color: var(--ink-soft); font: 300 .94rem/1.85 var(--body); }
 .landing-actions { display: flex; gap: 2rem; margin-top: 3rem; }
-.text-link { padding-bottom: .35rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 .68rem var(--utility); letter-spacing: .08em; text-transform: uppercase; }
+.text-link { padding-bottom: .35rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .text-link span { display: inline-block; margin-left: .35rem; transition: transform .3s var(--ease-enter); }.text-link:hover span { transform: translateY(.18rem); }
 .text-link--quiet { border-color: oklch(48% .03 60 / .35); }
 .score-index { margin-top: clamp(6rem, 15vw, 12rem); }
@@ -211,7 +217,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .score-index ol { padding: 0; margin: 0; list-style: none; }
 .score-index li { border-bottom: 1px solid oklch(55% .06 65 / .2); }
 .score-index li > span, .score-index li > a { display: flex; gap: 1rem; padding: 1rem 0; text-decoration: none; font: 400 .76rem/1.4 var(--body); }
-.score-index li b { color: var(--coral); font: 300 .58rem var(--utility); }
+.score-index li b { color: var(--coral); font: 300 var(--u-md) var(--utility); }
 
 @media (max-width: 860px) {
   .site-header { grid-template-columns: 1fr auto; padding: 1rem 1.1rem; }
@@ -241,4 +247,35 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .site-header, .score-rail, .movement-key, .atmosphere, .scroll-cue { display: none; }
   .overture { height: 44rem; }
   .overture__sticky { position: relative; height: 44rem; }
+}
+
+/* Musical cursor. Fine pointers only; coarse pointers keep the native cursor.
+
+   PNG only, deliberately. An earlier version led with an SVG data URI and listed a PNG as
+   the fallback, which is what the spec's fallback list is for — but Safari appears to drop
+   the whole declaration rather than falling through to the next image, so the cursor stayed
+   a native black arrow there while Chromium looked correct. PNG is decoded by every engine.
+   Cost is slight softness on HiDPI; a cursor is small and moving, so that is the right
+   trade for it working everywhere. Do not reintroduce an SVG entry.
+
+   Declared literally, never via `cursor: var(--x)`: custom properties resolve in
+   getComputedStyle but are unreliable at used-value time, which hides failures behind
+   verification that looks like it passes.
+
+   Night applies wherever the field is dark. That is two places, driven differently:
+   the overture, via the `is-night-field` class toggled from the same inkTone signal that
+   flips the typography; and the coda, which is always dark and so is scoped in CSS with no
+   JS involved. Paper remains the default so a no-JS render is still readable. */
+@media (pointer: fine) {
+  body { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAYAAAAIXrg4AAAD00lEQVR4AaxWbUhTURg+ZB8GRfav2u6oVkFh0I9CV6M2qJmZWgpFOvvhloqfFBpYCLOvQWjRfgSK+kclHBoIRUyFpsylZIgm+seVejWTIGcafqDQ+1y4Mpe7dxPFd+ece855nve85znvOVvYBv7a3tlNRXkZ7gXvmFpuesgEBGqw2xur5hfnlQMDQ6ZNJ3C5urjxiR/sWkJ86Yx3Rrcgs4qQV+Dr8dzsnMe3vV59QwRKxQEBS8EpeKpI7kPIBFptNI8QRUTsUU/wExxCRiQB/0MmICQhLACnOgMhykC2EQJ2WH2I//lrSr1r9y6ERyDcNILwCJXnoErFZv/MKae9v5VoBwLH95BXQLI0jIyNsb17I7htYdvbASJlIREAvPD+w6qOdhc3Pe3lY2Iv1kqBoy9oAgJXi+DRUWewghoKTwtApCxogk5XVy08P39ByxcU5NhTU2/Keg/ioAjIe0ODvVEDz8uePzVPTk61kP51AJCzoAhKSp5Yuro/s6ioM6UIC2nfiYMmB45+WQJ4PzPj1cQYLn1CWKitLi+3WRyOVg51GIACmSwBhYKD99qz0R7HhzZLfn7hcIO9ybi8smJEHVZhs7pxR6xHIkvwd3ZOh9jj5JZYHhuRh26npfBxVy5bMzJM1rjYy3VfBwaVL17aqprf1Py38bIEAKbYsy89vRoo6FFpiTU3N1MfGXm8OvLEcT7xVnoabbwe6aOiqsbY43I8812JLMGRw2rWTRt87NhRnoDMp7UxD2ijPTARCHXq06PtdHYYUYomSUAbaBgZHdUolApGXpsJaM3BGhgc4kQglFgF0gjNQxLEJyZJUF/fcPaV7TU7dfJknT84ZiNEvmBLC4scDH2iSRIsrywblOQ9bi7ElsAM4kSULnfXEkoYqU0HtW0P38GTM6spXJIA6sAGV1ZWF6ebsopJko4KkiQRCSHQaqOdeFmg7XC0CS+MS3r9mgwrSaA7f47h/oU04SU8bG5+rwEo2rCdO8ORBD86WloFlVGGteC7aJIEyPfdpCBxMMrx8QnW19cvhAahcHW6uW+e7xzOBikJQlgND8ZLEiD28B6gGAzDoaOU4UYdBhmLZ4MI16gM/ZIEvb39wgRsdEF+NsvOMltttrIjIhDF3oBrUzwbAPQ3SYI7eUXOTHN6HSY1vW1m+/ftxzNFeM1BVbiAnB2djIiETcc4f5MkwGCkguSkxFJsNlIBck5ScsowVIULyF/3mONrsgQYbMopsiA09+7mm2Fbw8LwokMX89e98NHnJygCjKe4ey5evVEN7asOqvBJsOsJ8eNCJcDPPwAAAP//LKGoWAAAAAZJREFUAwD+6b8Zcd77YgAAAABJRU5ErkJggg==") 8 2, auto; }
+  a, button, summary, [role="button"] { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAaCAYAAACzdqxAAAACEElEQVR4AeyUSywrURjHz4wb4WpNRW9Zsbj3Eon3ltCiREs8EgtBgkWx8FpIhKVY0cQGqUgIIh6JNE08Uu8QFiQeFSwQdFNGiqL1nOqZZKZhTM0kJCImc8755v//zm++8y0OCj7p+Trgq91VmWlIo7k5P4xydVjeFVs3V8ss41rV9ZRe9aFggnhycwWkPN4VUxvfW3mDUQSxvweFPm8w3MRl/IDpLn2jVtxeHP81DbYlmWdHSk+1XXVny+OF9Dk5BIxW4AcbwbiuW3euHZ65WVqYxDtb269m9Y3W6YkuY3OtAXV3D+TABS/AFws6lW2oZ8482JtumRwLeDw7JRlwte1sAevaSuiD2ezy8iE3OCYajE/0V1nmpzU2w7q/Q2d9Ccslv7vibttQBKtiJUIDQeAMUC8BQFBAkB8sE1kxPtpbc3d0GM6S45TtdnBvPAKYXDnlnZiidhrMiASjv4VBsI9Mm6m4SfxMwviEJg9R4AHTdSokmLBd7/4SS5wqS+QZEgoE4dFqD1GAniWFlknwH0W+WhArXaTVVwH8qbdcYfSKlZb4KvKaX9lvfpJg6GDy1EIsNaPFMyzyBFYGYXCI0jI3MGV2n09mjsxXmtUBc7kMGuw43r5/fkW1pLQyRihTRomLy3LF9Q3//XLLI8XJOQXQ5wKkcmgwJUCAT0zyOhYRN4BJ/u1ROt+VAeYLYMt/BgAA//8cSZAIAAAABklEQVQDAK5cnTXsLOL4AAAAAElFTkSuQmCC") 8 18, pointer; }
+
+  :root.is-night-field body,
+  .coda { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAgCAYAAAAIXrg4AAADwklEQVR4AaxWW0gUURg+u6O7s25b5hqbuxWiNFpQFt2oqLw8KRtGUaFdKIqth8CHfOghUKmgBy2EoBQJiVB7iBLDh6I0K3pIUxNMpxRDx0u2qem697X5Vk5MsjvjigvfnsvM+b5z/vOd/4yaLOF3M2dr3qvzuxq2p6w3Kw2PWGBLavKO7A26mpgoFXdwnSFv2QVOJuk5I6smTYKrOF6rTldaRcQrkM54pYYZlrZD1ZckYHcFglz9017ep9IkBBth/iIWeNLv4BGicbfPnGSI5hCyMNzB7ogFouY8IxgJcpQQRBkOEQuASHD4eUO0yvzH4zdTQfSHQsQC7b2Dw2NOP4nVMqKbGA7tUMS0L2IBnAOTjiFOX4DzBkgzUfhFJADyBweMNWlGDaeLUvNVPTOVCvxk0QI4UJS8d9IrrmCutqunr23ZBI4mr6rAzDvtHv5+91RZafu44uwhvqgVIDQ5G/RWzPzyO3t+4gpN27Hk1YdAoIRFCdzZG1ecEhtNeia9JQjL076JtzhoSuR4riiA2cdp1daPY+4XCAv2omS3qSjLHMOhDoAoHBQFkAow++4Jz/C5TXFFVRlmIdPC2rQMsaEOPDy+rQF3RCgRRQGDRpWO2OPkXkg12JCHXg45+cbB2cJH36YL34+6KlNiNdxpTl9TfiStYqGIsoCYEnomPSTNqLXCQXe7pgpvfPqZ0TI0XdskOPmC552XrrSMZCB95CbG2AqyNl+ViigKCA4fSY3VkB8zPh4OKn/dXYb0AFAi1CGC9qEEnQ0lhawANjhpZbT1l8tPilon8+EgOhBlhkXHoaQQxCSINCLdeFmBa9tWHc5N1MOelQvJQYoQSclYRsUBeEYhK+D2B3Zg9ri5EFusiA5EeSLJsAIlgIMHt7n8czxChj5AVgDugIPObjSU3toVV1qdHt8KS9JZ48DhywLtPSZtPghbx93/ZVhZgU67m2AFsCYGY4aZFp0VpGgDDm8g4d7BhKa9pnmXVX/9XYJ+ClkB5Hs4iL6MMp5lyO41rAF1hGKfiU2x6BkOZwMuQx+eUcgKIPaYPUjpAITsdsdUA20Loo3p2QhlBFmBnWs0wXyPMNUPOEjtd0fhxaZhCyXCphtZhqNng4pKS1mBM3UdzfUDs8G8v38tS2bFaxJuwabCVfMXkJagLSWV1mUF8CJSwYdRd4ld/NjKFVMBcs6z7HUCXJUmXp2s6H28Fw6KAhh4qu5zMULzmHfkA/7AHI9+YKHv0SfFogQwAO643vilFt4fdc5/OqL/jTD7TwzthfgLAAD//+IV+sUAAAAGSURBVAMAv4qqEriAjt8AAAAASUVORK5CYII=") 8 2, auto; }
+
+  :root.is-night-field a, :root.is-night-field button,
+  :root.is-night-field summary, :root.is-night-field [role="button"],
+  .coda a, .coda button { cursor: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAaCAYAAACzdqxAAAACAUlEQVR4AeyUbygDYRzHb8zYmkiLMkMsE9Oc+VMibxBR/uVvUkqR1BJeKS+ueCUxRSGFhJRoackL4QWSYWgukeXPamm8MBtrxnN112y7211Rkqvn+T3P9/d9Pvd7fnXnA/3Q83vAdRnx8skquF8qFsdSXZZxxQVR3NbSaF5HO8xv/lYwiwWxqYB4jnHF+EFvkTH4s2KHNyjIMwaDQ3TGP5jo0h9qBSwRhU9VyrN6i5PqRitkbZ25CSXEPWks3FqRnxYrGilLnulJD93IEXK2FdKg2UIRb7hWHLi81ZSusdockRCN5wsYKUqsQeCQ3QYJvz5PyI0TBPhiCBAlwX5QioADh/F8szHRy0SAB0pkjUUi/pw0xD+c6kwQx4fZv0Iu4LSCqqigeM5sA181y47vPUWsYmW5rDkqkJ3qyeCqRfDZkOravNR/alK65pz3GPjZ+h4D+uicIFsbLfa7Ud1zn06nN5B5gI6BuX6siwcr5c2AF0KfbNCe8RU5Ob88wASKCQO3r2gnNg1WNZkPvHT91nK1ojfXKJaPx8h8zjoGBsLg0UPT6vVL35npzQAqAzAwVPqXncVLsxLZN2Yj6tMF4KUzCPAhenNfPa/pbtk0pE6jlvjeg8eCMrVJWDunyexSaRUgTweIewgwLgDA0IYWHd8+XztE0XtcZxrdwEwBZP4PAAAA//+JPNEIAAAABklEQVQDAJb/njUpoIJMAAAAAElFTkSuQmCC") 8 18, pointer; }
+
+  input, textarea, select { cursor: text; }
 }

@@ -69,8 +69,41 @@ illuminated.
 - Display: a tall editorial serif with pronounced contrast
 - Body: a warm humanist sans, selected for long-form readability
 - Utility: compact mono or grotesk for dates, movement labels, and navigation
-- Body measure: 65–72 characters
 - Minimum modular scale ratio: 1.25
+
+**Display scale — committed.** Five steps, each at or above the 1.25 minimum:
+
+| Step | Size | Role |
+| --- | --- | --- |
+| 1 | 12vw | The resolved Shez lockup. Used once. |
+| 2 | 8vw | Chapter hero — Movement I landing, Coda. |
+| 3 | 6.4vw | Section opening — overture welcome, movement headings. |
+| 4 | 5vw | Item title — career role, variation title. |
+| 5 | 3vw | Voice title — systems entries. |
+
+Ratios: 1.5, 1.25, 1.28, 1.67. Do not introduce a size between steps. Two headings doing
+the same job must share a step rather than sit a few percent apart, which reads as drift
+rather than hierarchy.
+
+**Utility label scale — committed.** Three tokens in `:root`. The body movements had
+drifted across eight ad-hoc sizes from .55rem to .75rem; these are the only three
+permitted, and new labels must use a token rather than a literal size.
+
+| Token | Size | Use |
+| --- | --- | --- |
+| `--u-lg` | .72rem / 11.5px | Org lines, roles, movement eyebrows, links, nav, credits. |
+| `--u-md` | .655rem / 10.5px | Status, meta, tick labels, principles, title descriptors. |
+| `--u-sm` | .6rem / 9.6px | Micro only. |
+
+`--u-md` is the floor for any label a reader is expected to actually read. The overture's
+ambient wayfinding — movement key, scroll cue, movement handoff — and the rail's chapter
+numeral sit below the floor deliberately: they are atmosphere, not content, and enlarging
+them competes with the opening composition.
+
+**Body measure: 65–75 characters, for long-form reading text only.** This governs
+`.body-copy` and any future sustained passage. It does not govern annotation, reference,
+or list columns inside the multi-column editorial grid, which run 30–48 characters by
+design; narrowing is what makes the grid legible. Do not "fix" those columns to 65ch.
 
 Do not use Inter, Roboto, or a generic system font as the primary face.
 
@@ -99,6 +132,37 @@ Do not use Inter, Roboto, or a generic system font as the primary face.
 - Exit easing: `cubic-bezier(0.64, 0, 0.78, 0)`.
 - Avoid bounce, elastic easing, continuous large parallax, and camera zoom.
 - The book responds subtly to pointer movement only on fine-pointer devices.
+
+## Cursor
+
+Fine pointers get a musical cursor; coarse pointers keep the native one.
+
+- Default: the treble clef, hotspot at its top tip so it hangs down-right like an arrow.
+  It is the same mark that sits beside Shez, not generic music clip art.
+- Interactive: a note head, hotspot at the head centre — a note you can play.
+
+**Two palettes, switched on the ink signal.** The cursor must never fight its field.
+
+| Field | Clef | Note | Outline |
+| --- | --- | --- | --- |
+| Night | bright orange `#f4783c` | bright orange | warm ink, 40% |
+| Paper | warm ink `#2e2721` | coral `#d95b43` | paper, 55% |
+
+The swap is driven by the same `inkTone` range (0.82–0.9) that flips the typography from
+ivory to ink, applied as `:root.is-night-field`. The cursor therefore stops being ink at
+exactly the moment the field can no longer support ink — one signal, not two thresholds
+that can drift apart. Paper is the default state so a no-JS render still gets a readable
+cursor on the paper body. Each palette carries a thin counter-coloured outline so the
+shape holds through the mid-tone umber the field passes through between states.
+
+Implemented as CSS `cursor: url()` with inline SVG data URIs. No follower element and no
+rAF loop: a lerping cursor would cost a frame loop, lag behind the real pointer, and read
+as a cliché against this site's restraint. The clef is drawn as a path rather than the
+U+1D11E glyph, which would tofu on machines without a music font. Both states keep a
+native fallback after the comma so a failed image degrades to `auto` / `pointer`.
+
+Accepted trade-off: a site-wide custom cursor replaces the I-beam over body copy, so text
+no longer signals that it is selectable. That is the cost of the expressive choice.
 
 ## Progressive Enhancement
 

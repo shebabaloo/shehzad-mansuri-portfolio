@@ -53,6 +53,10 @@ export function App() {
       sticky.style.setProperty('--intro-y', `${(-18 * range(p, 0.04, 0.3)).toFixed(2)}px`)
       document.documentElement.style.setProperty('--header-opacity', (1 - range(p, 0.02, 0.24)).toFixed(4))
       document.documentElement.style.setProperty('--rail-paper-tone', inkTone.toFixed(4))
+      // The cursor flips on the same signal the typography does, so it stops being ink the
+      // moment the field stops being able to support ink. Paper is the default state, so a
+      // no-JS render still gets the correct cursor for the paper body.
+      document.documentElement.classList.toggle('is-night-field', inkTone < 0.5)
       sticky.style.setProperty('--node-opacity', (1 - range(p, 0.32, 0.74)).toFixed(4))
       sticky.style.setProperty('--spiral-opacity', '1')
       sticky.style.setProperty('--origin-open', range(p, 0.28, 0.43).toFixed(4))
