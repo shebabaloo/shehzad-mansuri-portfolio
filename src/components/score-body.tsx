@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { MailLink } from './ui/mail-link'
 import { PassageToggle } from './ui/passage-toggle'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
@@ -393,8 +394,8 @@ export function ScoreBody() {
           <p>If any of this sounds like a conversation worth having, say hello.</p>
           <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years; the first is what I am building toward.</p>
           <nav aria-label="Contact and resume links">
-            <a href="mailto:shehzadm7861@gmail.com">Email <span>↗</span></a>
-            <a href="https://www.linkedin.com/in/shehzad-mansuri/">LinkedIn <span>↗</span></a>
+            <MailLink>Email <span>↗</span></MailLink>
+            <a href="https://www.linkedin.com/in/shehzadmansuri/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
             <a href="#first-movement">Return to the score <span>↑</span></a>
           </nav>
           <strong>— Shez<span>.</span></strong>
