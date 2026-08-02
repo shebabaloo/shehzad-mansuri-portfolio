@@ -9,23 +9,24 @@ import { drawNote, type NoteKind } from '@/lib/notation'
  * through a slow fade, nothing has a leading edge, and an effect with no leading edge has
  * no direction. Motion needs an event, not an average.
  *
- * So this is a run instead. The notes are ordered into a descending line and lit in
- * sequence: each snaps on over about three percent of the band and decays behind, which
- * puts a bright head at the reader's scroll position with a tail of six or so notes
- * trailing it. Scroll down and the run plays downward; scroll up and it unplays, because
- * the whole thing is a pure function of scroll position rather than a timeline.
+ * So this is a run instead, written on a staff. The notes are quantised to real lines and
+ * spaces and lit in sequence: each snaps on over under two percent of the band and decays
+ * fast behind, which puts a bright head at the reader's scroll position with a short tail
+ * chasing it. The staff wipes in first, so the bar exists before the first note lands on
+ * it. Scroll down and the run plays; scroll up and it unplays, because the whole thing is
+ * a pure function of scroll position rather than a timeline.
  *
  * Ink, not coral. Coral marks what matters and this marks nothing — it is a rest between
  * two arguments, and it should be gone by the time the reader is reading again.
  */
 
-const COUNT = 34
+const COUNT = 18
 /** The head runs slightly past the end so the last notes still get their moment. */
 const HEAD = 1.16
 /** Decay length behind the head, in units of progress. Shorter reads as sharper. */
-const TAIL = 0.2
+const TAIL = 0.11
 /** Attack length. Small enough to snap, long enough not to alias into a flicker. */
-const ATTACK = 0.03
+const ATTACK = 0.018
 
 type Note = {
   x: number
@@ -46,23 +47,31 @@ const mulberry = (seed: number) => () => {
   return ((t ^ (t >>> 14)) >>> 0) / 4294967296
 }
 
-/* A run is stepwise, so these are placed on a path rather than scattered: y descends
-   steadily with the index while x snakes across the band. The jitter is small on purpose —
-   enough that it is not a ruler, not so much that the line stops reading as one gesture. */
+/* Staff geometry, in fractions of the band. The five lines sit on tenths, so a half-gap
+   step is exactly 0.05 — which is what lets the run land on real lines and spaces instead
+   of floating near them. */
+const STAFF_TOP = 0.3
+const STAFF_GAP = 0.1
+const STAFF_LINES = 5
+
+/* A descending run: x advances left to right, y steps down half a gap at a time, so the
+   line passes from above the staff, through it, to below. Quantised on purpose — the whole
+   point of adding a staff is that the notes then have somewhere to be, and notes sitting a
+   few pixels off a line read as a scatter that happens to be near one. */
 const build = (): Note[] => {
   const rand = mulberry(20260802)
-  // Eighths dominate, as they would in an actual run; a few quarters and halves break it up.
-  const kinds: NoteKind[] = ['eighth', 'eighth', 'eighth', 'eighth', 'quarter', 'quarter', 'half']
+  const kinds: NoteKind[] = ['eighth', 'eighth', 'eighth', 'eighth', 'eighth', 'quarter', 'quarter']
   return Array.from({ length: COUNT }, (_, i) => {
     const t = i / (COUNT - 1)
     return {
-      x: 0.5 + Math.sin(t * Math.PI * 2.1) * 0.3 + (rand() - 0.5) * 0.07,
-      y: 0.05 + t * 0.9 + (rand() - 0.5) * 0.03,
+      x: 0.06 + t * 0.88,
+      y: 0.05 + i * 0.05,
       trigger: t,
-      size: 5.5 + rand() * 4,
-      tilt: -22 + (rand() - 0.5) * 20,
+      size: 6 + rand() * 2.5,
+      tilt: -20 + (rand() - 0.5) * 12,
       kind: kinds[Math.floor(rand() * kinds.length)],
-      flip: rand() < 0.4,
+      // Stems turn once the run drops below the middle line, as an engraver would set it.
+      flip: 0.05 + i * 0.05 > STAFF_TOP + STAFF_GAP * 2,
     }
   })
 }
@@ -94,9 +103,36 @@ export function MovementTransition() {
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
+    /* The bar itself: five lines and two barlines, wiped in from the left ahead of the
+       run so the staff is already there when the first note lands on it. */
+    const drawStaff = (reveal: number) => {
+      if (reveal <= 0) return
+      const x2 = width * reveal
+      ctx.strokeStyle = 'oklch(24% .02 60 / .16)'
+      ctx.lineWidth = 1
+      for (let i = 0; i < STAFF_LINES; i++) {
+        const y = (STAFF_TOP + i * STAFF_GAP) * height
+        ctx.beginPath()
+        ctx.moveTo(0, y)
+        ctx.lineTo(x2, y)
+        ctx.stroke()
+      }
+      const top = STAFF_TOP * height
+      const bottom = (STAFF_TOP + (STAFF_LINES - 1) * STAFF_GAP) * height
+      for (const bx of [0.5, width - 0.5]) {
+        if (bx > x2) continue
+        ctx.beginPath()
+        ctx.moveTo(bx, top)
+        ctx.lineTo(bx, bottom)
+        ctx.stroke()
+      }
+    }
+
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
       const lead = progress * HEAD
+      // The staff arrives over the first eighth of the band, before the run reaches it.
+      drawStaff(Math.min(1, progress / 0.12))
 
       for (const note of notes) {
         const d = lead - note.trigger
@@ -140,6 +176,7 @@ export function MovementTransition() {
       // The run, written out and held: every note at rest, nothing tied to scrolling.
       progress = 1 / HEAD
       ctx.clearRect(0, 0, width, height)
+      drawStaff(1)
       for (const note of notes) {
         ctx.globalAlpha = 0.34
         drawNote(ctx, {
