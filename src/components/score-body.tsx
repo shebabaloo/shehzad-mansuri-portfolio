@@ -170,7 +170,7 @@ const interests: Interest[] = [
   },
   {
     id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
-    copy: 'The gym most weeks, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
+    copy: 'The gym most days, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
     listLabel: 'Weekly rotation',
     items: [{ name: 'Volleyball' }, { name: 'Gym' }, { name: 'Cycling' }],
     passage: [
