@@ -24,7 +24,8 @@ const career = [
       'I have supported six programs in this space over two years. The one I am on now is a data-center site-selection platform, and it did not exist when I arrived: the portfolio lived in sixteen spreadsheets, and no two people read them the same way.',
       'Concept to production took three weeks, which sounds like speed and was really scope discipline: deciding early, and out loud, what the first version would refuse to do. It now carries a $60B+ investment portfolio and peaks near 290 monthly users. The program underneath it was built from zero on the same clock—four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, and a decision log separating MVP from V1.',
       'The year before that was a different problem: a seven-module financial platform tracking $20B+ in spend, where I owned the roadmap, the releases, and the documentation—and covered the client program manager through a ninety-day absence.',
-      'The rest were not all platforms. One was a seven-page executive dashboard rebuilt on a new stack at feature parity, with its existing users migrated across automatically. One was a metrics product where a single management table cut engineering reporting support by 80% and took roughly a third off the monthly review prep. One was a data-science team with no intake process at all, which turned into 43 roadmap projects and 450+ closed tasks running on a cadence that finally held.',
+      'Two more were platforms. One, a seven-page executive dashboard rebuilt on a new stack at feature parity, with its existing users migrated across automatically. The other, a business-wide intelligence and metrics product, where I drove metrics management and a single table cut engineering reporting support by 80% and took roughly a third off the monthly review prep.',
+      'The last was not a platform at all. It was a nascent program with no intake and no sprint management—which we turned into a defined process: 43 roadmap projects and 450+ closed tasks, running on a cadence that finally held.',
       'What carries across all six is the practice rather than the subject matter. I use proprietary AI tooling to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing—compressing the distance between a question and something real enough to react to.',
     ],
   },
@@ -149,7 +150,7 @@ const interests: Interest[] = [
       { name: 'Meditations', by: 'Marcus Aurelius' },
     ],
     passage: [
-      'My college application essay was about a bookstore—about walking in with no title in mind and waiting to be caught by one. I still choose books that way. The shelf has changed.',
+      'My college application essay was about a bookstore—about walking in with no title in mind and waiting to be caught by one. I still choose books that way. The shelf has changed somewhat.',
       'What I look for now is a way of thinking I have not met yet. *Meditations* and *The Myth of Sisyphus* argue directly about how to hold a life. *Spring Snow* refuses to argue and simply shows you one. *The Way of Kings* invents an entire world in order to ask the same question somewhere the answer is not already settled.',
       'Each one is another point of view, another gap quietly closed. In this world, I seek to learn.',
     ],
@@ -166,7 +167,7 @@ const interests: Interest[] = [
     passage: [
       'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
       'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
-      'Destiny 2 is the outlier and the counterweight—a world I return to rather than finish, where the pull is the loop and the people running it with me.',
+      'Destiny 2 has been the outlier for the last decade—a world I return to rather than finish, where the pull is the loop and the people running it with me.',
     ],
   },
   {
@@ -185,7 +186,7 @@ const interests: Interest[] = [
     listLabel: 'What I play',
     items: [{ name: 'Bass clarinet' }, { name: 'Orchestral & jazz' }, { name: 'Piano' }],
     passage: [
-      'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
+      'The bass clarinet is a long, bottom-heavy, faintly absurd mix between a clarinet and a saxophone, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
       'What I remember is not any performance. It is the rehearsals—working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
     ],
   },

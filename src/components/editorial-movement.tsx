@@ -24,7 +24,7 @@ export function EditorialMovement() {
           <p className="dek">
             I’m Shez—part product thinker, part systems builder, and always curious
             about what happens when an idea gets room to move. Day to day, a technical
-            program manager at Deloitte, embedded with a FAANG company’s data-center
+            program manager at Deloitte, embedded within FAANG data-center
             infrastructure teams.
           </p>
           <p className="body-copy">
