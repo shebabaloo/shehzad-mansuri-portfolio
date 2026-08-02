@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react'
 import { EditorialMovement } from '@/components/editorial-movement'
 import { ScoreBody } from '@/components/score-body'
 import { SiteHeader } from '@/components/site-header'
+import { JumpToIndex } from '@/components/ui/jump-to-index'
 import { OriginBook } from '@/components/ui/origin-book'
 import { ScoreRail, type ScoreRailHandle } from '@/components/ui/score-rail'
 import { SpiralScore, type SpiralScoreHandle } from '@/components/ui/spiral-score'
@@ -157,6 +158,7 @@ export function App() {
       <a className="skip-link" href="#first-movement">Skip the opening</a>
       <SiteHeader />
       <ScoreRail ref={railRef} />
+      <JumpToIndex />
 
       <main>
         <section ref={overtureRef} className="overture" id="overture" aria-labelledby="overture-title">

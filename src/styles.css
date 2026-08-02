@@ -305,6 +305,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
     background: var(--coral-display);
     transform: scaleX(var(--page-progress)); transform-origin: left center;
   }
+  /* Phone-only, because the rail's chapter links are the desktop answer to the same
+     problem. Bottom right rather than bottom left: the Coda's own links sit left, and a
+     thumb reaches this corner. */
+  .jump-index {
+    position: fixed; z-index: 60; right: 1rem; bottom: 1rem;
+    display: inline-flex; align-items: center; gap: .55rem;
+    min-height: 44px; padding: .7rem 1.1rem;
+    border: 1px solid var(--coral); border-radius: 999px;
+    background: var(--paper); color: var(--ink);
+    font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 6px 20px oklch(30% .03 60 / .2);
+    opacity: 0; transform: translateY(.6rem); pointer-events: none;
+    transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
+  }
+  .jump-index[data-shown="true"] { opacity: 1; transform: none; pointer-events: auto; }
+  .jump-index span { color: var(--coral); }
+  .jump-index b { font-weight: 400; }
+
   .movement-label { display: none; }
   .overture-copy { top: 14%; width: calc(100% - 2.2rem); }
   .overture-copy h1 { font-size: clamp(3.6rem, 17vw, 5.4rem); }
