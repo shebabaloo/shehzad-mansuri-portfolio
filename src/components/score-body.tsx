@@ -205,7 +205,7 @@ const interests: Interest[] = [
     /* A fermata holds a note longer than it is written. It is the only mark in the notation
        that means "stay here a while", which is the whole argument of this measure. */
     id: 'coffee', mark: '𝄐', label: 'Coffee & company', title: 'Held longer than written.',
-    copy: 'Coffee and matcha, in equal measure. The standing excuse to sit across from someone for an hour that was meant to be twenty minutes—on a patio, when the weather allows.',
+    copy: 'Coffee and matcha, in equal measure. The standing excuse to sit across from someone for an hour that was meant to be twenty minutes.',
     listLabel: 'The usual',
     items: [
       { name: 'Coffee' }, { name: 'Matcha' },
