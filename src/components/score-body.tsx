@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { Fragment, useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
@@ -46,29 +46,34 @@ const career = [
 
 const systems = [
   {
-    number: '01', title: 'Second Brain', status: 'Active pattern',
+    tier: 'Building the thing behind the work', number: '01', title: 'Second Brain', status: 'Active pattern',
     copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two—and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     principle: 'Context → synthesis → next move',
     passage: 'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative. It prepares a meeting by answering what changed and what remains unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart. Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
   },
   {
-    number: '02', title: 'Team Third Brain', status: 'Active pattern',
+    tier: 'Building the thing behind the work', number: '02', title: 'Team Third Brain', status: 'Active pattern',
     copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. So the verified, team-relevant part of that context was promoted into shared ground—decisions, ownership, milestones, risks—and the agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members.',
     principle: 'Individual context ↔ shared clarity',
     passage: 'Private context stays private; only what the team has agreed on is promoted. It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without operating it themselves. What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
   },
-]
-
-const variations = [
   {
-    number: 'Variation I', title: 'Restaurant / Café Ranker', status: 'In the sketchbook',
-    question: 'What if your saved places became a personal guide your friends could actually use?',
-    copy: 'A shareable, filterable map of places I’d genuinely recommend—organized by cuisine, neighborhood, price, and vibe.',
+    tier: 'Problems taken apart, then pitched', number: '03', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
+    copy: 'A problem statement, and a four-day answer to it: how autonomous machinery actually gets to work at scale on specialty-crop farms, where millions of tons go unharvested for want of everything around the robots rather than the robots themselves.',
+    principle: 'Problem → strategy → pitch',
+    passage: 'The interesting part was never the machinery. It was the value chain around it—the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for. We scoped the problem, the shape of a response, and what execution and financial strategy would have to look like, then pitched it. A concept and an argument, built in a week that did not have one.',
   },
   {
-    number: 'Variation II', title: 'Intentional YouTube', status: 'In the sketchbook',
-    question: 'What if video discovery optimized for learning intent instead of watch time?',
-    copy: 'A calmer front door to YouTube that turns a topic into a taste-aware learning path, with focus and exploration treated as different modes.',
+    tier: 'Ideas worth giving a first playable form', number: '04', title: 'Restaurant / Café Ranker', status: 'Unbuilt',
+    copy: 'What if your saved places became a personal guide your friends could actually use—scored by what you return for, not what you rated afterwards?',
+    principle: 'Taste → shareable',
+    passage: null,
+  },
+  {
+    tier: 'Ideas worth giving a first playable form', number: '05', title: 'Intentional YouTube', status: 'Unbuilt',
+    copy: 'What if video discovery optimised for learning intent instead of watch time—an interface that behaves like a syllabus rather than a slot machine?',
+    principle: 'Intent → path',
+    passage: null,
   },
 ]
 
@@ -262,31 +267,34 @@ export function ScoreBody() {
       <section className="score-section systems-movement" id="systems" aria-labelledby="systems-title">
         <SectionStaff />
         <header className="movement-heading movement-heading--compact" data-score-reveal>
-          <p>Movement III <span>·</span> Systems that compound</p>
-          <h2 id="systems-title">Building the thing <em>behind the work.</em></h2>
-          <p className="movement-intro">What should the system remember, connect, or do so a person doesn’t have to start from zero again?</p>
+          <p>Movement III <span>·</span> Nobody assigned these</p>
+          <h2 id="systems-title">The things I built <em>because nobody asked.</em></h2>
+          <p className="movement-intro">Three tiers of the same instinct: what is running, what got as far as a pitch, and what is still only an idea.</p>
         </header>
 
         <div className="counterpoint" aria-label="Systems progressing from personal context to shared output">
-          {systems.map(({ number, title, status, copy, principle, passage }) => (
-            <article className="system-voice" data-score-reveal key={number}>
+          {systems.map(({ tier, number, title, status, copy, principle, passage }, i) => (
+            <Fragment key={number}>
+            {tier !== systems[i - 1]?.tier && <p className="counterpoint__tier" data-score-reveal>{tier}</p>}
+            <article className="system-voice" data-score-reveal>
               <span className="system-voice__number">{number}</span>
               <div><p className="system-voice__status">{status}</p><h3>{title}</h3></div>
               <div className="system-voice__body">
                 <p>{copy}</p>
-                <PassageToggle
+                {passage && <PassageToggle
                   id={`system-${number}-passage`}
                   open={openPassage === `system-${number}`}
                   onToggle={() => setOpenPassage(openPassage === `system-${number}` ? null : `system-${number}`)}
                   label="Read the mechanics"
                   openLabel="Close the mechanics"
-                />
-                <div className="passage" id={`system-${number}-passage`} data-open={openPassage === `system-${number}`} role="region" aria-label={`${title}, mechanics`}>
+                />}
+                {passage && <div className="passage" id={`system-${number}-passage`} data-open={openPassage === `system-${number}`} role="region" aria-label={`${title}, mechanics`}>
                   <div className="passage__inner"><p>{passage}</p></div>
-                </div>
+                </div>}
               </div>
               <strong>{principle}</strong>
             </article>
+            </Fragment>
           ))}
           <p className="counterpoint__check" data-score-reveal>
             Given enough context and too few guardrails, these systems will state something
@@ -296,24 +304,6 @@ export function ScoreBody() {
             refused to trust it.</em>
           </p>
           <span className="counterpoint__chord" aria-hidden="true"><i /><i /><i /></span>
-        </div>
-      </section>
-
-      <section className="score-section variations-movement" id="experiments" aria-labelledby="variations-title">
-        <header className="movement-heading movement-heading--compact" data-score-reveal>
-          <p>Movement IV <span>·</span> Variations</p>
-          <h2 id="variations-title">Ideas worth giving a <em>first playable form.</em></h2>
-          <p className="movement-intro">Not polished companies or finished case studies—questions I’d like to test by making something small and real.</p>
-        </header>
-        <div className="variation-score">
-          {variations.map((variation) => (
-            <article className="variation" data-score-reveal key={variation.title}>
-              <div className="variation__meta"><span>{variation.number}</span><b>{variation.status}</b></div>
-              <div><h3>{variation.title}</h3><p className="variation__question">{variation.question}</p></div>
-              <p className="variation__copy">{variation.copy}</p>
-              <span className="variation__motif" aria-hidden="true"><i /><i /><i /><i /><i /></span>
-            </article>
-          ))}
         </div>
       </section>
 
@@ -359,6 +349,7 @@ export function ScoreBody() {
           <p>Coda <span>·</span> Still composing</p>
           <h2 id="coda-title">The next movement is <em>still unwritten.</em></h2>
           <p>If any of this sounds like a conversation worth having, say hello.</p>
+          <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years; the first is what I am building toward.</p>
           <nav aria-label="Contact and resume links">
             <a href="mailto:shehzadm7861@gmail.com">Email <span>↗</span></a>
             <a href="https://www.linkedin.com/in/shehzad-mansuri/">LinkedIn <span>↗</span></a>
