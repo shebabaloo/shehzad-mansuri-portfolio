@@ -124,10 +124,10 @@ const variations: Variation[] = [
     sourceLabel: 'Read the post',
   },
   {
-    number: 'Variation II', title: 'Restaurant / Café Ranker', status: 'In the sketchbook',
+    number: 'Variation II', title: 'The Short List', status: 'In the sketchbook',
     icon: 'cup',
-    question: 'What if the places I have saved and the recommendations I keep texting became one thing you could actually look at?',
-    copy: 'Years of dropped pins and half-remembered advice, turned into a shareable, filterable map—organized by cuisine, neighborhood, price, and vibe.',
+    question: 'What if a recommendation still carried the person who made it, instead of an average of strangers?',
+    copy: 'I never took to the food-ranking apps: the number at the top is everyone’s opinion, and therefore nobody’s. This is the opposite—the places I have actually saved and the advice I keep texting, ordered by my own taste. And something you move through rather than scroll: filter by cuisine, neighborhood, price, or vibe and watch the shortlist redraw itself.',
   },
   {
     number: 'Variation III', title: 'One-File Flight', status: 'In the sketchbook',
