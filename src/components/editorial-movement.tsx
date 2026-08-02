@@ -39,7 +39,12 @@ export function EditorialMovement() {
           </p>
           <div className="landing-actions">
             <a className="text-link" href="#score-index">Read the score <span>↓</span></a>
-            <a className="text-link" href="/shehzad-mansuri-cv.pdf" target="_blank" rel="noreferrer">Take the score <span>↗</span></a>
+            {/* Prefixed with BASE_URL rather than written from the root. Files in public/
+                are copied verbatim and their URLs are not rewritten, so a literal
+                "/shehzad-mansuri-cv.pdf" resolves to the domain root and 404s wherever the
+                site is served from a subpath — which is exactly where it went live.
+                BASE_URL carries its own trailing slash and is "/" at the root. */}
+            <a className="text-link" href={`${import.meta.env.BASE_URL}shehzad-mansuri-cv.pdf`} target="_blank" rel="noreferrer">Take the score <span>↗</span></a>
             <a className="text-link text-link--quiet" href="#coda">Say hello <span>↓</span></a>
           </div>
         </article>
