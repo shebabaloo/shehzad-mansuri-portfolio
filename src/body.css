@@ -115,6 +115,9 @@
 .personal-measure__copy h3 { margin: 0; max-width: 12ch; font: 400 clamp(2.7rem, 5vw, 5.6rem)/.9 var(--display); letter-spacing: -.05em; }
 .personal-measure__copy > span { display: block; max-width: 48ch; margin-top: 2rem; color: var(--ink-soft); font: 300 var(--t-md)/1.75 var(--body); }
 .personal-measure__list-label { margin: 0 0 .9rem; padding-bottom: .6rem; border-bottom: 1px solid oklch(48% .045 60 / .3); color: var(--brass-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+/* A second list under the same measure needs a clear break from the first, or the two read
+   as one run of items with a stray heading in the middle. */
+.personal-measure__list-label--second { margin-top: 2.25rem; }
 .personal-measure ul { padding: 0; margin: 0; list-style: none; }
 .personal-measure li { padding: 1rem 0; border-bottom: 1px solid oklch(48% .045 60 / .2); font: 400 var(--u-lg) var(--utility); letter-spacing: .06em; }
 /* Bylines sit under the title, quieter — the title is what is being listed, the author is

@@ -148,12 +148,15 @@ type Interest = {
   // volleyball does not. Without the annotation TypeScript infers a union per entry and
   // the optional property becomes unreachable.
   items: { name: string; by?: string }[]
+  // A second list, where one measure holds two kinds of the same interest.
+  listLabel2?: string
+  items2?: { name: string }[]
   passage: string[]
 }
 
 const interests: Interest[] = [
   {
-    id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
+    id: 'books', mark: 'Aa', label: 'Literature', title: 'Some ideas need more than a tab.',
     copy: 'Fantasy for invention, philosophy for friction, and literary fiction for the things neither one will say directly.',
     listLabel: 'Recent favorites',
     items: [
@@ -169,18 +172,20 @@ const interests: Interest[] = [
     ],
   },
   {
-    id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
-    copy: 'What they share is authorship—somebody chose the color of that field, the length of that silence. The same taste that produced the site you are scrolling, pointed at a different medium.',
-    listLabel: 'Most memorable video games',
+    id: 'games', mark: '◇', label: 'Games', title: 'Worlds, and the people in them.',
+    copy: 'Two pleasures, not one. Narrative worlds you enter alone—somebody chose the color of that field, the length of that silence. And the collaborative kind, on a screen or across a table, where the rules matter less than who is playing.',
+    listLabel: 'Most memorable on screen',
     items: [
       { name: 'The Last of Us' }, { name: 'Ghost of Tsushima' },
-      { name: 'Clair Obscur: Expedition 33' },
-      { name: 'Final Fantasy VII' }, { name: 'Destiny 2' },
+      { name: 'Clair Obscur: Expedition 33' }, { name: 'Destiny 2' },
     ],
+    listLabel2: 'Most played around the table',
+    items2: [{ name: 'Catan' }, { name: 'Codenames' }, { name: 'Rummikub' }],
     passage: [
       'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
       'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
-      'Destiny 2 has been the outlier for the last decade—a world I return to rather than finish, where the pull is the loop and the people running it with me.',
+      'Destiny 2 has been the outlier for the last decade, and it is the hinge between the two: a world I return to rather than finish, where the pull is not the ending but the loop, and the people running it with me.',
+      'Board games are that second pleasure with the screen removed. Catan is a negotiation engine wearing the costume of a farming game; Codenames takes all of its difficulty from one brutal constraint, a single word. What I like is watching a small set of rules produce behavior nobody wrote down—which is, more or less, what I spend the working day on.',
     ],
   },
   {
@@ -668,6 +673,14 @@ export function ScoreBody() {
                     {item.by && <span>{item.by}</span>}
                   </li>
                 ))}</ul>
+                {interest.listLabel2 && interest.items2 && (
+                  <>
+                    <p className="personal-measure__list-label personal-measure__list-label--second">
+                      {interest.listLabel2}
+                    </p>
+                    <ul>{interest.items2.map((item) => <li key={item.name}>{item.name}</li>)}</ul>
+                  </>
+                )}
               </div>
             </article>
           ))}
