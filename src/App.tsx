@@ -11,7 +11,13 @@ import { SpiralScore, type SpiralScoreHandle } from '@/components/ui/spiral-scor
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-const movements = ['Work', 'Systems', 'Experiments', 'Books', 'Games', 'Music', 'Movement']
+// Two registers rather than one flat list. The old key mixed chapter names (Work,
+// Systems, Experiments) with Interlude sub-items (Books, Games, Music, Movement), which
+// read as one level of structure when it was two.
+const movementKey = [
+  { group: 'In motion', items: ['Work', 'Systems', 'Ideas'] },
+  { group: 'Off the clock', items: ['Books', 'Games', 'Movement', 'Music'] },
+]
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value))
 const range = (value: number, start: number, end: number) => clamp((value - start) / (end - start))
@@ -160,12 +166,17 @@ export function App() {
               </a>
             </div>
 
-            <div className="movement-key" role="list" aria-label="Movements in The Living Score">
-              {movements.map((movement) => (
-                <span className={`movement-key__item movement-key__item--${movement.toLowerCase()}`} role="listitem" key={movement}>
-                  <span className="movement-key__mark" />
-                  <span>{movement}</span>
-                </span>
+            <div className="movement-key" aria-label="What is in The Living Score">
+              {movementKey.map(({ group, items }) => (
+                <div className="movement-key__group" role="list" aria-label={group} key={group}>
+                  <p className="movement-key__label">{group}</p>
+                  {items.map((item) => (
+                    <span className={`movement-key__item movement-key__item--${item.toLowerCase()}`} role="listitem" key={item}>
+                      <span className="movement-key__mark" />
+                      <span>{item}</span>
+                    </span>
+                  ))}
+                </div>
               ))}
             </div>
 

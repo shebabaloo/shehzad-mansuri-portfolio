@@ -96,10 +96,10 @@ const interests = [
     passage: 'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back. I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
   },
   {
-    id: 'volleyball', mark: '↗', label: 'Volleyball', title: 'The second touch.',
-    copy: 'Twelve hours a week, ideally across three sessions. I set.',
-    items: ['Setter', 'Twelve hrs / week', 'Three sessions'],
-    passage: 'The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way. What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
+    id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
+    copy: 'The gym most weeks, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
+    items: ['Volleyball', 'Gym', 'Cycling'],
+    passage: 'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way. What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
   },
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
@@ -319,14 +319,17 @@ export function ScoreBody() {
           {variations.map((variation) => (
             <article className="variation" data-score-reveal key={variation.title}>
               <div className="variation__meta"><span>{variation.number}</span><b>{variation.status}</b></div>
-              <div><h3>{variation.title}</h3><p className="variation__question">{variation.question}</p></div>
               <div>
-                <p className="variation__copy">{variation.copy}</p>
+                <h3>{variation.title}</h3>
+                <p className="variation__question">{variation.question}</p>
                 {variation.source && (
                   <a className="variation__source" href={variation.source} target="_blank" rel="noreferrer">
                     {variation.sourceLabel} <span aria-hidden="true">↗</span>
                   </a>
                 )}
+              </div>
+              <div>
+                <p className="variation__copy">{variation.copy}</p>
                 {variation.passage && (
                   <>
                     <PassageToggle
