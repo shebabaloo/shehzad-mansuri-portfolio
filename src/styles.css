@@ -416,7 +416,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (pointer: coarse) {
-  .skip-link, .monogram, .open-score, .enter-score, .jump-index,
+  /* .jump-index is deliberately absent here. These selectors only need a containing block
+     so their ::after can be placed, and position: relative supplies one — but the pill is
+     already position: fixed, and this rule sits later in the sheet, so including it
+     overrode fixed with relative. On a touch device the pill dropped out of the viewport
+     corner and into normal flow at its DOM position, near the top of the page: present,
+     styled, and thousands of pixels above wherever the reader was. fixed establishes a
+     containing block of its own, so its ::after below still lands correctly. */
+  .skip-link, .monogram, .open-score, .enter-score,
   .text-link, .passage-toggle, .variation__source, .coda nav a { position: relative; }
 
   .skip-link::after, .monogram::after, .open-score::after, .enter-score::after,
