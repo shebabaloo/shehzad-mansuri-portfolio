@@ -283,11 +283,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
      Transposing the existing rail rather than adding a second indicator keeps one source of
      truth: --page-progress, the chapter tracking, and the aria progress semantics on <nav>
      are already here, and display:none was removing those from the accessibility tree too.
-     The staff, notation, and chapter jump links are dropped, since 2px of height cannot
-     carry them and a touch reader gets those affordances from the headings instead. */
+     The staff, notation, and chapter jump links are dropped, since a few pixels of height
+     cannot carry them and a touch reader gets those affordances from the headings instead.
+
+     Height is 4px rather than 2px, and the track sits a little stronger than it did: at
+     2px against a .2 alpha the bar was easy to scroll straight past without registering
+     that a progress indicator existed at all. It is still a hairline by intent — enough to
+     notice once, not enough to compete with the page. */
   .score-rail {
-    inset: 0 0 auto 0; width: auto; height: 2px;
-    background: oklch(60% .05 70 / .2);
+    inset: 0 0 auto 0; width: auto; height: 4px;
+    background: oklch(60% .05 70 / .3);
     transform: translateY(calc((1 - var(--rail-opacity)) * -100%));
     pointer-events: none;
   }
