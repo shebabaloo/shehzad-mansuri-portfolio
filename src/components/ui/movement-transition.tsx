@@ -9,18 +9,19 @@ import { drawNote, type NoteKind } from '@/lib/notation'
  * through a slow fade, nothing has a leading edge, and an effect with no leading edge has
  * no direction. Motion needs an event, not an average.
  *
- * So this is a run instead, written on a staff. The notes are quantised to real lines and
- * spaces and lit in sequence: each snaps on over under two percent of the band and decays
- * fast behind, which puts a bright head at the reader's scroll position with a short tail
- * chasing it. The staff wipes in first, so the bar exists before the first note lands on
- * it. Scroll down and the run plays; scroll up and it unplays, because the whole thing is
- * a pure function of scroll position rather than a timeline.
+ * So this is a run instead, played across a staff. The notes descend on a serpentine line
+ * and are lit in sequence: each snaps on over under two percent of the band and decays fast
+ * behind, which puts a bright head at the reader's scroll position with a short tail
+ * chasing it. The staff wipes in first and stays a backdrop — the notes cross it rather
+ * than sit on it, because pinning them to degrees made the run tidier and deader. Scroll
+ * down and the run plays; scroll up and it unplays, because the whole thing is a pure
+ * function of scroll position rather than a timeline.
  *
  * Ink, not coral. Coral marks what matters and this marks nothing — it is a rest between
  * two arguments, and it should be gone by the time the reader is reading again.
  */
 
-const COUNT = 18
+const COUNT = 34
 /** The head runs slightly past the end so the last notes still get their moment. */
 const HEAD = 1.16
 /** Decay length behind the head, in units of progress. Shorter reads as sharper. */
@@ -54,24 +55,25 @@ const STAFF_TOP = 0.3
 const STAFF_GAP = 0.1
 const STAFF_LINES = 5
 
-/* A descending run: x advances left to right, y steps down half a gap at a time, so the
-   line passes from above the staff, through it, to below. Quantised on purpose — the whole
-   point of adding a staff is that the notes then have somewhere to be, and notes sitting a
-   few pixels off a line read as a scatter that happens to be near one. */
+/* The path is a serpentine descent rather than a quantised one. Pinning the notes to
+   staff degrees made the run tidier and deader: every note the same distance from the
+   last, every step the same size, which is a scale being recited rather than a run being
+   played. The staff stays as a backdrop for the notes to cross, and the notes keep their
+   own line — varied spacing, varied size, varied lean. Order still descends, so it reads
+   downward; it just is not a ruler. */
 const build = (): Note[] => {
   const rand = mulberry(20260802)
-  const kinds: NoteKind[] = ['eighth', 'eighth', 'eighth', 'eighth', 'eighth', 'quarter', 'quarter']
+  const kinds: NoteKind[] = ['eighth', 'eighth', 'eighth', 'eighth', 'quarter', 'quarter', 'half']
   return Array.from({ length: COUNT }, (_, i) => {
     const t = i / (COUNT - 1)
     return {
-      x: 0.06 + t * 0.88,
-      y: 0.05 + i * 0.05,
+      x: 0.5 + Math.sin(t * Math.PI * 2.1) * 0.3 + (rand() - 0.5) * 0.07,
+      y: 0.05 + t * 0.9 + (rand() - 0.5) * 0.03,
       trigger: t,
-      size: 6 + rand() * 2.5,
-      tilt: -20 + (rand() - 0.5) * 12,
+      size: 5.5 + rand() * 4,
+      tilt: -22 + (rand() - 0.5) * 20,
       kind: kinds[Math.floor(rand() * kinds.length)],
-      // Stems turn once the run drops below the middle line, as an engraver would set it.
-      flip: 0.05 + i * 0.05 > STAFF_TOP + STAFF_GAP * 2,
+      flip: rand() < 0.4,
     }
   })
 }
