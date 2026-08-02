@@ -196,13 +196,4 @@
 }
 .counterpoint__check em { color: var(--ink); font-style: normal; }
 
-/* Tier headings group Movement III by how far each idea got: running, pitched, sketched.
-   That makes "unbuilt" a tier rather than a disclaimer. */
-.counterpoint__tier {
-  margin: clamp(3rem, 5vw, 4.5rem) 0 0; padding-top: 1.25rem;
-  border-top: 1px solid oklch(48% .045 60 / .3);
-  max-width: 34ch; color: var(--brass);
-  font: 400 clamp(1.05rem, 1.5vw, 1.35rem)/1.45 var(--display); letter-spacing: -.01em;
-}
-.counterpoint > .counterpoint__tier:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
 .coda__honest { max-width: 46ch; margin: 2.5rem 0 0; color: oklch(72% .02 78); font: 300 .92rem/1.8 var(--body); }

@@ -9,9 +9,10 @@ const chapters = [
   { id: 'overture', short: 'P', label: 'Prelude' },
   { id: 'first-movement', short: 'I', label: 'Meet Shez' },
   { id: 'work', short: 'II', label: 'Work in motion' },
-  { id: 'systems', short: 'III', label: 'Nobody assigned these' },
-  { id: 'off-clock', short: 'IV', label: 'Off the clock' },
-  { id: 'coda', short: 'V', label: 'Coda' },
+  { id: 'systems', short: 'III', label: 'Systems that compound' },
+  { id: 'experiments', short: 'IV', label: 'Variations' },
+  { id: 'off-clock', short: 'V', label: 'Off the clock' },
+  { id: 'coda', short: 'VI', label: 'Coda' },
 ]
 
 const notation = [
