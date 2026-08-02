@@ -363,6 +363,15 @@ button, a { -webkit-tap-highlight-color: transparent; }
    changes the touch target and nothing else, and it is scoped to coarse pointers so the
    desktop rhythm is untouched. Listed explicitly rather than applied to every link: a
    blanket a::after would collide with the decorative ::after rules on the barlines. */
+/* The utility scale is fixed rem, so it does not shrink with the viewport — but it does not
+   grow either, and what reads as comfortable meta text across a desktop grid lands at
+   10.4px on a 375px phone. Uppercase monospace at wide tracking is the least forgiving
+   thing to set that small. A modest lift puts every label at or above 11.7px and leaves the
+   desktop rhythm untouched. */
+@media (max-width: 600px) {
+  :root { --u-lg: .78rem; --u-md: .73rem; }
+}
+
 @media (pointer: coarse) {
   .skip-link, .monogram, .open-score, .enter-score,
   .text-link, .passage-toggle, .variation__source, .coda nav a { position: relative; }

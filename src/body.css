@@ -48,7 +48,7 @@
 .career-passages { width: min(100%, 84rem); margin: 0 auto; padding-top: clamp(4rem, 7vw, 6rem); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 3vw, 3rem); }
 .career-passage-card { position: relative; padding: 1.5rem 0 0; border-top: 1px solid oklch(48% .045 60 / .28); }
 .career-passage-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.25rem; }
-.career-passage-card__mark { display: grid; place-items: center; width: 1.8rem; aspect-ratio: 1; flex-shrink: 0; border: 1px solid var(--coral); font: 400 .65rem var(--utility); }
+.career-passage-card__mark { display: grid; place-items: center; width: 1.8rem; aspect-ratio: 1; flex-shrink: 0; border: 1px solid var(--coral); font: 400 .7rem var(--utility); }
 .career-passage-card__header > div > p { margin: 0; font: 400 var(--u-md) var(--utility); letter-spacing: .06em; }
 .career-passage-card__header > div > span { display: block; margin-top: .25rem; color: var(--coral-ink); font: 300 var(--u-md) var(--utility); letter-spacing: .06em; }
 @media (max-width: 860px) { .career-passages { grid-template-columns: 1fr; gap: 0; } }
@@ -186,6 +186,11 @@
   .variation, .personal-measure { gap: 2rem; }
   .counterpoint__chord, .variation__motif { display: none; }
   .coda nav { flex-direction: column; align-items: flex-start; }
+  /* The bottom clamp floors at 6rem, which on a phone is wider than the slack the Coda has
+     left: the block measured 734px against an 812px viewport, and 96px of padding pushed
+     the "Coda" label 18px above the fold. Closing it up lets the section frame whole here
+     the same way it does on a desktop. */
+  .coda { padding-bottom: 4rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
