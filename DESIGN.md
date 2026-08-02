@@ -51,6 +51,27 @@ All implementation colors use OKLCH.
 - Structure: muted brass linework
 - Counterpoint: tiny electric-cobalt accents
 
+**Accent rungs — committed.** The bright accents are tuned for the night field and clear AA
+there (coral 5.80:1, brass 6.97:1 on `--night`). On paper they do not: coral measures
+2.89:1 and brass 2.40:1, which failed roughly forty small-text nodes across the body
+movements before this was caught. Same hue, lower lightness, chosen per WCAG threshold:
+
+| Token | Value | Ratio on paper / paper-deep / ensemble | Use |
+| --- | --- | --- | --- |
+| `--coral` / `--brass` | 67% / 70% | 2.89 / 2.41 / 2.64 | Night field only. Decorative rules, barlines, braces, bullets on paper. |
+| `--coral-ink` | 50% | 5.80 / 4.83 / 5.30 | The only coral permitted on paper text below 24px. |
+| `--brass-ink` | 48% | 5.89 / 4.91 / 5.38 | The only brass permitted on paper text below 24px. |
+| `--coral-display` | 58% | 4.16 / 3.46 / 3.80 | Display type, marks, and UI affordances at 24px+. |
+| `--cobalt-display` | 52% | — | The Games mark. |
+
+The rule is **colour follows the field, and the rung follows the threshold**. Decorative
+linework keeps the bright accents because it carries nothing a reader has to resolve.
+`--focus-ring` is field-aware for the same reason: `--coral-display` by default, bright
+coral inside `.overture` and `.coda`.
+
+Do not dim an accent token with `opacity` — the mark on the personal measures composited
+down to 3.04:1 that way, and the token was already the muted value.
+
 Palette changes behave like harmonic modulation rather than hard section cuts. The
 opening resolves through night → warm umber → parchment → ivory, with light rising
 from the lower edge. Typography remains ivory through the umber register and switches
@@ -85,20 +106,28 @@ Ratios: 1.5, 1.25, 1.28, 1.67. Do not introduce a size between steps. Two headin
 the same job must share a step rather than sit a few percent apart, which reads as drift
 rather than hierarchy.
 
-**Utility label scale — committed.** Three tokens in `:root`. The body movements had
-drifted across eight ad-hoc sizes from .55rem to .75rem; these are the only three
-permitted, and new labels must use a token rather than a literal size.
+**Utility label scale — committed.** Two tokens in `:root`. The body movements had drifted
+across eight ad-hoc sizes from .55rem to .75rem; these are the only two permitted, and new
+labels must use a token rather than a literal size.
 
 | Token | Size | Use |
 | --- | --- | --- |
 | `--u-lg` | .72rem / 11.5px | Org lines, roles, movement eyebrows, links, nav, credits. |
 | `--u-md` | .655rem / 10.5px | Status, meta, tick labels, principles, title descriptors. |
-| `--u-sm` | .6rem / 9.6px | Micro only. |
 
-`--u-md` is the floor for any label a reader is expected to actually read. The overture's
-ambient wayfinding — movement key, scroll cue, movement handoff — and the rail's chapter
-numeral sit below the floor deliberately: they are atmosphere, not content, and enlarging
-them competes with the opening composition.
+`--u-md` is the floor for any label a reader is expected to actually read, with no
+exceptions. **This reverses an earlier decision** recorded here, which exempted the
+overture's wayfinding — movement key, scroll cue, movement handoff — and the rail's chapter
+numeral as "atmosphere, not content," and retires `--u-sm` along with it.
+
+The exemption did not survive contact with the rendered page. Those elements were running
+at .52–.6rem, or 8.3–9.6px. They are not atmosphere: the movement key is the only thing
+telling a first-time reader what the site contains, the scroll cue is the only instruction
+for how to operate it, and the rail chapter is the only position indicator. All three are
+wayfinding, which is content. A floor with an exception below it is not a floor, and
+`--u-sm` had exactly one remaining user by the end.
+
+Smallest text on the page is now 10.48px, previously 8.3px.
 
 **Body measure: 65–75 characters, for long-form reading text only.** This governs
 `.body-copy` and any future sustained passage. It does not govern annotation, reference,
@@ -206,4 +235,15 @@ camera grammar, calibrated cost, seams, and content legibility are explicitly ap
 
 The opening, right-edge rail, editorial landing, career measures, systems voices,
 experiments, personal ensemble, and coda now form the desktop production foundation.
-Iterate desktop motion and content first; mobile remains intentionally deferred.
+Iterate desktop motion and content first; mobile layout remains intentionally deferred.
+
+**Mobile status, measured at 375×812.** It degrades correctly rather than being designed:
+no horizontal overflow, the Movement II pin disables, measures stack, and the rail, key,
+and progression hide. Touch controls now get a 44px hit area via a `(pointer: coarse)`
+overlay — layout-neutral, since padding would pull the passage toggle's staff line off its
+note head. The desktop pane cannot match `(pointer: coarse)`, so that rule is verified by
+geometry and by rule inspection, not on a real device; check it on hardware before launch.
+
+Known and unfixed: with the rail hidden on mobile *and* the native scrollbar suppressed
+site-wide (`scrollbar-width: none`), a phone reader gets no scroll position feedback at all
+on a 17,900px page. That is the one mobile gap worth closing before this is public.
