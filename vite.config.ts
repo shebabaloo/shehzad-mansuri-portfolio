@@ -39,6 +39,18 @@ const siteUrl = (): Plugin => {
 
 export default defineConfig({
   plugins: [react(), tailwindcss(), siteUrl()],
+  /**
+   * Where the site sits on its host, which is not always the root.
+   *
+   * A custom domain serves from "/" and needs nothing. GitHub Pages without one serves
+   * from "/<repo>/", and every hashed asset URL is written at build time — so a bundle
+   * built for "/" requests /assets/index-abc.js, gets the 404 page, and renders blank.
+   * Nothing in the app reports this; the page is simply empty.
+   *
+   * Set BASE_PATH to "/<repo>/" (leading and trailing slash) for that case, and drop it
+   * again once a domain points at the root.
+   */
+  base: process.env.BASE_PATH || '/',
   resolve: {
     alias: { '@': path.resolve(__dirname, './src') },
   },
