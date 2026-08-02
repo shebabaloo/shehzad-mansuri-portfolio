@@ -64,7 +64,11 @@ const variations = [
     number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
     copy: 'Millions of tons of specialty crops go unharvested every year, and the gap is never the robots—it is everything around them. A four-day answer: the problem taken apart, a response scoped, and what execution and financial strategy would have to look like, then pitched.',
-    passage: 'The platform was aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for. A concept and an argument, built in a week that did not have one.',
+    passage: 'A Human-Machine Fleet Intelligence Platform, aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for. A concept and an argument, built in a week that did not have one.',
+    // Shehzad's own public LinkedIn post about SUD '26. Set the URL to make the link
+    // render; it is intentionally null rather than a placeholder so nothing broken ships.
+    source: null as string | null,
+    sourceLabel: 'Read the post',
   },
   {
     number: 'Variation II', title: 'Restaurant / Café Ranker', status: 'In the sketchbook',
@@ -318,6 +322,11 @@ export function ScoreBody() {
               <div><h3>{variation.title}</h3><p className="variation__question">{variation.question}</p></div>
               <div>
                 <p className="variation__copy">{variation.copy}</p>
+                {variation.source && (
+                  <a className="variation__source" href={variation.source} target="_blank" rel="noreferrer">
+                    {variation.sourceLabel} <span aria-hidden="true">↗</span>
+                  </a>
+                )}
                 {variation.passage && (
                   <>
                     <PassageToggle

@@ -197,3 +197,13 @@
 .counterpoint__check em { color: var(--ink); font-style: normal; }
 
 .coda__honest { max-width: 46ch; margin: 2.5rem 0 0; color: oklch(72% .02 78); font: 300 .92rem/1.8 var(--body); }
+
+/* Source link on a variation. Present only where the claim has a public artifact behind
+   it, which is what keeps Groundwork evidence rather than assertion. */
+.variation__source {
+  display: inline-block; margin-top: 1.5rem; padding-bottom: .35rem;
+  border-bottom: 1px solid var(--coral); text-decoration: none;
+  color: var(--ink); font: 400 var(--u-md) var(--utility);
+  letter-spacing: .08em; text-transform: uppercase;
+}
+.variation__source span { color: var(--coral); }
