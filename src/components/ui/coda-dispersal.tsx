@@ -1,39 +1,40 @@
 import { useEffect, useRef } from 'react'
 
 /**
- * The Coda's closing gesture: note heads leaving the staff and dispersing off the right
- * edge, generated continuously rather than played once.
- *
- * This is the opening run backwards. The overture gathers a scattered particle field into a
- * staff; the Coda lets that staff go again, under the line that says the next movement is
- * still unwritten. The words and the image are making the same claim.
- *
- * Deliberately not a spray of musical glyphs. DESIGN.md lists music-note clip art as an
- * anti-pattern, and the reason holds: the clef and note heads already on this site read as
- * notation because they are typographic marks used sparingly. A field of sharps, flats, and
- * beamed quavers would read as decoration, and it would outrank the copy — which in the
- * Coda is the whole point of the section. So: note heads only, the same rotated ellipse the
- * passage toggle and the score rail already use, at low alpha, in the palette's own coral
- * and brass.
+ * Musical notes dispersing rightward from the Coda — eighths, quarters, halves, and lone
+ * heads, each with a properly oriented stem and (for eighths) a flag. Low alpha, coral and
+ * brass only, so notation reads as texture rather than clip-art.
  *
  * Perpetual, so the cost matters. A fixed pool is recycled rather than allocated per frame,
  * the loop is suspended by IntersectionObserver whenever the Coda is off screen, and
- * prefers-reduced-motion renders one still frame and stops. Nothing here is scroll-linked,
- * so it never contends with ScrollTrigger.
+ * prefers-reduced-motion renders one still frame and stops.
  */
 
 const POOL = 96
-const FOCUS_X = 0.12 // the vanishing point the notes leave from, in canvas widths
+const FOCUS_X = 0.38
 const FOCUS_Y = 0.5
+const STAFF_LINES = 5
+const STAFF_INITIAL = 5     // half-spread at x=0, in CSS px — tight bundle
+const STAFF_FAN = 0.34       // half-spread at x=width, as fraction of canvas height
+
+type Kind = 'eighth' | 'quarter' | 'half' | 'head'
+
+const KINDS: Kind[] = [
+  'eighth','eighth','eighth','eighth','eighth','eighth','eighth',
+  'quarter','quarter','quarter','quarter','quarter','quarter',
+  'half','half',
+  'head','head','head',
+]
 
 type Note = {
-  life: number      // 0 at the focus, 1 once it has cleared the right edge
+  life: number
   speed: number
-  spread: number    // vertical divergence, signed
+  spread: number
   size: number
   tilt: number
-  ring: boolean     // hollow note head rather than filled
-  warm: boolean     // brass rather than coral
+  kind: Kind
+  flip: boolean     // stem down from left edge rather than up from right
+  warm: boolean
   wobble: number
 }
 
@@ -43,7 +44,8 @@ const seed = (note: Note, atBirth: boolean) => {
   note.spread = (Math.random() - 0.5) * 0.9
   note.size = 2.4 + Math.random() * 4.4
   note.tilt = -22 + (Math.random() - 0.5) * 26
-  note.ring = Math.random() < 0.28
+  note.kind = KINDS[Math.floor(Math.random() * KINDS.length)]
+  note.flip = Math.random() < 0.42
   note.warm = Math.random() < 0.42
   note.wobble = Math.random() * Math.PI * 2
 }
@@ -78,41 +80,115 @@ export function CodaDispersal() {
       return note
     })
 
+    const drawNote = (
+      x: number, y: number, note: Note, alpha: number,
+    ) => {
+      const r = note.size * (0.55 + note.life * 0.9)
+      const hue = note.warm ? '188, 151, 105' : '243, 94, 61'
+      const rgba = `rgba(${hue}, ${alpha})`
+      const stemH = r * 3.6
+      const tiltRad = (note.tilt * Math.PI) / 180
+
+      ctx.save()
+      ctx.translate(x, y)
+
+      // Head — tilted ellipse. The tilt follows notation convention: the head
+      // leans, but the stem stays vertical.
+      ctx.save()
+      ctx.rotate(tiltRad)
+      ctx.beginPath()
+      ctx.ellipse(0, 0, r, r * 0.68, 0, 0, Math.PI * 2)
+      if (note.kind === 'half') {
+        ctx.strokeStyle = rgba
+        ctx.lineWidth = r * 0.28
+        ctx.stroke()
+      } else {
+        ctx.fillStyle = rgba
+        ctx.fill()
+      }
+      ctx.restore()
+
+      // Stem — vertical line from head edge. flip = stem down from left edge.
+      if (note.kind !== 'head') {
+        const edgeX = note.flip ? -Math.cos(tiltRad) * r : Math.cos(tiltRad) * r
+        const edgeY = note.flip ? Math.sin(tiltRad) * r : -Math.sin(tiltRad) * r
+        const tipX = edgeX
+        const tipY = note.flip ? edgeY + stemH : edgeY - stemH
+        ctx.beginPath()
+        ctx.moveTo(edgeX, edgeY)
+        ctx.lineTo(tipX, tipY)
+        ctx.strokeStyle = rgba
+        ctx.lineWidth = r * 0.22
+        ctx.stroke()
+
+        // Flag — quadratic curve for eighth notes
+        if (note.kind === 'eighth') {
+          const dir = note.flip ? 1 : -1
+          ctx.beginPath()
+          ctx.moveTo(tipX, tipY)
+          ctx.quadraticCurveTo(
+            tipX + r * 1.6, tipY - dir * stemH * 0.35,
+            tipX + r * 0.6, tipY - dir * stemH * 0.62,
+          )
+          ctx.strokeStyle = rgba
+          ctx.lineWidth = r * 0.2
+          ctx.stroke()
+        }
+      }
+
+      ctx.restore()
+    }
+
+    let time = 0
+
+    const drawStaff = () => {
+      const cy = height * FOCUS_Y
+      const maxSpread = height * STAFF_FAN
+      const segments = 80
+
+      for (let i = 0; i < STAFF_LINES; i++) {
+        const norm = (i - (STAFF_LINES - 1) / 2) / ((STAFF_LINES - 1) / 2)
+
+        ctx.beginPath()
+        for (let s = 0; s <= segments; s++) {
+          const t = s / segments
+          const x = t * width
+
+          const spread = STAFF_INITIAL + (maxSpread - STAFF_INITIAL) * t * t
+          const baseY = cy + norm * spread
+
+          const waveAmp = (2 + t * 10) * t
+          const wave = Math.sin(x * 0.007 + time * 0.55 + i * 1.3) * waveAmp
+
+          const y = baseY + wave
+          if (s === 0) { ctx.moveTo(x, y) } else { ctx.lineTo(x, y) }
+        }
+
+        ctx.strokeStyle = 'rgba(188, 151, 105, 0.2)'
+        ctx.lineWidth = 0.8
+        ctx.stroke()
+      }
+    }
+
     const draw = () => {
       ctx.clearRect(0, 0, width, height)
+      drawStaff()
+
       const fx = width * FOCUS_X
       const fy = height * FOCUS_Y
 
       for (const note of notes) {
-        // Travel accelerates with distance, so notes leave the focus slowly and stretch out
-        // as they go — the divergence reads as depth rather than as a uniform conveyor.
         const eased = note.life * note.life
         const x = fx + eased * (width - fx) * 1.15
         const y = fy + eased * note.spread * height * 0.62
           + Math.sin(note.wobble + note.life * 3.2) * 6 * note.life
 
-        // Fade in off the focus, hold, then fade out before the edge so nothing pops.
         const fadeIn = Math.min(1, note.life / 0.14)
         const fadeOut = 1 - Math.max(0, (note.life - 0.62) / 0.38)
         const alpha = fadeIn * fadeOut * 0.5
 
         if (alpha > 0.004 && x < width + 20) {
-          const r = note.size * (0.55 + note.life * 0.9)
-          ctx.save()
-          ctx.translate(x, y)
-          ctx.rotate((note.tilt * Math.PI) / 180)
-          ctx.beginPath()
-          ctx.ellipse(0, 0, r, r * 0.72, 0, 0, Math.PI * 2)
-          const hue = note.warm ? '188, 151, 105' : '243, 94, 61'
-          if (note.ring) {
-            ctx.strokeStyle = `rgba(${hue}, ${alpha})`
-            ctx.lineWidth = 1
-            ctx.stroke()
-          } else {
-            ctx.fillStyle = `rgba(${hue}, ${alpha})`
-            ctx.fill()
-          }
-          ctx.restore()
+          drawNote(x, y, note, alpha)
         }
       }
     }
@@ -124,6 +200,7 @@ export function CodaDispersal() {
       // returning does not jump the whole field forward at once.
       const dt = Math.min((now - last) / 1000, 0.05)
       last = now
+      time += dt
       for (const note of notes) {
         note.life += note.speed * dt
         if (note.life >= 1) seed(note, false)

@@ -18,7 +18,13 @@ const career = [
     beats: [
       'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for 200+ stakeholders tracking a $60B+ investment portfolio.',
       'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, 50+ stakeholder journeys, prototypes, user testing, and tangible enhancements shipped to production apps.',
-      'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
+      'Owned the roadmap, releases, and documentation for a four-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
+    ],
+    passage: [
+      'The site-selection platform did not exist when I arrived. The portfolio lived in sixteen spreadsheets, and no two people read them the same way. Concept to production took three weeks—which sounds like speed and was really scope discipline: deciding, early and out loud, what the first version would refuse to do.',
+      'The program underneath it was built from zero at the same time. Four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, a decision log separating MVP from V1, and a standing cadence—so that four groups moving at once stayed legible to each other rather than merely busy.',
+      'A separate product ran alongside it: a four-module financial platform tracking $20B+ in spend, where I owned the roadmap, the releases, and the documentation, and covered the client program manager through a ninety-day absence.',
+      'What connected them was the practice rather than the subject matter—proprietary AI tooling used to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing. It compressed the distance between a question and something real enough to react to.',
     ],
   },
   {
@@ -30,6 +36,11 @@ const career = [
     beats: [
       'Led a workstream with three client privacy managers, facilitating roadmap reviews across 140+ GenAI product releases.',
       'Synthesized risk trends and briefed 40+ product, legal, and policy stakeholders to align on roadmap and mitigation.',
+    ],
+    passage: [
+      'GenAI products ship fast and privacy reviews do not. The tension is structural: product teams measure in sprints, legal measures in precedent, and privacy measures in risk that compounds quietly. My job was to make those three clocks legible to each other.',
+      'In practice that meant triaging 140+ releases for pattern rather than only for compliance—noticing where the same question kept surfacing across different products, and which mitigations could be shared instead of rebuilt each time.',
+      'The briefings were not status updates. They were trend synthesis: turning individual review outcomes into a picture of where the portfolio was heading, early enough that something could still change.',
     ],
   },
   {
@@ -43,6 +54,11 @@ const career = [
       'Supported a $2M ERP MVP through user stories, RAID log, and status reporting for an entertainment client.',
       'Documented supplier scope for a Medicare divestiture, keeping compliance intact through the transition.',
     ],
+    passage: [
+      'Three industries in twelve months, and the hardest part was never the framework. It was working out which questions matter in a domain you are still learning.',
+      'In cybersecurity the question was sizing—where a $10M+ opportunity actually sits across customer-partner and outcomes programs. In entertainment it was execution: carrying a $2M ERP MVP through user stories, a RAID log, and the status reporting that keeps a build honest. In healthcare it was compliance—documenting supplier scope for a Medicare divestiture without breaking the regulatory chain.',
+      'Each asked for a different kind of rigor. The through-line was learning to ask before reaching for a template.',
+    ],
   },
 ]
 
@@ -51,13 +67,21 @@ const systems = [
     number: '01', title: 'Second Brain', status: 'Active pattern',
     copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two—and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     principle: 'Context → synthesis → next move',
-    passage: 'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative. It prepares a meeting by answering what changed and what remains unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart. Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
+    passage: [
+      'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative.',
+      'It prepares a meeting by answering what changed and what is still unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart.',
+      'Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
+    ],
   },
   {
     number: '02', title: 'Team Third Brain', status: 'Active pattern',
     copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. So the verified, team-relevant part of that context was promoted into shared ground—decisions, ownership, milestones, risks—and the agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members.',
     principle: 'Individual context ↔ shared clarity',
-    passage: 'Private context stays private; only what the team has agreed on is promoted. It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without operating it themselves. What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
+    passage: [
+      'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
+      'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without having to operate it themselves.',
+      'What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
+    ],
   },
 ]
 
@@ -66,7 +90,10 @@ const variations = [
     number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
     copy: 'Millions of tons of specialty crops go unharvested every year, and the gap is never the robots—it is everything around them. A four-day answer: the problem taken apart, a response scoped, and what execution and financial strategy would have to look like, then pitched.',
-    passage: 'A Human-Machine Fleet Intelligence Platform, aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for. A concept and an argument, built in a week that did not have one.',
+    passage: [
+      'A Human-Machine Fleet Intelligence Platform, aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for.',
+      'A concept and an argument, built in a week that did not have one.',
+    ],
     // Shehzad's own public LinkedIn post about SUD '26. Tracking parameters stripped:
     // utm_* are share attribution, and rcm= is a member token tied to his account.
     source: 'https://www.linkedin.com/posts/shehzadmansuri_figured-this-was-a-good-time-to-startup-ugcPost-7456178859080708096-iNgw/',
@@ -89,27 +116,70 @@ const interests = [
     id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
     copy: 'Fiction for scale. Philosophy for friction. Notes for everything I’m not done thinking about.',
     items: ['The Way of Kings', 'The Myth of Sisyphus', 'Meditations'],
-    passage: 'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed; the shelf has. Percy Jackson told me what a hero was and Sydney Carton complicated it. In *Lord of the Flies* I was less interested in whether people are inherently good or evil than in Simon, whose kindness failed not because goodness is powerless but because he was never charismatic enough to be heard. Now it is *The Way of Kings* and *Meditations*—one for scale, one for friction. Each is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
+    passage: [
+      'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed. The shelf has.',
+      'Percy Jackson told me what a hero was and Sydney Carton complicated it. In *Lord of the Flies* I was less interested in whether people are inherently good or evil than in Simon, whose kindness failed not because goodness is powerless but because he was never charismatic enough to be heard.',
+      'Now it is *The Way of Kings* and *Meditations*—one for scale, one for friction. Each is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
+    ],
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
     copy: 'What they share is authorship—somebody chose the color of that field, the length of that silence. The same taste that produced the site you are scrolling, pointed at a different medium.',
     items: ['The Last of Us', 'Ghost of Tsushima', 'Final Fantasy VII'],
-    passage: 'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back. I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
+    passage: [
+      'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
+      'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
+    ],
   },
   {
     id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
     copy: 'The gym most weeks, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
     items: ['Volleyball', 'Gym', 'Cycling'],
-    passage: 'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way. What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
+    passage: [
+      'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way.',
+      'What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
+    ],
   },
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
     copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which plays either part: the floor or the melody, depending on what the room needs.',
     items: ['Bass clarinet', 'Orchestral & jazz', 'Piano'],
-    passage: 'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate. What I remember is not any performance—it is the rehearsals, working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
+    passage: [
+      'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
+      'What I remember is not any performance. It is the rehearsals—working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
+    ],
   },
 ]
+
+/* Ids reach the DOM from display strings like "Variation I", and an id may not contain
+   whitespace — an invalid id silently breaks the aria-controls link between a toggle and
+   the region it opens, which is exactly the wiring a screen reader depends on. */
+const slug = (value: string) => value.toLowerCase().replace(/[^a-z0-9]+/g, '-')
+
+/* Passages are authored as arrays of paragraphs rather than one block: these are arguments
+   in stages, and a reader who opens a disclosure should be able to see the stages. Titles
+   are marked with *asterisks* in the source and set in italic here. */
+const renderEmphasis = (text: string) =>
+  text.split(/(\*[^*]+\*)/).map((part, i) =>
+    part.startsWith('*') && part.endsWith('*')
+      ? <em key={i}>{part.slice(1, -1)}</em>
+      : part,
+  )
+
+function Passage({ id, open, label, paragraphs }: {
+  id: string
+  open: boolean
+  label: string
+  paragraphs: string[]
+}) {
+  return (
+    <div className="passage" id={id} data-open={open} role="region" aria-label={label}>
+      <div className="passage__inner">
+        {paragraphs.map((paragraph, i) => <p key={i}>{renderEmphasis(paragraph)}</p>)}
+      </div>
+    </div>
+  )
+}
 
 function SectionStaff() {
   return (
@@ -269,6 +339,33 @@ export function ScoreBody() {
             </div>
           </div>
         </div>
+
+        <div className="career-passages" data-score-reveal>
+          {career.map((entry, index) => (
+            <div className="career-passage-card" key={`passage-${entry.period}-${entry.team}`}>
+              <div className="career-passage-card__header">
+                <span className="career-passage-card__mark">{String.fromCharCode(65 + index)}</span>
+                <div>
+                  <p>{entry.role}</p>
+                  <span>{entry.team}</span>
+                </div>
+              </div>
+              <PassageToggle
+                id={`career-${String.fromCharCode(65 + index)}-passage`}
+                open={openPassage === `career-${index}`}
+                onToggle={() => setOpenPassage(openPassage === `career-${index}` ? null : `career-${index}`)}
+                label="Read the full measure"
+                openLabel="Close the measure"
+              />
+              <Passage
+                id={`career-${String.fromCharCode(65 + index)}-passage`}
+                open={openPassage === `career-${index}`}
+                label={`${entry.role}, full passage`}
+                paragraphs={entry.passage}
+              />
+            </div>
+          ))}
+        </div>
       </section>
 
       <section className="score-section systems-movement" id="systems" aria-labelledby="systems-title">
@@ -293,9 +390,12 @@ export function ScoreBody() {
                   label="Read the mechanics"
                   openLabel="Close the mechanics"
                 />
-                <div className="passage" id={`system-${number}-passage`} data-open={openPassage === `system-${number}`} role="region" aria-label={`${title}, mechanics`}>
-                  <div className="passage__inner"><p>{passage}</p></div>
-                </div>
+                <Passage
+                  id={`system-${number}-passage`}
+                  open={openPassage === `system-${number}`}
+                  label={`${title}, mechanics`}
+                  paragraphs={passage}
+                />
               </div>
               <strong>{principle}</strong>
             </article>
@@ -335,13 +435,16 @@ export function ScoreBody() {
                 {variation.passage && (
                   <>
                     <PassageToggle
-                      id={`${variation.number}-passage`}
+                      id={`${slug(variation.number)}-passage`}
                       open={openPassage === variation.number}
                       onToggle={() => setOpenPassage(openPassage === variation.number ? null : variation.number)}
                     />
-                    <div className="passage" id={`${variation.number}-passage`} data-open={openPassage === variation.number} role="region" aria-label={`${variation.title}, full passage`}>
-                      <div className="passage__inner"><p>{variation.passage}</p></div>
-                    </div>
+                    <Passage
+                      id={`${slug(variation.number)}-passage`}
+                      open={openPassage === variation.number}
+                      label={`${variation.title}, full passage`}
+                      paragraphs={variation.passage}
+                    />
                   </>
                 )}
               </div>
@@ -369,15 +472,12 @@ export function ScoreBody() {
                       open={openPassage === interest.id}
                       onToggle={() => setOpenPassage(openPassage === interest.id ? null : interest.id)}
                     />
-                    <div className="passage" id={`${interest.id}-passage`} data-open={openPassage === interest.id} role="region" aria-label={`${interest.label}, full passage`}>
-                      <div className="passage__inner">
-                        <p>{interest.passage.split(/(\*[^*]+\*)/).map((part, i) =>
-                          part.startsWith('*') && part.endsWith('*')
-                            ? <em key={i}>{part.slice(1, -1)}</em>
-                            : part,
-                        )}</p>
-                      </div>
-                    </div>
+                    <Passage
+                      id={`${interest.id}-passage`}
+                      open={openPassage === interest.id}
+                      label={`${interest.label}, full passage`}
+                      paragraphs={interest.passage}
+                    />
                   </>
                 )}
               </div>
@@ -395,12 +495,18 @@ export function ScoreBody() {
           <h2 id="coda-title">The next movement is <em>still unwritten.</em></h2>
           <p>If any of this sounds like a conversation worth having, say hello.</p>
           <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years; the first is what I am building toward.</p>
-          <nav aria-label="Contact and resume links">
-            <MailLink>Email <span>↗</span></MailLink>
-            <a href="https://www.linkedin.com/in/shehzadmansuri/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
-            <a href="#first-movement">Return to the score <span>↑</span></a>
-          </nav>
-          <strong>— Shez<span>.</span></strong>
+          {/* The sign-off shares the nav's row rather than sitting a screen below it. It is
+              the same gesture a score uses: the composer's name sits on the final system,
+              not on a page of its own. Collapsing the two rows is also what lets the whole
+              Coda — label through signature — frame in a single viewport. */}
+          <div className="coda__close">
+            <nav aria-label="Contact and resume links">
+              <MailLink>Email <span>↗</span></MailLink>
+              <a href="https://www.linkedin.com/in/shehzadmansuri/" target="_blank" rel="noreferrer">LinkedIn <span>↗</span></a>
+              <a href="#first-movement">Return to the score <span>↑</span></a>
+            </nav>
+            <strong>— Shez<span>.</span></strong>
+          </div>
         </div>
       </section>
     </div>

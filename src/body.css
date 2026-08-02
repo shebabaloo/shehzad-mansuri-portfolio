@@ -45,6 +45,14 @@
 .career-measure__score li { position: relative; padding: 1.1rem 0 1.1rem 2rem; border-bottom: 1px solid oklch(48% .045 60 / .18); color: var(--ink-soft); font: 300 .88rem/1.65 var(--body); }
 .career-measure__score li::before { content: ""; position: absolute; left: 0; top: 1.7rem; width: .75rem; height: 1px; background: var(--coral); }
 
+.career-passages { width: min(100%, 84rem); margin: 0 auto; padding-top: clamp(4rem, 7vw, 6rem); display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(2rem, 3vw, 3rem); }
+.career-passage-card { position: relative; padding: 1.5rem 0 0; border-top: 1px solid oklch(48% .045 60 / .28); }
+.career-passage-card__header { display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.25rem; }
+.career-passage-card__mark { display: grid; place-items: center; width: 1.8rem; aspect-ratio: 1; flex-shrink: 0; border: 1px solid var(--coral); font: 400 .65rem var(--utility); }
+.career-passage-card__header > div > p { margin: 0; font: 400 var(--u-md) var(--utility); letter-spacing: .06em; }
+.career-passage-card__header > div > span { display: block; margin-top: .25rem; color: var(--coral-ink); font: 300 var(--u-md) var(--utility); letter-spacing: .06em; }
+@media (max-width: 860px) { .career-passages { grid-template-columns: 1fr; gap: 0; } }
+
 .systems-movement { background: linear-gradient(to bottom, var(--paper) 0, var(--paper-deep) 12rem, var(--paper-deep) calc(100% - 12rem), var(--paper) 100%); }
 .counterpoint { position: relative; width: min(100%, 84rem); margin: 0 auto; border-top: 1px solid oklch(48% .045 60 / .28); }
 /* Rows vary from one line to five bullets, so breathing room comes from real padding
@@ -96,28 +104,31 @@
    18rem, just inside the 19rem floor of the padding below, so every line of the coda sits on
    a settled field at any viewport. The transition reads faster, which is also better: the
    gradient is the approach, and the words land after dark. */
-.coda { position: relative; min-height: 130svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(10rem, 15vw, 15rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
-/* The dispersal occupies the right half only. The copy has the left, and the notes leave
-   from a focus just inside the canvas — so the field reads as coming off the end of the
-   staff rather than as a texture laid over the whole section. */
+/* Top padding stays at or above 19rem: the gradient resolves to night at 18rem, and every
+   line of the Coda has to sit on solid night to hold contrast. The bottom is free to close
+   up, and does — it is what lets the section rest inside one viewport. */
+.coda { position: relative; min-height: 100svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(6rem, 8vw, 9rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
+/* Full-width canvas: the staff lines fan from a tight bundle on the left into an open
+   funnel on the right, and the notes disperse through the widening space. The canvas
+   replaces the static SectionStaff in the Coda. */
 .coda-dispersal {
-  position: absolute; z-index: 1; right: 0; top: 50%; width: 62%; height: min(46rem, 70%);
-  transform: translateY(-50%); pointer-events: none;
+  position: absolute; z-index: 1; inset: 0; width: 100%; height: 100%;
+  pointer-events: none;
 }
-@media (max-width: 860px) { .coda-dispersal { width: 100%; opacity: .55; } }
-
-.coda .section-staff { top: 50%; opacity: .3; transform: translateY(-50%); }
-.coda .section-staff path { stroke: var(--brass); }
+@media (max-width: 860px) { .coda-dispersal { opacity: .5; } }
+.coda .section-staff { display: none; }
 .coda__inner { position: relative; z-index: 2; width: min(100%, 76rem); }
-.coda__inner > p:first-child { margin: 0 0 3rem; color: var(--coral); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
+.coda__inner > p:first-child { margin: 0 0 2.25rem; color: var(--coral); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
 .coda h2 { max-width: 11ch; margin: 0; font: 400 clamp(4.2rem, 8vw, 9rem)/.84 var(--display); letter-spacing: -.06em; }
 .coda h2 em { color: var(--coral); font-weight: 400; }
-.coda h2 + p { max-width: 43ch; margin: clamp(2rem, 3.5vw, 2.75rem) 0 0; color: oklch(82% .022 78); font: 300 1.05rem/1.7 var(--body); }
-.coda nav { display: flex; flex-wrap: wrap; gap: clamp(1.75rem, 4vw, 3.25rem); row-gap: 1.25rem; margin-top: clamp(3.5rem, 6vw, 5.25rem); }
+.coda h2 + p { max-width: 43ch; margin: clamp(1.5rem, 2.4vw, 2.25rem) 0 0; color: oklch(82% .022 78); font: 300 1.05rem/1.7 var(--body); }
+/* Links left, signature right, sharing one baseline. */
+.coda__close { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 2rem 3rem; margin-top: clamp(2.5rem, 3.6vw, 3.25rem); }
+.coda nav { display: flex; flex-wrap: wrap; gap: clamp(1.75rem, 4vw, 3.25rem); row-gap: 1.25rem; }
 .coda nav a { padding-bottom: .6rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .coda nav a span { color: var(--coral); }
-.coda__inner > strong { display: block; margin-top: clamp(5rem, 9vw, 8rem); font: 400 clamp(2rem, 4vw, 4rem) var(--display); }
-.coda__inner > strong span { color: var(--coral); }
+.coda__close > strong { flex-shrink: 0; margin: 0; font: 400 clamp(2rem, 3.4vw, 3.25rem) var(--display); line-height: 1; }
+.coda__close > strong span { color: var(--coral); }
 [data-score-reveal], [data-measure-reveal] { will-change: transform, opacity; }
 
 /* Movement II reads horizontally: the measures sit side by side on one pinned staff and
@@ -205,6 +216,13 @@
   opacity: 0; transform: translateY(.6rem);
   transition: opacity .3s var(--ease-enter) .08s, transform .3s var(--ease-enter) .08s;
 }
+/* Within a passage the paragraphs are one argument in stages, not separate blocks, so
+   they sit closer than the 2rem that separates the passage from its toggle. Each one
+   arrives a beat after the last rather than all at once. */
+.passage__inner > p + p { margin-top: 1.15rem; }
+.passage__inner > p:nth-child(2) { transition-delay: .14s; }
+.passage__inner > p:nth-child(3) { transition-delay: .2s; }
+.passage__inner > p:nth-child(n+4) { transition-delay: .26s; }
 .passage[data-open="true"] .passage__inner > p { opacity: 1; transform: none; }
 
 @media (prefers-reduced-motion: reduce) {
@@ -223,7 +241,7 @@
 /* The invitation and the confession do different jobs, so they are separated rather than
    stacked at the same weight. A short brass rule marks this one as an aside — notation,
    not a decorative side stripe: it sits above the text, not alongside it. */
-.coda__honest { position: relative; max-width: 50ch; margin: clamp(3rem, 5vw, 4rem) 0 0; padding-top: 1.6rem; color: oklch(66% .018 76); font: 300 .88rem/1.85 var(--body); }
+.coda__honest { position: relative; max-width: 58ch; margin: clamp(2.25rem, 3.2vw, 3rem) 0 0; padding-top: 1.4rem; color: oklch(66% .018 76); font: 300 .88rem/1.75 var(--body); }
 .coda__honest::before { content: ""; position: absolute; top: 0; left: 0; width: 3.25rem; height: 1px; background: var(--brass); opacity: .7; }
 
 /* Source link on a variation. Present only where the claim has a public artifact behind
