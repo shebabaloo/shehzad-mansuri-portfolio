@@ -88,7 +88,7 @@ const systems = [
     principle: 'Individual context ↔ shared clarity',
     passage: [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
-      'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without having to operate it themselves.',
+      'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—and it delivers them on a schedule, into the chats and documents people already work in, so they benefit from it without ever having to operate it themselves.',
       'What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
       'What I am building now is the push and the pull. Each person’s brain contributes what the rest of the team needs to know, and draws back what has changed elsewhere—so the shared context stays current and aware of itself, rather than waiting for someone to go collect it.',
     ],
@@ -291,25 +291,37 @@ const systemDiagrams = {
     ),
   },
   share: {
-    label: 'Several brains pushing into and pulling from one shared team context',
+    label:
+      'Several brains pushing into and pulling from one shared team context, which in turn '
+      + 'delivers on a schedule into the chats, documents and inboxes people already work in',
     art: (
       <>
         {[40, 100, 160].map((x) => (
           <g key={x}>
-            <circle cx={x} cy="26" r="11" />
-            <circle cx={x} cy="26" r="2.5" />
+            <circle cx={x} cy="20" r="10" />
+            <circle cx={x} cy="20" r="2.5" />
             {/* push: down into shared ground */}
-            <path d={`M${x - 5} 39v54`} />
-            <path d={`M${x - 8.5} 88l3.5 5 3.5-5`} />
+            <path d={`M${x - 5} 32v40`} />
+            <path d={`M${x - 8.5} 67l3.5 5 3.5-5`} />
             {/* pull: back up, carrying what changed elsewhere */}
-            <path d={`M${x + 5} 93V39`} />
-            <path d={`M${x + 1.5} 44l3.5-5 3.5 5`} />
+            <path d={`M${x + 5} 72V32`} />
+            <path d={`M${x + 1.5} 37l3.5-5 3.5 5`} />
           </g>
         ))}
         <g className="system-diagram__focus">
-          <rect x="18" y="98" width="164" height="26" rx="3" />
-          <path d="M30 111h28M86 111h28M142 111h20" />
+          <rect x="18" y="76" width="164" height="24" rx="3" />
+          <path d="M30 88h28M86 88h28M142 88h20" />
+          {/* and out again: the shared ground delivers rather than merely storing */}
+          <path d="M100 100v16" />
+          <path d="M100 116L48 138M100 116v22M100 116l52 22" />
+          <path d="M52.1 132.4L48 138l6.9.9" />
+          <path d="M96.5 132.5L100 138l3.5-5.5" />
+          <path d="M147.9 132.4L152 138l-6.9.9" />
         </g>
+        {/* the places the work actually lands */}
+        <rect x="35" y="138" width="26" height="13" rx="2" />
+        <rect x="87" y="138" width="26" height="13" rx="2" />
+        <rect x="139" y="138" width="26" height="13" rx="2" />
       </>
     ),
   },
@@ -318,7 +330,7 @@ const systemDiagrams = {
 function SystemDiagram({ kind }: { kind: keyof typeof systemDiagrams }) {
   const { label, art } = systemDiagrams[kind]
   return (
-    <svg className="system-diagram" viewBox="0 0 200 140" role="img" aria-label={label}>
+    <svg className="system-diagram" viewBox={kind === 'share' ? '0 0 200 158' : '0 0 200 140'} role="img" aria-label={label}>
       {art}
     </svg>
   )
