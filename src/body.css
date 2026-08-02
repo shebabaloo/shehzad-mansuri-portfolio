@@ -135,7 +135,16 @@
 /* Top padding stays at or above 19rem: the gradient resolves to night at 18rem, and every
    line of the Coda has to sit on solid night to hold contrast. The bottom is free to close
    up, and does — it is what lets the section rest inside one viewport. */
-.coda { position: relative; min-height: 100svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(6rem, 8vw, 9rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
+/* Whether the whole Coda lands in the final frame reduces to one inequality: the viewport
+   has to be at least as tall as the content plus the bottom padding. At 8vw that padding
+   reached 128px against 638px of content, so anything shorter than a 766px window cut the
+   label off the top — which is most laptops once browser chrome is subtracted. At 3vw the
+   requirement drops to about 686px.
+   The top padding stops chasing the viewport width for the same reason: the gradient
+   resolves to night at 18rem no matter how wide the window is, so 24vw was adding dead
+   height on large monitors to no purpose. It still floors at 19rem, which is what keeps
+   every line of the Coda on solid night. */
+.coda { position: relative; min-height: 100svh; padding: clamp(19rem, 20vw, 20rem) max(2rem, 5vw) clamp(2.5rem, 3vw, 3.5rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
 /* Full-width canvas: the staff lines fan from a tight bundle on the left into an open
    funnel on the right, and the notes disperse through the widening space. The canvas
    replaces the static SectionStaff in the Coda. */
@@ -190,7 +199,7 @@
      left: the block measured 734px against an 812px viewport, and 96px of padding pushed
      the "Coda" label 18px above the fold. Closing it up lets the section frame whole here
      the same way it does on a desktop. */
-  .coda { padding-bottom: 4rem; }
+  .coda { padding-bottom: 3rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {
