@@ -93,11 +93,11 @@
 .coda__inner > p:first-child { margin: 0 0 3rem; color: var(--coral); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
 .coda h2 { max-width: 11ch; margin: 0; font: 400 clamp(4.2rem, 8vw, 9rem)/.84 var(--display); letter-spacing: -.06em; }
 .coda h2 em { color: var(--coral); font-weight: 400; }
-.coda h2 + p { max-width: 43ch; margin: 3rem 0; color: oklch(80% .02 78); font: 300 1rem/1.7 var(--body); }
-.coda nav { display: flex; gap: 2.5rem; }
-.coda nav a { padding-bottom: .45rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
+.coda h2 + p { max-width: 43ch; margin: clamp(2rem, 3.5vw, 2.75rem) 0 0; color: oklch(82% .022 78); font: 300 1.05rem/1.7 var(--body); }
+.coda nav { display: flex; flex-wrap: wrap; gap: clamp(1.75rem, 4vw, 3.25rem); row-gap: 1.25rem; margin-top: clamp(3.5rem, 6vw, 5.25rem); }
+.coda nav a { padding-bottom: .6rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .coda nav a span { color: var(--coral); }
-.coda__inner > strong { display: block; margin-top: 7rem; font: 400 clamp(2rem, 4vw, 4rem) var(--display); }
+.coda__inner > strong { display: block; margin-top: clamp(5rem, 9vw, 8rem); font: 400 clamp(2rem, 4vw, 4rem) var(--display); }
 .coda__inner > strong span { color: var(--coral); }
 [data-score-reveal], [data-measure-reveal] { will-change: transform, opacity; }
 
@@ -196,7 +196,11 @@
 }
 .counterpoint__check em { color: var(--ink); font-style: normal; }
 
-.coda__honest { max-width: 46ch; margin: 2.5rem 0 0; color: oklch(72% .02 78); font: 300 .92rem/1.8 var(--body); }
+/* The invitation and the confession do different jobs, so they are separated rather than
+   stacked at the same weight. A short brass rule marks this one as an aside — notation,
+   not a decorative side stripe: it sits above the text, not alongside it. */
+.coda__honest { position: relative; max-width: 50ch; margin: clamp(3rem, 5vw, 4rem) 0 0; padding-top: 1.6rem; color: oklch(66% .018 76); font: 300 .88rem/1.85 var(--body); }
+.coda__honest::before { content: ""; position: absolute; top: 0; left: 0; width: 3.25rem; height: 1px; background: var(--brass); opacity: .7; }
 
 /* Source link on a variation. Present only where the claim has a public artifact behind
    it, which is what keeps Groundwork evidence rather than assertion. */
