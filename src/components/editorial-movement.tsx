@@ -23,13 +23,19 @@ export function EditorialMovement() {
             about what happens when an idea gets room to move.
           </p>
           <p className="body-copy">
-            This is where the professional and personal share a staff: work at Deloitte,
-            AI-native systems, experiments still taking shape, and the books, games,
-            music, and movement that keep the whole thing human.
+            Most of what I do happens in the space between things—between a team that has
+            decided something and a team that has not yet heard it, between what a system
+            can be told and what it can be trusted to say. The work I keep returning to is
+            the layer underneath: consolidating what is scattered, naming which source is
+            actually authoritative, carrying context across a gap it would not otherwise
+            cross. It is quieter than the work that sits on top of it, and it is the part I
+            want to keep doing—increasingly as product, where the question stops being what
+            is already owed and becomes what should exist at all.
           </p>
           <div className="landing-actions">
             <a className="text-link" href="#score-index">Read the score <span>↓</span></a>
-            <a className="text-link text-link--quiet" href="mailto:shehzadm7861@gmail.com">Say hello <span>↗</span></a>
+            <a className="text-link" href="/shehzad-mansuri-cv.pdf" target="_blank" rel="noreferrer">Take the score <span>↗</span></a>
+            <a className="text-link text-link--quiet" href="#coda">Say hello <span>↓</span></a>
           </div>
         </article>
 
@@ -38,7 +44,7 @@ export function EditorialMovement() {
           <ol>
             <li><a href="#work"><b>02</b> Work in motion</a></li>
             <li><a href="#systems"><b>03</b> Systems that compound</a></li>
-            <li><a href="#experiments"><b>04</b> Variations</a></li>
+            <li><a href="#experiments"><b>04</b> Ideas worth a first form</a></li>
             <li><a href="#off-clock"><b>05</b> Off the clock</a></li>
           </ol>
         </nav>
