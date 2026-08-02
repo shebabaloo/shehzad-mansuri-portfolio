@@ -14,9 +14,9 @@ const career = [
     org: 'Deloitte · FAANG company',
     team: 'Infrastructure & Data Centers',
     role: 'Technical Program Manager',
-    lead: 'Six programs across data-center infrastructure, currently a site-selection platform—turning complex work into products and programs people can actually operate.',
+    lead: 'Turning complex infrastructure work into products and programs people can actually operate.',
     beats: [
-      'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for a $60B+ investment portfolio, now peaking near 290 monthly users.',
+      'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for a $60B+ investment portfolio.',
       'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, 50+ stakeholder journeys, prototypes, user testing, and tangible enhancements shipped to production apps.',
       'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
     ],
@@ -82,6 +82,7 @@ const systems = [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
       'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without having to operate it themselves.',
       'What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
+      'What I am building now is the push and the pull. Each person’s brain contributes what the rest of the team needs to know, and draws back what has changed elsewhere—so the shared context stays current and aware of itself, rather than waiting for someone to go collect it.',
     ],
   },
 ]
@@ -112,12 +113,31 @@ const variations = [
   },
 ]
 
-const interests = [
+type Interest = {
+  id: string
+  mark: string
+  label: string
+  title: string
+  copy: string
+  listLabel: string
+  // `by` is the byline, carried only where attribution is the point — books have authors,
+  // volleyball does not. Without the annotation TypeScript infers a union per entry and
+  // the optional property becomes unreachable.
+  items: { name: string; by?: string }[]
+  passage: string[]
+}
+
+const interests: Interest[] = [
   {
     id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
     copy: 'Fantasy for invention, philosophy for friction, and literary fiction for the things neither one will say directly.',
     listLabel: 'Recent favorites',
-    items: ['The Way of Kings', 'The Myth of Sisyphus', 'Spring Snow', 'Meditations'],
+    items: [
+      { name: 'The Way of Kings', by: 'Brandon Sanderson' },
+      { name: 'The Myth of Sisyphus', by: 'Albert Camus' },
+      { name: 'Spring Snow', by: 'Yukio Mishima' },
+      { name: 'Meditations', by: 'Marcus Aurelius' },
+    ],
     passage: [
       'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed. The shelf has.',
       'What I look for now is a way of thinking I have not met yet. *Meditations* and *The Myth of Sisyphus* argue directly about how to hold a life. *Spring Snow* refuses to argue and simply shows you one. *The Way of Kings* invents an entire world in order to ask the same question somewhere the answer is not already settled.',
@@ -128,7 +148,10 @@ const interests = [
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
     copy: 'What they share is authorship—somebody chose the color of that field, the length of that silence. The same taste that produced the site you are scrolling, pointed at a different medium.',
     listLabel: 'Most memorable video games',
-    items: ['The Last of Us', 'Ghost of Tsushima', 'Final Fantasy VII', 'Destiny 2'],
+    items: [
+      { name: 'The Last of Us' }, { name: 'Ghost of Tsushima' },
+      { name: 'Final Fantasy VII' }, { name: 'Destiny 2' },
+    ],
     passage: [
       'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
       'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
@@ -139,7 +162,7 @@ const interests = [
     id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
     copy: 'The gym most weeks, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
     listLabel: 'Weekly rotation',
-    items: ['Volleyball', 'Gym', 'Cycling'],
+    items: [{ name: 'Volleyball' }, { name: 'Gym' }, { name: 'Cycling' }],
     passage: [
       'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way.',
       'What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
@@ -149,7 +172,7 @@ const interests = [
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
     copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which plays either part: the floor or the melody, depending on what the room needs.',
     listLabel: 'What I play',
-    items: ['Bass clarinet', 'Orchestral & jazz', 'Piano'],
+    items: [{ name: 'Bass clarinet' }, { name: 'Orchestral & jazz' }, { name: 'Piano' }],
     passage: [
       'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
       'What I remember is not any performance. It is the rehearsals—working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
@@ -322,7 +345,10 @@ export function ScoreBody() {
                   key={`tick-${entry.period}-${entry.team}`}
                   style={{ left: `${(index / career.length) * 100}%` }}
                 >
-                  <span>{String.fromCharCode(65 + index)} · {entry.period}</span>
+                  {/* Letter only. Each measure's own rehearsal mark already carries the
+                      period directly beneath it, and printing both put the same string on
+                      screen twice while B and C floated over the measure being read. */}
+                  <span>{String.fromCharCode(65 + index)}</span>
                 </span>
               ))}
               <span className="career-progression__playhead" ref={playheadRef} />
@@ -491,7 +517,12 @@ export function ScoreBody() {
                   four proper nouns had in common. Naming it is the cheaper fix. */}
               <div className="personal-measure__list">
                 <p className="personal-measure__list-label">{interest.listLabel}</p>
-                <ul>{interest.items.map((item) => <li key={item}>{item}</li>)}</ul>
+                <ul>{interest.items.map((item) => (
+                  <li key={item.name}>
+                    {item.name}
+                    {item.by && <span>{item.by}</span>}
+                  </li>
+                ))}</ul>
               </div>
             </article>
           ))}

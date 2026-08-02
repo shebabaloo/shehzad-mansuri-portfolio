@@ -108,6 +108,14 @@ export function App() {
         end: 'bottom bottom',
         scrub: 1.1,
         invalidateOnRefresh: true,
+        // This tween owns document-level state — header colour and the night-field flag —
+        // and a scrub tween does not re-run once scroll is past its end. Movement II's pin
+        // calls ScrollTrigger.refresh(), which resets the tween to progress 0; render()
+        // then never fired again, stranding `--header-opacity: 1` and `is-night-field` on
+        // the paper body. The header is cream, the paper is cream, and its label text
+        // vanished while its coral children stayed — orphan glyphs at the top of Movement
+        // II. Re-syncing on refresh keeps the flags honest at whatever scroll we are at.
+        onRefresh: (self) => { progress.value = self.progress; render() },
       },
     })
 
