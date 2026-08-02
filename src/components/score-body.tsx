@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { CodaDispersal } from './ui/coda-dispersal'
 import { MailLink } from './ui/mail-link'
+import { MovementTransition } from './ui/movement-transition'
 import { PassageToggle } from './ui/passage-toggle'
 import { ARROW_BOTH_WAYS, ARROW_RIGHT, ARROW_UP, ARROW_UP_RIGHT } from '@/lib/glyphs'
 
@@ -609,6 +610,8 @@ export function ScoreBody() {
           <span className="counterpoint__chord" aria-hidden="true"><i /><i /><i /></span>
         </div>
       </section>
+
+      <MovementTransition />
 
       <section className="score-section variations-movement" id="experiments" aria-labelledby="variations-title">
         <header className="movement-heading movement-heading--compact" data-score-reveal>

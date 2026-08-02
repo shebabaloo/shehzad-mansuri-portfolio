@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react'
+import { drawNote, NOTE_KINDS, type NoteKind } from '@/lib/notation'
 
 /**
  * Musical notes dispersing rightward from the Coda — eighths, quarters, halves, and lone
@@ -17,14 +18,6 @@ const STAFF_LINES = 5
 const STAFF_INITIAL = 5     // half-spread at x=0, in CSS px — tight bundle
 const STAFF_FAN = 0.34       // half-spread at x=width, as fraction of canvas height
 
-type Kind = 'eighth' | 'quarter' | 'half' | 'head'
-
-const KINDS: Kind[] = [
-  'eighth','eighth','eighth','eighth','eighth','eighth','eighth',
-  'quarter','quarter','quarter','quarter','quarter','quarter',
-  'half','half',
-  'head','head','head',
-]
 
 type Note = {
   life: number
@@ -32,7 +25,7 @@ type Note = {
   spread: number
   size: number
   tilt: number
-  kind: Kind
+  kind: NoteKind
   flip: boolean     // stem down from left edge rather than up from right
   warm: boolean
   wobble: number
@@ -44,7 +37,7 @@ const seed = (note: Note, atBirth: boolean) => {
   note.spread = (Math.random() - 0.5) * 0.9
   note.size = 2.4 + Math.random() * 4.4
   note.tilt = -22 + (Math.random() - 0.5) * 26
-  note.kind = KINDS[Math.floor(Math.random() * KINDS.length)]
+  note.kind = NOTE_KINDS[Math.floor(Math.random() * NOTE_KINDS.length)]
   note.flip = Math.random() < 0.42
   note.warm = Math.random() < 0.42
   note.wobble = Math.random() * Math.PI * 2
@@ -80,67 +73,23 @@ export function CodaDispersal() {
       return note
     })
 
-    const drawNote = (
-      x: number, y: number, note: Note, alpha: number,
-    ) => {
-      const r = note.size * (0.55 + note.life * 0.9)
-      const hue = note.warm ? '188, 151, 105' : '243, 94, 61'
-      const rgba = `rgba(${hue}, ${alpha})`
-      const stemH = r * 3.6
-      const tiltRad = (note.tilt * Math.PI) / 180
-
-      ctx.save()
-      ctx.translate(x, y)
-
-      // Head — tilted ellipse. The tilt follows notation convention: the head
-      // leans, but the stem stays vertical.
-      ctx.save()
-      ctx.rotate(tiltRad)
-      ctx.beginPath()
-      ctx.ellipse(0, 0, r, r * 0.68, 0, 0, Math.PI * 2)
-      if (note.kind === 'half') {
-        ctx.strokeStyle = rgba
-        ctx.lineWidth = r * 0.28
-        ctx.stroke()
-      } else {
-        ctx.fillStyle = rgba
-        ctx.fill()
-      }
-      ctx.restore()
-
-      // Stem — vertical line from head edge. flip = stem down from left edge.
-      if (note.kind !== 'head') {
-        const edgeX = note.flip ? -Math.cos(tiltRad) * r : Math.cos(tiltRad) * r
-        const edgeY = note.flip ? Math.sin(tiltRad) * r : -Math.sin(tiltRad) * r
-        const tipX = edgeX
-        const tipY = note.flip ? edgeY + stemH : edgeY - stemH
-        ctx.beginPath()
-        ctx.moveTo(edgeX, edgeY)
-        ctx.lineTo(tipX, tipY)
-        ctx.strokeStyle = rgba
-        ctx.lineWidth = r * 0.22
-        ctx.stroke()
-
-        // Flag — quadratic curve for eighth notes
-        if (note.kind === 'eighth') {
-          const dir = note.flip ? 1 : -1
-          ctx.beginPath()
-          ctx.moveTo(tipX, tipY)
-          ctx.quadraticCurveTo(
-            tipX + r * 1.6, tipY - dir * stemH * 0.35,
-            tipX + r * 0.6, tipY - dir * stemH * 0.62,
-          )
-          ctx.strokeStyle = rgba
-          ctx.lineWidth = r * 0.2
-          ctx.stroke()
-        }
-      }
-
-      ctx.restore()
+    const paint = (x: number, y: number, note: Note, alpha: number) => {
+      ctx.globalAlpha = alpha
+      drawNote(ctx, {
+        x, y,
+        r: note.size * (0.55 + note.life * 0.9),
+        kind: note.kind,
+        tilt: note.tilt,
+        flip: note.flip,
+        color: note.warm ? 'rgb(188, 151, 105)' : 'rgb(243, 94, 61)',
+      })
+      ctx.globalAlpha = 1
     }
 
     let time = 0
 
+    // The staff fans from a tight bundle on the left into an open funnel on the right, and
+    // wobbles more the further it travels — the notes leave through the widening gap.
     const drawStaff = () => {
       const cy = height * FOCUS_Y
       const maxSpread = height * STAFF_FAN
@@ -153,14 +102,9 @@ export function CodaDispersal() {
         for (let s = 0; s <= segments; s++) {
           const t = s / segments
           const x = t * width
-
           const spread = STAFF_INITIAL + (maxSpread - STAFF_INITIAL) * t * t
-          const baseY = cy + norm * spread
-
-          const waveAmp = (2 + t * 10) * t
-          const wave = Math.sin(x * 0.007 + time * 0.55 + i * 1.3) * waveAmp
-
-          const y = baseY + wave
+          const wave = Math.sin(x * 0.007 + time * 0.55 + i * 1.3) * (2 + t * 10) * t
+          const y = cy + norm * spread + wave
           if (s === 0) { ctx.moveTo(x, y) } else { ctx.lineTo(x, y) }
         }
 
@@ -188,7 +132,7 @@ export function CodaDispersal() {
         const alpha = fadeIn * fadeOut * 0.5
 
         if (alpha > 0.004 && x < width + 20) {
-          drawNote(x, y, note, alpha)
+          paint(x, y, note, alpha)
         }
       }
     }
