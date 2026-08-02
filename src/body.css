@@ -120,7 +120,11 @@
 /* Bylines sit under the title, quieter — the title is what is being listed, the author is
    the attribution. Same relationship the item list already has to its heading. */
 .personal-measure li span { display: block; margin-top: .35rem; color: var(--ink-soft); font: 300 var(--u-md) var(--utility); letter-spacing: .05em; }
-.personal-measure--2 .personal-measure__mark { color: var(--cobalt-display); }
+/* Alternating accent down the Interlude: coral, cobalt, coral, cobalt. Cobalt on the flat
+   as well as the diamond keeps the two-colour system legible as a system rather than
+   reading as one stray blue mark. */
+.personal-measure--2 .personal-measure__mark,
+.personal-measure--4 .personal-measure__mark { color: var(--cobalt-display); }
 
 /* Nightfall has to finish before the text starts. The stops used to run to 36rem while the
    content began at 21.8rem, which stranded the "Coda · Still composing" label on a mid-tone

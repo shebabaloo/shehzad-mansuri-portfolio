@@ -241,13 +241,18 @@ function Passage({ id, open, label, paragraphs }: {
    out. These use the monogram's vocabulary instead — one weight of stroke, round joins,
    no fill — so they read as notation on the same page rather than borrowed iconography. */
 const variationMarks = {
+  /* Wide shoulders tapering to a point — a round body read as an apple at 34px. The crown
+     is four leaves rather than two hairlines, and three seeds rather than five, because
+     below about 40px the fine detail closed up into a smudge. */
   strawberry: (
     <>
-      <path d="M12 21.4c-3.9 0-6.9-3.3-6.9-7.2 0-2.7 2.1-4.8 3.9-4.8 1 0 2 .4 3 .4s2-.4 3-.4c1.8 0 3.9 2.1 3.9 4.8 0 3.9-3 7.2-6.9 7.2Z" />
-      <path d="M12 9.4V5.9" />
-      <path d="M12 7.2C11 6.1 9.6 5.6 8.2 5.8" />
-      <path d="M12 7.2c1-1.1 2.4-1.6 3.8-1.4" />
-      <path d="M9.7 13.3v.7M14.3 13.3v.7M12 16v.7M10.3 18.2v.7M13.7 18.2v.7" />
+      <path d="M5.5 12.3c0-1.7 2.9-3 6.5-3s6.5 1.3 6.5 3c0 4-3.4 9.6-6.5 9.6S5.5 16.3 5.5 12.3Z" />
+      <path d="M12 9.3V5.6" />
+      <path d="M12 9.1C10.6 7.7 8.6 7 6.5 7.2" />
+      <path d="M12 9.1c1.4-1.4 3.4-2.1 5.5-1.9" />
+      <path d="M12 8.6c-.7-1.5-1.9-2.6-3.4-3.1" />
+      <path d="M12 8.6c.7-1.5 1.9-2.6 3.4-3.1" />
+      <path d="M9.5 14.1v1.3M14.5 14.1v1.3M12 17.4v1.3" />
     </>
   ),
   cup: (
