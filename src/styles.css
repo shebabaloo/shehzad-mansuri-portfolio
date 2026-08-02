@@ -128,6 +128,30 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .score-rail__links a { position: absolute; right: -.35rem; top: calc(1rem + var(--chapter-position) * (100% - 4.25rem)); width: 2.25rem; height: 2.25rem; display: grid; place-items: center; text-decoration: none; color: transparent; border-radius: 50%; }
 .score-rail__links a:focus-visible { color: var(--ink); background: var(--paper); }
 
+/* A standing way back to the index, on every viewport. It was phone-only at first, on the
+   grounds that the rail's chapter links already answer this on a desktop — but the rail is
+   a hairline of notation a reader has to decode, and a labelled control is simply quicker.
+   Scoping it to the phone also left the anchor unstyled above 860px, where it rendered as
+   stray text near the top of the page.
+   Sized to its label rather than to the 44px touch floor; the pointer:coarse rule restores
+   that as a hit area without inflating the pill. Cleared of the rail, which occupies the
+   right edge at .75rem plus 2rem of width on a desktop. */
+.jump-index {
+  position: fixed; z-index: 60; right: 3.75rem; bottom: 1.2rem;
+  display: inline-flex; align-items: center; gap: .4rem;
+  padding: .5rem .8rem;
+  border: 1px solid var(--coral); border-radius: 999px;
+  background: var(--paper); color: var(--ink);
+  font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 3px 12px oklch(30% .03 60 / .16);
+  opacity: 0; transform: translateY(.6rem); pointer-events: none;
+  transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
+}
+.jump-index[data-shown="true"] { opacity: 1; transform: none; pointer-events: auto; }
+.jump-index span { color: var(--coral); }
+.jump-index b { font-weight: 400; }
+
 .overture { position: relative; height: 420svh; background: var(--night); }
 .overture__sticky {
   --intro-opacity: 1; --intro-y: 0px; --header-opacity: 1; --node-opacity: 1;
@@ -305,30 +329,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
     background: var(--coral-display);
     transform: scaleX(var(--page-progress)); transform-origin: left center;
   }
-  /* Phone-only, because the rail's chapter links are the desktop answer to the same
-     problem. Bottom right rather than bottom left: the Coda's own links sit left, and a
-     thumb reaches this corner. */
-  .jump-index {
-    position: fixed; z-index: 60; right: .85rem; bottom: .85rem;
-    display: inline-flex; align-items: center; gap: .4rem;
-    /* Sized to the label rather than to the 44px minimum — at that height it read as a
-       primary action and collided with whatever heading happened to be beside it. The tap
-       area is restored to 44px by the pointer:coarse rule below, which grows the hit box
-       without growing the pill. */
-    padding: .5rem .8rem;
-    border: 1px solid var(--coral); border-radius: 999px;
-    background: var(--paper); color: var(--ink);
-    /* --u-md, not a smaller one-off: the mobile audit put the floor for utility text at
-       11.7px, and a control's own label is the last place to go under it. */
-    font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
-    text-decoration: none;
-    box-shadow: 0 3px 12px oklch(30% .03 60 / .16);
-    opacity: 0; transform: translateY(.6rem); pointer-events: none;
-    transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
-  }
-  .jump-index[data-shown="true"] { opacity: 1; transform: none; pointer-events: auto; }
-  .jump-index span { color: var(--coral); }
-  .jump-index b { font-weight: 400; }
+  /* The rail lies across the top here rather than down the right edge, so the corner is
+     free and the pill can sit where a thumb actually reaches. */
+  .jump-index { right: .85rem; bottom: .85rem; }
 
   .movement-label { display: none; }
   .overture-copy { top: 14%; width: calc(100% - 2.2rem); }
