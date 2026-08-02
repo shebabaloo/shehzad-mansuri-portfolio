@@ -65,9 +65,9 @@ const variations = [
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
     copy: 'Millions of tons of specialty crops go unharvested every year, and the gap is never the robots—it is everything around them. A four-day answer: the problem taken apart, a response scoped, and what execution and financial strategy would have to look like, then pitched.',
     passage: 'A Human-Machine Fleet Intelligence Platform, aimed at the whole value chain rather than the machinery: the operators running a fleet they have to trust, the finance side working out whether the model holds, and a workforce being redesigned around equipment it did not ask for. A concept and an argument, built in a week that did not have one.',
-    // Shehzad's own public LinkedIn post about SUD '26. Set the URL to make the link
-    // render; it is intentionally null rather than a placeholder so nothing broken ships.
-    source: null as string | null,
+    // Shehzad's own public LinkedIn post about SUD '26. Tracking parameters stripped:
+    // utm_* are share attribution, and rcm= is a member token tied to his account.
+    source: 'https://www.linkedin.com/posts/shehzadmansuri_figured-this-was-a-good-time-to-startup-ugcPost-7456178859080708096-iNgw/',
     sourceLabel: 'Read the post',
   },
   {
