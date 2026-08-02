@@ -85,9 +85,13 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
       return { x: 0.46 + Math.cos(angle) * radius, y: 0.56 + Math.sin(angle) * radius * 0.63 }
     }
 
-    const staffPoint = (arm: number, u: number) => ({
+    // The staff rests on the title's vertical centre, so it steps down as the title
+    // resolves and holds that lower lane through the rail morph.
+    const titleClearance = (progress: number) => range(progress, 0.6, 0.75) * 0.21
+
+    const staffPoint = (arm: number, u: number, progress: number) => ({
       x: 0.06 + u * 0.9,
-      y: 0.5 + (arm - 2) * 0.024 + Math.sin(u * Math.PI * 2.2) * 0.012 * (1 - u),
+      y: 0.5 + titleClearance(progress) + (arm - 2) * 0.024 + Math.sin(u * Math.PI * 2.2) * 0.012 * (1 - u),
     })
 
     const railPoint = (arm: number, u: number) => ({
@@ -97,13 +101,17 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
 
     const resolvePoint = (arm: number, u: number, progress: number, time: number) => {
       const spiral = spiralPoint(arm, u, time)
-      const staff = staffPoint(arm, u)
+      const staff = staffPoint(arm, u, progress)
       const rail = railPoint(arm, u)
       const toStaff = range(progress, 0.38, 0.72)
       const toRail = range(progress, 0.74, 0.92)
+      // The staff swings to the rail along an arc rather than a straight lerp, so the
+      // mid-morph diagonal passes under the resolved title instead of through it.
+      // Endpoints are untouched: the bend peaks at the halfway pose and returns to zero.
+      const bend = toRail * (1 - toRail) * 4
       return {
-        x: mix(mix(spiral.x, staff.x, toStaff), rail.x, toRail),
-        y: mix(mix(spiral.y, staff.y, toStaff), rail.y, toRail),
+        x: mix(mix(spiral.x, staff.x, toStaff), rail.x, toRail) + bend * 0.085,
+        y: mix(mix(spiral.y, staff.y, toStaff), rail.y, toRail) + bend * 0.3,
       }
     }
 
