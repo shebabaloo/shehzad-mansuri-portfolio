@@ -13,9 +13,9 @@ const career = [
     role: 'Technical Program Manager',
     lead: 'Turning complex infrastructure work into products and programs people can actually operate.',
     beats: [
-      'Led the launch and stabilization of an enterprise site-selection platform across product, engineering, data, and operations.',
-      'Authored requirements for an internal planning tool designed to replace a fragmented roadmap cycle with a shared source of truth.',
-      'Helped shift an infrastructure reporting product from a periodic artifact toward an everyday insights tool.',
+      'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for 200+ stakeholders tracking a $60B+ investment portfolio.',
+      'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, 50+ stakeholder journeys, prototypes, user testing, and tangible enhancements shipped to production apps.',
+      'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
     ],
   },
   {
@@ -25,25 +25,60 @@ const career = [
     role: 'Program Manager',
     lead: 'Creating a shared rhythm where product velocity, policy, legal, and privacy had to move together.',
     beats: [
-      'Brought product, legal, policy, and privacy partners into a shared roadmap rhythm.',
-      'Synthesized release risks and open decisions into clearer planning inputs.',
+      'Led a workstream with three client privacy managers, facilitating roadmap reviews across 140+ GenAI product releases.',
+      'Synthesized risk trends and briefed 40+ product, legal, and policy stakeholders to align on roadmap and mitigation.',
     ],
   },
   {
-    period: '2024—Now',
+    period: '2024',
     org: 'Deloitte',
-    team: 'AI & Engineering',
-    role: 'Consultant',
-    lead: 'Learning to enter unfamiliar systems, find the thread quickly, and earn trust through useful work.',
-    beats: [],
+    team: 'Cybersecurity · Healthcare · Entertainment',
+    role: 'PMO Analyst',
+    lead: 'Three industries in one year—learning how differently each one defines a decision.',
+    beats: [
+      'Scoped a $10M+ market opportunity across customer-partner and outcomes programs for a cybersecurity client.',
+      'Supported a $2M ERP MVP through user stories, RAID log, and status reporting for an entertainment client.',
+      'Documented supplier scope for a Medicare divestiture, keeping compliance intact through the transition.',
+    ],
   },
 ]
 
 const systems = [
-  ['01', 'Personal Workspace', 'Active', 'A files-first knowledge and action space connecting projects, reading, decisions, and ideas.', 'Capture → connect → act'],
-  ['02', 'Second Brain', 'Active pattern', 'A personal operations layer that turns scattered context into preparation, follow-through, and durable memory.', 'Context → synthesis → next move'],
-  ['03', 'Team Third Brain', 'Active pattern', 'The shared version: individual context stays personal while agreed knowledge becomes reusable team infrastructure.', 'Individual context ↔ shared clarity'],
-  ['04', 'The Living Score', 'In progress', 'Part portfolio, part interface experiment—a way to make the system legible without turning it into a dashboard.', 'Structure → story'],
+  {
+    number: '01', title: 'Personal Workspace', status: 'Active',
+    copy: 'A files-first knowledge and action space connecting projects, reading, decisions, and ideas. Plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
+    beats: [],
+    principle: 'Capture → connect → act',
+  },
+  {
+    number: '02', title: 'Second Brain', status: 'Active pattern',
+    copy: 'A persistent operating layer around the work. The problem was never finding information—it was continuously understanding what mattered, what had changed, and what needed action. Every project switch used to mean rebuilding the whole mental model from scratch.',
+    beats: [
+      'Holds project state, decisions and their reasoning, dependencies, open commitments, and which sources are actually authoritative.',
+      'Prepares meetings by answering what changed, what is still unresolved, and what outcome to drive toward—not by summarizing the last one.',
+      'Signals continuously: what is approaching a deadline, what is blocked, what has quietly stopped moving, where two workstreams are drifting apart.',
+      'Starts from the history of the work instead of a blank prompt, so a draft or a risk assessment arrives already grounded in context.',
+      'Automates 8–11 hours of recurring coordination a week across 31 scheduled workflows, ingesting signal 115× faster than the manual scan it replaced.',
+    ],
+    principle: 'Context → synthesis → next move',
+  },
+  {
+    number: '03', title: 'Team Third Brain', status: 'Active pattern',
+    copy: 'The personal system helped me operate, but the team still ran on meetings, status requests, and hand-maintained documents. The Third Brain promotes the verified, team-relevant parts of that context into shared infrastructure.',
+    beats: [
+      'Private context stays private; decisions, ownership, milestones, and risks become the team’s institutional memory.',
+      'Powers agendas, briefings, weekly updates, and onboarding material—so people benefit without operating the system themselves.',
+      'Reduces the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, handoffs that survive transitions.',
+      'The first team implementation serves 22 members with 93+ curated resources and 131 synchronized decisions—shared context went from roughly 14 hours stale to near real time.',
+    ],
+    principle: 'Individual context ↔ shared clarity',
+  },
+  {
+    number: '04', title: 'The Living Score', status: 'In progress',
+    copy: 'Part portfolio, part interface experiment—a way to make the system legible without turning it into a dashboard.',
+    beats: [],
+    principle: 'Structure → story',
+  },
 ]
 
 const variations = [
@@ -92,6 +127,9 @@ function SectionStaff() {
 
 export function ScoreBody() {
   const rootRef = useRef<HTMLDivElement>(null)
+  const careerStageRef = useRef<HTMLDivElement>(null)
+  const careerTrackRef = useRef<HTMLDivElement>(null)
+  const playheadRef = useRef<HTMLSpanElement>(null)
 
   useEffect(() => {
     const id = window.location.hash.slice(1)
@@ -115,6 +153,67 @@ export function ScoreBody() {
         )
       })
     })
+
+    // Movement II: the three career measures advance horizontally under a fixed playhead
+    // while the section is pinned. Native scroll still drives everything; the pin only
+    // remaps vertical distance onto the staff's left-to-right reading direction.
+    // Stacked reading: the measures scroll vertically, so they reveal like every other
+    // block. In the pinned horizontal mode below they are visible from the start and the
+    // sideways advance is the choreography instead.
+    media.add('(prefers-reduced-motion: no-preference) and (max-width: 860px)', () => {
+      gsap.utils.toArray<HTMLElement>('[data-measure-reveal]').forEach((element) => {
+        gsap.fromTo(element,
+          { y: 44, opacity: 0 },
+          {
+            y: 0, opacity: 1, duration: 1, ease: 'power4.out',
+            scrollTrigger: { trigger: element, start: 'top 86%', once: true },
+          },
+        )
+      })
+    })
+
+    media.add('(prefers-reduced-motion: no-preference) and (min-width: 861px)', () => {
+      const stage = careerStageRef.current
+      const track = careerTrackRef.current
+      const playhead = playheadRef.current
+      if (!stage || !track) return
+
+      // The measure locks in place, then travels sideways. Without a beat between those
+      // two motions the direction changes 90° on the same scroll tick, which reads as a
+      // lurch. A hold at each end lets the first measure settle before it moves and the
+      // last one arrive before the section releases.
+      const HOLD_IN = 0.12
+      const HOLD_OUT = 0.08
+      const TRAVEL = 1 - HOLD_IN - HOLD_OUT
+
+      const distance = () => Math.max(0, track.scrollWidth - stage.clientWidth)
+      const timeline = gsap.timeline({
+        scrollTrigger: {
+          trigger: stage,
+          start: 'top top',
+          // Scroll range is grown so the travel portion still maps 1:1 to scroll.
+          end: () => `+=${Math.round(distance() / TRAVEL)}`,
+          pin: true,
+          // Tighter than the opening's cinematic scrub: these panels carry text to read,
+          // so they should settle when scrolling stops rather than keep gliding.
+          scrub: 0.5,
+          anticipatePin: 1,
+          invalidateOnRefresh: true,
+          // Refresh before the plain reveal triggers so they measure post-pin positions.
+          refreshPriority: 1,
+        },
+      })
+
+      timeline.to(track, { x: () => -distance(), ease: 'none', duration: TRAVEL }, HOLD_IN)
+      if (playhead) {
+        // Three measures advance in two steps, so the playhead stops on each barline
+        // rather than running the full width of the rail.
+        const travel = () => ((playhead.parentElement?.clientWidth ?? 0) / career.length) * (career.length - 1)
+        timeline.to(playhead, { x: travel, ease: 'none', duration: TRAVEL }, HOLD_IN)
+      }
+      timeline.set({}, {}, 1)
+    })
+
     return () => media.revert()
   }, { scope: rootRef })
 
@@ -128,20 +227,52 @@ export function ScoreBody() {
           <p className="movement-intro">My work sits between product, program, and systems thinking—defining the shape, aligning the people, and staying through launch.</p>
         </header>
 
+        {/* The brace is the score's way of saying one performer plays every staff below.
+            Deloitte governs all three measures, so it opens the movement rather than
+            competing with them as a fourth. */}
+        <div className="ensemble-brace" data-score-reveal>
+          <span className="ensemble-brace__mark" aria-hidden="true" />
+          <span className="ensemble-brace__period">2024—Now</span>
+          <div className="ensemble-brace__id">
+            <p>Deloitte <span>·</span> AI &amp; Engineering</p>
+            <span>Consultant</span>
+            <h3>One ensemble, three measures.</h3>
+          </div>
+          <p className="ensemble-brace__note">Since January 2024, every measure below has been performed here—embedded with client teams, carrying the practice in with me.</p>
+        </div>
+
         <div className="career-score">
-          {career.map((entry, index) => (
-            <article className="career-measure" data-score-reveal key={`${entry.period}-${entry.team}`}>
-              <div className="rehearsal-mark"><span>{String.fromCharCode(65 + index)}</span><p>{entry.period}</p></div>
-              <div className="career-measure__identity">
-                <p>{entry.org}</p><span>{entry.team}</span>
-                <h3>{entry.role}</h3>
-              </div>
-              <div className="career-measure__score">
-                <p className="career-lead">{entry.lead}</p>
-                {entry.beats.length > 0 && <ul>{entry.beats.map((beat) => <li key={beat}>{beat}</li>)}</ul>}
-              </div>
-            </article>
-          ))}
+          <div className="career-stage" ref={careerStageRef}>
+            <div className="career-progression" aria-hidden="true">
+              <span className="career-progression__line" />
+              {career.map((entry, index) => (
+                <span
+                  className="career-progression__tick"
+                  key={`tick-${entry.period}-${entry.team}`}
+                  style={{ left: `${(index / career.length) * 100}%` }}
+                >
+                  <span>{String.fromCharCode(65 + index)} · {entry.period}</span>
+                </span>
+              ))}
+              <span className="career-progression__playhead" ref={playheadRef} />
+            </div>
+
+            <div className="career-track" ref={careerTrackRef}>
+              {career.map((entry, index) => (
+                <article className="career-measure" data-measure-reveal key={`${entry.period}-${entry.team}`}>
+                  <div className="rehearsal-mark"><span>{String.fromCharCode(65 + index)}</span><p>{entry.period}</p></div>
+                  <div className="career-measure__identity">
+                    <p>{entry.org}</p><span>{entry.team}</span>
+                    <h3>{entry.role}</h3>
+                  </div>
+                  <div className="career-measure__score">
+                    <p className="career-lead">{entry.lead}</p>
+                    {entry.beats.length > 0 && <ul>{entry.beats.map((beat) => <li key={beat}>{beat}</li>)}</ul>}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
         </div>
       </section>
 
@@ -154,11 +285,14 @@ export function ScoreBody() {
         </header>
 
         <div className="counterpoint" aria-label="Systems progressing from personal context to shared output">
-          {systems.map(([number, title, status, copy, principle]) => (
+          {systems.map(({ number, title, status, copy, beats, principle }) => (
             <article className="system-voice" data-score-reveal key={number}>
               <span className="system-voice__number">{number}</span>
               <div><p className="system-voice__status">{status}</p><h3>{title}</h3></div>
-              <p>{copy}</p>
+              <div className="system-voice__body">
+                <p>{copy}</p>
+                {beats.length > 0 && <ul>{beats.map((beat) => <li key={beat}>{beat}</li>)}</ul>}
+              </div>
               <strong>{principle}</strong>
             </article>
           ))}
