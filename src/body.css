@@ -60,6 +60,21 @@
    Labels align to the top of the content block so tall rows read as one entry. */
 .system-voice { position: relative; z-index: 2; min-height: 11rem; display: grid; grid-template-columns: .35fr 1.15fr 1.45fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; padding: clamp(3.25rem, 5vw, 4.75rem) 0; border-bottom: 1px solid oklch(48% .045 60 / .23); }
 .system-voice__number { color: var(--coral-ink); font: 300 var(--u-lg) var(--utility); }
+/* Fills the column under the title, which was empty on wide viewports. Shares the marks'
+   hand — one stroke weight, round joins, no fill — but not their colour. A mark is a label
+   and can afford to be coral; these are diagrams sitting directly under a display-size
+   heading, and drawn in full coral they compete with it. So the structure is brass and
+   only the thing being argued for takes the accent: the single synthesising node, and the
+   shared ground the team writes into. */
+.system-diagram { display: block; width: 100%; max-width: 16rem; height: auto; margin-top: clamp(1.75rem, 3vw, 2.75rem); color: var(--brass-ink); }
+.system-diagram path, .system-diagram circle, .system-diagram rect {
+  fill: none; stroke: currentColor; stroke-width: 1;
+  stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke;
+}
+.system-diagram__focus { color: var(--coral-display); }
+.system-diagram__focus path, .system-diagram__focus circle, .system-diagram__focus rect { stroke-width: 1.2; }
+@media (max-width: 860px) { .system-diagram { max-width: 13rem; margin-top: 1.5rem; } }
+
 .system-voice__body > p { max-width: 52ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-md)/1.7 var(--body); }
 /* These voices read as one continuous block of prose otherwise — the reason to break them
    is that each holds a distinct beat: the problem, the build, the result. */

@@ -64,7 +64,7 @@ const career = [
 
 const systems = [
   {
-    number: '01', title: 'Second Brain', status: 'Active pattern',
+    number: '01', title: 'Second Brain', status: 'Active pattern', diagram: 'ingest' as const,
     copy: [
       'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was the reconstruction, performed again at every switch.',
       'So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk.',
@@ -79,7 +79,7 @@ const systems = [
     ],
   },
   {
-    number: '02', title: 'Team Third Brain', status: 'Active pattern',
+    number: '02', title: 'Team Third Brain', status: 'Active pattern', diagram: 'share' as const,
     copy: [
       'The personal system made me faster. The team still ran on meetings and hand-maintained documents.',
       'So the Third Brain is the same architecture at team scope: a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context is promoted into common ground—decisions, ownership, milestones, risks.',
@@ -262,6 +262,66 @@ const variationMarks = {
   plane: (
     <path d="M12 2.6c.75 0 1.3.85 1.3 1.9v4.4l7.2 4.2v1.9l-7.2-2.2v4.4l2.1 1.5v1.4L12 19.4l-3.4.7v-1.4l2.1-1.5v-4.4L3.5 15v-1.9l7.2-4.2V4.5c0-1.05.55-1.9 1.3-1.9Z" />
   ),
+}
+
+/* The two systems are architectures, and an architecture is faster to see than to read.
+   These are not illustration: the first is the funnel the prose describes — many sources
+   converging on one node, one considered move leaving it — and the second is the push and
+   pull, each brain writing into shared ground and drawing back what changed. Same stroke
+   vocabulary as the variation marks, so they read as notation rather than infographic.
+   Labelled for screen readers, since they carry meaning rather than decorate. */
+const systemDiagrams = {
+  ingest: {
+    label: 'Many sources converging on one system, which returns a single next move',
+    art: (
+      <>
+        {[16, 38, 60, 82, 104, 126].map((y) => (
+          <g key={y}>
+            <circle cx="14" cy={y} r="2.5" />
+            <path d={`M19 ${y}L84 70`} />
+          </g>
+        ))}
+        <g className="system-diagram__focus">
+          <circle cx="100" cy="70" r="15" />
+          <circle cx="100" cy="70" r="3.5" />
+          <path d="M115 70h56" />
+          <path d="M165 64.5l6.5 5.5-6.5 5.5" />
+        </g>
+      </>
+    ),
+  },
+  share: {
+    label: 'Several brains pushing into and pulling from one shared team context',
+    art: (
+      <>
+        {[40, 100, 160].map((x) => (
+          <g key={x}>
+            <circle cx={x} cy="26" r="11" />
+            <circle cx={x} cy="26" r="2.5" />
+            {/* push: down into shared ground */}
+            <path d={`M${x - 5} 39v54`} />
+            <path d={`M${x - 8.5} 88l3.5 5 3.5-5`} />
+            {/* pull: back up, carrying what changed elsewhere */}
+            <path d={`M${x + 5} 93V39`} />
+            <path d={`M${x + 1.5} 44l3.5-5 3.5 5`} />
+          </g>
+        ))}
+        <g className="system-diagram__focus">
+          <rect x="18" y="98" width="164" height="26" rx="3" />
+          <path d="M30 111h28M86 111h28M142 111h20" />
+        </g>
+      </>
+    ),
+  },
+}
+
+function SystemDiagram({ kind }: { kind: keyof typeof systemDiagrams }) {
+  const { label, art } = systemDiagrams[kind]
+  return (
+    <svg className="system-diagram" viewBox="0 0 200 140" role="img" aria-label={label}>
+      {art}
+    </svg>
+  )
 }
 
 function VariationMark({ icon }: { icon: keyof typeof variationMarks }) {
@@ -471,10 +531,13 @@ export function ScoreBody() {
         </header>
 
         <div className="counterpoint" aria-label="Systems progressing from personal context to shared output">
-          {systems.map(({ number, title, status, copy, principle, passage }) => (
+          {systems.map(({ number, title, status, copy, principle, passage, diagram }) => (
             <article className="system-voice" data-score-reveal key={number}>
               <span className="system-voice__number">{number}</span>
-              <div><p className="system-voice__status">{status}</p><h3>{title}</h3></div>
+              <div>
+                <p className="system-voice__status">{status}</p><h3>{title}</h3>
+                <SystemDiagram kind={diagram} />
+              </div>
               <div className="system-voice__body">
                 {copy.map((paragraph, i) => <p key={i}>{paragraph}</p>)}
                 <PassageToggle
