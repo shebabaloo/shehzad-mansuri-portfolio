@@ -84,7 +84,7 @@ const systems = [
     copy: [
       'The personal system made me faster. The team still ran on meetings and hand-maintained documents.',
       'So the Third Brain is the same architecture at team scope: a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context is promoted into common ground—decisions, ownership, milestones, risks.',
-      'Agendas, briefings, and weekly updates now stand on that rather than on anyone’s memory. The first implementation serves 22 members across 90+ resources and 130+ synchronized decisions.',
+      'Agendas, briefings, and weekly updates now stand on that rather than on anyone’s memory. The first implementation served 22 members and routed 90+ sources into a defined structure—decisions, backlogs, a folder per workstream—with 130+ decisions kept in sync. It has grown since.',
     ],
     principle: `Individual context ${ARROW_BOTH_WAYS} shared clarity`,
     passage: [
