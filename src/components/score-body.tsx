@@ -680,7 +680,7 @@ export function ScoreBody() {
         <div className="coda__inner" data-score-reveal>
           <p>Coda <span>·</span> Still composing</p>
           <h2 id="coda-title">The next movement is <em>still unwritten.</em></h2>
-          <p>If any of this sounds like a conversation worth having, say hello.</p>
+          <p>If any of this sounds like a conversation worth having, say hello!</p>
           <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years; the first is what I am building toward.</p>
           {/* The sign-off shares the nav's row rather than sitting a screen below it. It is
               the same gesture a score uses: the composer's name sits on the final system,
