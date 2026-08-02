@@ -46,39 +46,16 @@ const career = [
 
 const systems = [
   {
-    number: '01', title: 'Personal Workspace', status: 'Active',
-    copy: 'A files-first knowledge and action space connecting projects, reading, decisions, and ideas. Plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
-    beats: [],
-    principle: 'Capture → connect → act',
-  },
-  {
-    number: '02', title: 'Second Brain', status: 'Active pattern',
-    copy: 'A persistent operating layer around the work. The problem was never finding information—it was continuously understanding what mattered, what had changed, and what needed action. Every project switch used to mean rebuilding the whole mental model from scratch.',
-    beats: [
-      'Holds project state, decisions and their reasoning, dependencies, open commitments, and which sources are actually authoritative.',
-      'Prepares meetings by answering what changed, what is still unresolved, and what outcome to drive toward—not by summarizing the last one.',
-      'Signals continuously: what is approaching a deadline, what is blocked, what has quietly stopped moving, where two workstreams are drifting apart.',
-      'Starts from the history of the work instead of a blank prompt, so a draft or a risk assessment arrives already grounded in context.',
-      'Automates 8–11 hours of recurring coordination a week across 31 scheduled workflows, ingesting signal 115× faster than the manual scan it replaced.',
-    ],
+    number: '01', title: 'Second Brain', status: 'Active pattern',
+    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two.',
     principle: 'Context → synthesis → next move',
+    passage: 'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative. It prepares a meeting by answering what changed and what remains unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart. Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
   },
   {
-    number: '03', title: 'Team Third Brain', status: 'Active pattern',
-    copy: 'The personal system helped me operate, but the team still ran on meetings, status requests, and hand-maintained documents. The Third Brain promotes the verified, team-relevant parts of that context into shared infrastructure.',
-    beats: [
-      'Private context stays private; decisions, ownership, milestones, and risks become the team’s institutional memory.',
-      'Powers agendas, briefings, weekly updates, and onboarding material—so people benefit without operating the system themselves.',
-      'Reduces the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, handoffs that survive transitions.',
-      'The first team implementation serves 22 members with 93+ curated resources and 131 synchronized decisions—shared context went from roughly 14 hours stale to near real time.',
-    ],
+    number: '02', title: 'Team Third Brain', status: 'Active pattern',
+    copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. So the verified, team-relevant part of that context was promoted into shared ground—decisions, ownership, milestones, risks—and the agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members.',
     principle: 'Individual context ↔ shared clarity',
-  },
-  {
-    number: '04', title: 'The Living Score', status: 'In progress',
-    copy: 'Part portfolio, part interface experiment—a way to make the system legible without turning it into a dashboard.',
-    beats: [],
-    principle: 'Structure → story',
+    passage: 'Private context stays private; only what the team has agreed on is promoted. It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—so people benefit from it without operating it themselves. What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
   },
 ]
 
@@ -104,18 +81,21 @@ const interests = [
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
-    copy: 'Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
+    copy: 'What they share is authorship—somebody chose the color of that field, the length of that silence. The same taste that produced the site you are scrolling, pointed at a different medium.',
     items: ['The Last of Us', 'Ghost of Tsushima', 'Final Fantasy VII'],
+    passage: 'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back. I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
+  },
+  {
+    id: 'volleyball', mark: '↗', label: 'Volleyball', title: 'The second touch.',
+    copy: 'Twelve hours a week, across three sessions. I set.',
+    items: ['Setter', 'Twelve hrs / week', 'Three sessions'],
+    passage: 'The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way. What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
   },
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
-    copy: 'I played clarinet and bass clarinet for seven years. Orchestral music and jazz are still in the rotation.',
-    items: ['Clarinet', 'Bass clarinet', 'Orchestral & jazz'],
-  },
-  {
-    id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
-    copy: 'Most weeks, that means the gym or a volleyball court—the useful kind of focus where the next touch is the only thing that matters.',
-    items: ['Volleyball', 'Gym', 'Reset'],
+    copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, and it is the first time in a long while that I am the top line.',
+    items: ['Bass clarinet', 'Orchestral & jazz', 'Piano'],
+    passage: 'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate. What I remember is not any performance—it is the rehearsals, working out where everyone’s strength sat and what they needed underneath them. COVID closed the ensemble. The interest never went anywhere.',
   },
 ]
 
@@ -288,17 +268,33 @@ export function ScoreBody() {
         </header>
 
         <div className="counterpoint" aria-label="Systems progressing from personal context to shared output">
-          {systems.map(({ number, title, status, copy, beats, principle }) => (
+          {systems.map(({ number, title, status, copy, principle, passage }) => (
             <article className="system-voice" data-score-reveal key={number}>
               <span className="system-voice__number">{number}</span>
               <div><p className="system-voice__status">{status}</p><h3>{title}</h3></div>
               <div className="system-voice__body">
                 <p>{copy}</p>
-                {beats.length > 0 && <ul>{beats.map((beat) => <li key={beat}>{beat}</li>)}</ul>}
+                <PassageToggle
+                  id={`system-${number}-passage`}
+                  open={openPassage === `system-${number}`}
+                  onToggle={() => setOpenPassage(openPassage === `system-${number}` ? null : `system-${number}`)}
+                  label="Read the mechanics"
+                  openLabel="Close the mechanics"
+                />
+                <div className="passage" id={`system-${number}-passage`} data-open={openPassage === `system-${number}`} role="region" aria-label={`${title}, mechanics`}>
+                  <div className="passage__inner"><p>{passage}</p></div>
+                </div>
               </div>
               <strong>{principle}</strong>
             </article>
           ))}
+          <p className="counterpoint__check" data-score-reveal>
+            Given enough context and too few guardrails, these systems will state something
+            false with perfect composure. The work I care about most was the checks: every
+            output cross-verified against multiple sources, every closure traceable to a
+            specific signal, everything stale flagged as stale. <em>I built it, and then I
+            refused to trust it.</em>
+          </p>
           <span className="counterpoint__chord" aria-hidden="true"><i /><i /><i /></span>
         </div>
       </section>

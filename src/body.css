@@ -182,3 +182,12 @@
 @media (prefers-reduced-motion: reduce) {
   .passage, .passage__inner > p, .passage-toggle__note { transition: none; }
 }
+
+/* The verification note closes Movement III. It sits outside the voices because it is
+   about both of them, and it stays inline because it is the strongest credibility
+   sentence on the site — hiding it behind a press would cost the readers who do not press. */
+.counterpoint__check {
+  width: min(100%, 84rem); max-width: 67ch; margin: clamp(3.5rem, 6vw, 5.5rem) auto 0;
+  color: var(--ink-soft); font: 300 .94rem/1.85 var(--body);
+}
+.counterpoint__check em { color: var(--ink); font-style: normal; }
