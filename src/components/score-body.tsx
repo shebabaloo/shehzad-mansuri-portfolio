@@ -47,7 +47,7 @@ const career = [
 const systems = [
   {
     number: '01', title: 'Second Brain', status: 'Active pattern',
-    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two.',
+    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two—and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     principle: 'Context → synthesis → next move',
     passage: 'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative. It prepares a meeting by answering what changed and what remains unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart. Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
   },
@@ -77,7 +77,7 @@ const interests = [
     id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
     copy: 'Fiction for scale. Philosophy for friction. Notes for everything I’m not done thinking about.',
     items: ['The Way of Kings', 'The Myth of Sisyphus', 'Meditations'],
-    passage: '*Born a Crime* was the first book I held as a star rather than an assignment—blue, soft-covered, heavier in the hand than its size accounted for. Percy Jackson told me what a hero was; Sydney Carton complicated it; in *Lord of the Flies* I argued, loudly and to nobody, that Simon’s kindness failed not because goodness is powerless but because he was never charismatic enough to be heard. I still prance through a bookstore the same way. The shelf is only harder now. Each one is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
+    passage: 'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed; the shelf has. Percy Jackson told me what a hero was and Sydney Carton complicated it. In *Lord of the Flies* I was less interested in whether people are inherently good or evil than in Simon, whose kindness failed not because goodness is powerless but because he was never charismatic enough to be heard. Now it is *The Way of Kings* and *Meditations*—one for scale, one for friction. Each is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
@@ -87,15 +87,15 @@ const interests = [
   },
   {
     id: 'volleyball', mark: '↗', label: 'Volleyball', title: 'The second touch.',
-    copy: 'Twelve hours a week, across three sessions. I set.',
+    copy: 'Twelve hours a week, ideally across three sessions. I set.',
     items: ['Setter', 'Twelve hrs / week', 'Three sessions'],
     passage: 'The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way. What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
   },
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
-    copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, and it is the first time in a long while that I am the top line.',
+    copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which plays either part: the floor or the melody, depending on what the room needs.',
     items: ['Bass clarinet', 'Orchestral & jazz', 'Piano'],
-    passage: 'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate. What I remember is not any performance—it is the rehearsals, working out where everyone’s strength sat and what they needed underneath them. COVID closed the ensemble. The interest never went anywhere.',
+    passage: 'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate. What I remember is not any performance—it is the rehearsals, working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
   },
 ]
 

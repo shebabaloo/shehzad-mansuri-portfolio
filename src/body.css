@@ -109,7 +109,11 @@
      pin to this section instead of the document and the progression never advances. */
   .work-movement { overflow: visible; }
   .career-stage { position: relative; min-height: 100svh; overflow: hidden; }
-  .career-track { display: flex; align-items: center; min-height: 100svh; will-change: transform; }
+  /* Reserve the progression rail's band. The measures centre in the track, so on a short
+     viewport the tallest one grows upward into the rail and its labels — measured at 620px
+     tall, measure A overlapped them by 46px. Padding makes the centring happen below the
+     rail instead, at any viewport height. */
+  .career-track { display: flex; align-items: center; min-height: 100svh; padding-top: clamp(7rem, 13vh, 9.5rem); will-change: transform; }
   .career-measure { flex: 0 0 100%; min-height: auto; padding: 0 clamp(2rem, 4vw, 4rem) 0 0; border-top: none; }
   .career-measure + .career-measure { padding-left: clamp(2rem, 4vw, 4rem); border-left: 1px solid oklch(48% .045 60 / .34); }
   .career-measure::after { top: 0; left: auto; right: 0; }
