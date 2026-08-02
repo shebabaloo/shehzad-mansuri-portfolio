@@ -4,8 +4,42 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#1e1a18" />
-    <meta name="description" content="The Living Score — a personal and professional playground by Shehzad Mansuri." />
+
     <title>The Living Score — Shehzad Mansuri</title>
+    <meta
+      name="description"
+      content="Product thinking, systems building, and the things that keep the whole score human. A personal index by Shehzad Mansuri."
+    />
+    <link rel="canonical" href="%SITE_URL%/" />
+
+    <!-- %SITE_URL% is substituted at build time from the SITE_URL environment variable; see
+         the site-url plugin in vite.config.ts. LinkedIn does not reliably resolve a relative
+         og:image, and LinkedIn is where this gets shared, so it must be absolute in prod. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="The Living Score" />
+    <meta property="og:title" content="The Living Score — Shehzad Mansuri" />
+    <meta
+      property="og:description"
+      content="Product thinking, systems building, and the things that keep the whole score human."
+    />
+    <meta property="og:url" content="%SITE_URL%/" />
+    <meta property="og:image" content="%SITE_URL%/og.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta
+      property="og:image:alt"
+      content="The Living Score, set on a musical staff, with note heads scattering off the right edge."
+    />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="The Living Score — Shehzad Mansuri" />
+    <meta
+      name="twitter:description"
+      content="Product thinking, systems building, and the things that keep the whole score human."
+    />
+    <meta name="twitter:image" content="%SITE_URL%/og.jpg" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400&amp;family=Libre+Caslon+Display&amp;family=Manrope:wght@300;400;500&amp;display=swap" rel="stylesheet" />
