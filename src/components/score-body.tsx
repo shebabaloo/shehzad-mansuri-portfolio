@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { CodaDispersal } from './ui/coda-dispersal'
 import { MailLink } from './ui/mail-link'
 import { PassageToggle } from './ui/passage-toggle'
 
@@ -388,6 +389,7 @@ export function ScoreBody() {
 
       <section className="coda" id="coda" aria-labelledby="coda-title">
         <SectionStaff />
+        <CodaDispersal />
         <div className="coda__inner" data-score-reveal>
           <p>Coda <span>·</span> Still composing</p>
           <h2 id="coda-title">The next movement is <em>still unwritten.</em></h2>

@@ -97,6 +97,15 @@
    a settled field at any viewport. The transition reads faster, which is also better: the
    gradient is the approach, and the words land after dark. */
 .coda { position: relative; min-height: 130svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(10rem, 15vw, 15rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
+/* The dispersal occupies the right half only. The copy has the left, and the notes leave
+   from a focus just inside the canvas — so the field reads as coming off the end of the
+   staff rather than as a texture laid over the whole section. */
+.coda-dispersal {
+  position: absolute; z-index: 1; right: 0; top: 50%; width: 62%; height: min(46rem, 70%);
+  transform: translateY(-50%); pointer-events: none;
+}
+@media (max-width: 860px) { .coda-dispersal { width: 100%; opacity: .55; } }
+
 .coda .section-staff { top: 50%; opacity: .3; transform: translateY(-50%); }
 .coda .section-staff path { stroke: var(--brass); }
 .coda__inner { position: relative; z-index: 2; width: min(100%, 76rem); }
