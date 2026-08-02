@@ -253,7 +253,30 @@ button, a { -webkit-tap-highlight-color: transparent; }
 @media (max-width: 860px) {
   .site-header { grid-template-columns: 1fr auto; padding: 1rem 1.1rem; }
   .site-credit { display: none; }
-  .score-rail { display: none; }
+  /* The rail turns on its side rather than disappearing. It used to be display:none here,
+     which — combined with `scrollbar-width: none` on html — left a phone reader with no
+     position feedback of any kind on a 17,900px page.
+
+     Transposing the existing rail rather than adding a second indicator keeps one source of
+     truth: --page-progress, the chapter tracking, and the aria progress semantics on <nav>
+     are already here, and display:none was removing those from the accessibility tree too.
+     The staff, notation, and chapter jump links are dropped, since 2px of height cannot
+     carry them and a touch reader gets those affordances from the headings instead. */
+  .score-rail {
+    inset: 0 0 auto 0; width: auto; height: 2px;
+    background: oklch(60% .05 70 / .2);
+    transform: translateY(calc((1 - var(--rail-opacity)) * -100%));
+    pointer-events: none;
+  }
+  .score-rail__staff, .score-rail__notation,
+  .score-rail__links, .score-rail__chapter { display: none; }
+  /* The playhead becomes the filled span behind it — same object, read left to right. */
+  .score-rail__thumb {
+    top: 0; left: 0; width: 100%; height: 100%;
+    border: 0; border-radius: 0; box-shadow: none;
+    background: var(--coral-display);
+    transform: scaleX(var(--page-progress)); transform-origin: left center;
+  }
   .movement-label { display: none; }
   .overture-copy { top: 14%; width: calc(100% - 2.2rem); }
   .overture-copy h1 { font-size: clamp(3.6rem, 17vw, 5.4rem); }

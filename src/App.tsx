@@ -33,11 +33,22 @@ export function App() {
     const sticky = stickyRef.current
     if (!overture || !sticky) return
 
+    // Page progress is wayfinding, not decoration, so it is wired up before the
+    // reduced-motion branch. It used to be created after, which meant anyone with reduced
+    // motion lost the rail entirely — on a 17,900px page that is the one indicator they
+    // most need, and it costs no animation to provide.
+    const railTrigger = ScrollTrigger.create({
+      start: 0,
+      end: () => ScrollTrigger.maxScroll(window),
+      onUpdate: (self) => railRef.current?.setProgress(self.progress),
+    })
+
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     if (reducedMotion) {
       spiralRef.current?.setProgress(0.6)
-      railRef.current?.setVisible(0)
-      return
+      railRef.current?.setVisible(1)
+      railRef.current?.setProgress(0)
+      return () => railTrigger.kill()
     }
 
     const progress = { value: 0 }
@@ -98,12 +109,6 @@ export function App() {
         scrub: 1.1,
         invalidateOnRefresh: true,
       },
-    })
-
-    const railTrigger = ScrollTrigger.create({
-      start: 0,
-      end: () => ScrollTrigger.maxScroll(window),
-      onUpdate: (self) => railRef.current?.setProgress(self.progress),
     })
 
     const firstMovement = document.getElementById('first-movement')
