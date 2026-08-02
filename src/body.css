@@ -79,6 +79,8 @@
 .variation-score { width: min(100%, 84rem); margin: 0 auto; }
 .variation { position: relative; min-height: 26rem; display: grid; grid-template-columns: .58fr 1.5fr 1fr; gap: clamp(2rem, 5vw, 6rem); padding: 4.5rem 0; border-top: 1px solid oklch(48% .045 60 / .32); align-items: start; overflow: hidden; }
 .variation:last-child { border-bottom: 1px solid oklch(48% .045 60 / .2); }
+.variation__icon { display: block; width: clamp(2.1rem, 3vw, 2.75rem); height: auto; margin-bottom: 1.35rem; color: var(--coral-display); }
+.variation__icon path { fill: none; stroke: currentColor; stroke-width: 1.1; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
 .variation__meta span, .variation__meta b { display: block; font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
 .variation__meta b { margin-top: 1rem; color: var(--coral-ink); font-weight: 400; }
 .variation h3 { margin: 0; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.048em; }

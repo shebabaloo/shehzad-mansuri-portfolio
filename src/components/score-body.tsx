@@ -95,9 +95,22 @@ const systems = [
   },
 ]
 
-const variations = [
+type Variation = {
+  number: string
+  title: string
+  status: string
+  icon: 'strawberry' | 'cup' | 'plane'
+  question: string
+  copy: string
+  passage?: string[]
+  source?: string
+  sourceLabel?: string
+}
+
+const variations: Variation[] = [
   {
     number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
+    icon: 'strawberry',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
     copy: 'Millions of tons of specialty crops go unharvested every year—labor shortages, rising costs, and harvest windows that keep narrowing—and the value rots in the field. Groundwork OS was our four-day answer.',
     passage: [
@@ -112,13 +125,15 @@ const variations = [
   },
   {
     number: 'Variation II', title: 'Restaurant / Café Ranker', status: 'In the sketchbook',
-    question: 'What if your saved places became a personal guide your friends could actually use?',
-    copy: 'A shareable, filterable map of places I’d genuinely recommend—organized by cuisine, neighborhood, price, and vibe.',
+    icon: 'cup',
+    question: 'What if the places I have saved and the recommendations I keep texting became one thing you could actually look at?',
+    copy: 'Years of dropped pins and half-remembered advice, turned into a shareable, filterable map—organized by cuisine, neighborhood, price, and vibe.',
   },
   {
-    number: 'Variation III', title: 'Intentional YouTube', status: 'In the sketchbook',
-    question: 'What if video discovery optimized for learning intent instead of watch time?',
-    copy: 'A calmer front door to YouTube that turns a topic into a taste-aware learning path, with focus and exploration treated as different modes.',
+    number: 'Variation III', title: 'One-File Flight', status: 'In the sketchbook',
+    icon: 'plane',
+    question: 'How much world can you fit inside a single HTML file?',
+    copy: 'A flight simulator with no build step and no dependencies—terrain generated procedurally at load, flown in the browser, and passed around as one file that still works in ten years.',
   },
 ]
 
@@ -217,6 +232,43 @@ function Passage({ id, open, label, paragraphs }: {
         {paragraphs.map((paragraph, i) => <p key={i}>{renderEmphasis(paragraph)}</p>)}
       </div>
     </div>
+  )
+}
+
+/* Each variation gets a mark, because three headings in the same display face read as one
+   undifferentiated block until something tells them apart. Drawn rather than set: emoji or
+   stock glyphs would land as clip art next to this typography, and DESIGN.md rules that
+   out. These use the monogram's vocabulary instead — one weight of stroke, round joins,
+   no fill — so they read as notation on the same page rather than borrowed iconography. */
+const variationMarks = {
+  strawberry: (
+    <>
+      <path d="M12 21.4c-3.9 0-6.9-3.3-6.9-7.2 0-2.7 2.1-4.8 3.9-4.8 1 0 2 .4 3 .4s2-.4 3-.4c1.8 0 3.9 2.1 3.9 4.8 0 3.9-3 7.2-6.9 7.2Z" />
+      <path d="M12 9.4V5.9" />
+      <path d="M12 7.2C11 6.1 9.6 5.6 8.2 5.8" />
+      <path d="M12 7.2c1-1.1 2.4-1.6 3.8-1.4" />
+      <path d="M9.7 13.3v.7M14.3 13.3v.7M12 16v.7M10.3 18.2v.7M13.7 18.2v.7" />
+    </>
+  ),
+  cup: (
+    <>
+      <path d="M5.4 10.4h11.2v4.3a5.6 5.6 0 0 1-11.2 0Z" />
+      <path d="M16.6 11.7h1.7a2.1 2.1 0 0 1 0 4.2h-1.7" />
+      <path d="M3.4 20.4h15.2" />
+      <path d="M9.5 7.6c0-1.1 1-1.6 1-2.7s-1-1.6-1-1.6" />
+      <path d="M13.5 7.6c0-1.1 1-1.6 1-2.7s-1-1.6-1-1.6" />
+    </>
+  ),
+  plane: (
+    <path d="M12 2.6c.75 0 1.3.85 1.3 1.9v4.4l7.2 4.2v1.9l-7.2-2.2v4.4l2.1 1.5v1.4L12 19.4l-3.4.7v-1.4l2.1-1.5v-4.4L3.5 15v-1.9l7.2-4.2V4.5c0-1.05.55-1.9 1.3-1.9Z" />
+  ),
+}
+
+function VariationMark({ icon }: { icon: keyof typeof variationMarks }) {
+  return (
+    <svg className="variation__icon" viewBox="0 0 24 24" aria-hidden="true">
+      {variationMarks[icon]}
+    </svg>
   )
 }
 
@@ -462,7 +514,10 @@ export function ScoreBody() {
         <div className="variation-score">
           {variations.map((variation) => (
             <article className="variation" data-score-reveal key={variation.title}>
-              <div className="variation__meta"><span>{variation.number}</span><b>{variation.status}</b></div>
+              <div className="variation__meta">
+                <VariationMark icon={variation.icon} />
+                <span>{variation.number}</span><b>{variation.status}</b>
+              </div>
               <div>
                 <h3>{variation.title}</h3>
                 <p className="variation__question">{variation.question}</p>
