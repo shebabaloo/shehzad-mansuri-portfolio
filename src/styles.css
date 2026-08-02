@@ -138,7 +138,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
   --paper-tone: 0; --descriptor-opacity: 0; --descriptor-y: 1.2rem;
   --descriptor-1: 0; --descriptor-2: 0; --descriptor-3: 0; --extract: 0;
   --handoff-opacity: 0; --handoff-y: 1.4rem; --scroll-opacity: 1;
-  position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate;
+  /* dvh, not svh. svh is the viewport with the browser chrome fully expanded — the
+     smallest it ever gets — so on iOS, once the URL bar collapses on scroll, the viewport
+     grows past this element and exposes a band of bare --night beneath the starfield,
+     which stops at the canvas edge. dvh tracks the viewport as the bar moves, so there is
+     nothing to expose.
+     lvh would also close the gap, but it pins the element to the largest viewport, and
+     .scroll-cue is anchored bottom: 2rem — it would sit below the fold on first paint,
+     hidden at the one moment it is doing its job. The svh line stays as the fallback for
+     engines without dvh. */
+  position: sticky; top: 0; height: 100svh; height: 100dvh; overflow: hidden; isolation: isolate;
   background: radial-gradient(circle at 50% 57%, oklch(27% .024 48), transparent 34%), linear-gradient(145deg, oklch(21% .014 53), var(--night));
 }
 .overture__sticky::after { content: ""; position: absolute; z-index: 30; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px oklch(87% .03 80 / .08); }
