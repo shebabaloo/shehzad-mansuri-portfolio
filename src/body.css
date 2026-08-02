@@ -94,6 +94,7 @@
 .personal-measure__copy > p { margin: 0 0 1.25rem; color: var(--coral-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .personal-measure__copy h3 { margin: 0; max-width: 12ch; font: 400 clamp(2.7rem, 5vw, 5.6rem)/.9 var(--display); letter-spacing: -.05em; }
 .personal-measure__copy > span { display: block; max-width: 48ch; margin-top: 2rem; color: var(--ink-soft); font: 300 .9rem/1.75 var(--body); }
+.personal-measure__list-label { margin: 0 0 .9rem; padding-bottom: .6rem; border-bottom: 1px solid oklch(48% .045 60 / .3); color: var(--brass-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .personal-measure ul { padding: 0; margin: 0; list-style: none; }
 .personal-measure li { padding: 1rem 0; border-bottom: 1px solid oklch(48% .045 60 / .2); font: 400 var(--u-lg) var(--utility); letter-spacing: .06em; }
 .personal-measure--2 .personal-measure__mark { color: var(--cobalt-display); }

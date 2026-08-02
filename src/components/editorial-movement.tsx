@@ -18,9 +18,14 @@ export function EditorialMovement() {
         <article className="landing-copy">
           <p className="eyebrow">The Living Score</p>
           <h2 id="living-score-title">A life in<br /><em>progress.</em></h2>
+          {/* The dek used to stop at temperament — three descriptors and no facts. A reader
+              meeting this section first had no idea what the work actually is, so the
+              second sentence lands the role before the abstraction starts. */}
           <p className="dek">
             I’m Shez—part product thinker, part systems builder, and always curious
-            about what happens when an idea gets room to move.
+            about what happens when an idea gets room to move. Day to day, a technical
+            program manager at Deloitte, embedded with a FAANG company’s data-center
+            infrastructure teams.
           </p>
           <p className="body-copy">
             Most of what I do happens in the space between things—between a team that has

@@ -14,17 +14,17 @@ const career = [
     org: 'Deloitte · FAANG company',
     team: 'Infrastructure & Data Centers',
     role: 'Technical Program Manager',
-    lead: 'Turning complex infrastructure work into products and programs people can actually operate.',
+    lead: 'Six programs across data-center infrastructure, currently a site-selection platform—turning complex work into products and programs people can actually operate.',
     beats: [
-      'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for 200+ stakeholders tracking a $60B+ investment portfolio.',
+      'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for a $60B+ investment portfolio, now peaking near 290 monthly users.',
       'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, 50+ stakeholder journeys, prototypes, user testing, and tangible enhancements shipped to production apps.',
-      'Owned the roadmap, releases, and documentation for a four-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
+      'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking $20B+ in spend, and covered the client program manager through a 90-day absence.',
     ],
     passage: [
-      'The site-selection platform did not exist when I arrived. The portfolio lived in sixteen spreadsheets, and no two people read them the same way. Concept to production took three weeks—which sounds like speed and was really scope discipline: deciding, early and out loud, what the first version would refuse to do.',
-      'The program underneath it was built from zero at the same time. Four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, a decision log separating MVP from V1, and a standing cadence—so that four groups moving at once stayed legible to each other rather than merely busy.',
-      'A separate product ran alongside it: a four-module financial platform tracking $20B+ in spend, where I owned the roadmap, the releases, and the documentation, and covered the client program manager through a ninety-day absence.',
-      'What connected them was the practice rather than the subject matter—proprietary AI tooling used to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing. It compressed the distance between a question and something real enough to react to.',
+      'Six programs across this space in two years. The one I am on now is a data-center site-selection platform, and it did not exist when I arrived—the portfolio lived in sixteen spreadsheets, and no two people read them the same way.',
+      'Concept to production took three weeks, which sounds like speed and was really scope discipline: deciding early, and out loud, what the first version would refuse to do. It now carries a $60B+ investment portfolio and peaks near 290 monthly users. The program underneath it was built from zero on the same clock—four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, and a decision log separating MVP from V1.',
+      'The year before that was a different problem: a seven-module financial platform tracking $20B+ in spend, where I owned the roadmap, the releases, and the documentation—and covered the client program manager through a ninety-day absence.',
+      'What carries across all six is the practice rather than the subject matter. Proprietary AI tooling to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing—compressing the distance between a question and something real enough to react to.',
     ],
   },
   {
@@ -65,17 +65,18 @@ const career = [
 const systems = [
   {
     number: '01', title: 'Second Brain', status: 'Active pattern',
-    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a layer underneath the work that does the reconstruction and hands it back. Twenty minutes of morning assembly became two—and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
+    copy: 'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information—it was the reconstruction, performed again at every switch. So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk. Twenty minutes of morning assembly became two, and then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     principle: 'Context → synthesis → next move',
     passage: [
       'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative.',
       'It prepares a meeting by answering what changed and what is still unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart.',
       'Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
+      'In practice it takes back eight to eleven hours a week, roughly three-quarters of the recurring program overhead. The number I care about more is that it was adopted across my team rather than staying a personal trick—which meant it had to survive contact with people who had not built it.',
     ],
   },
   {
     number: '02', title: 'Team Third Brain', status: 'Active pattern',
-    copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. So the verified, team-relevant part of that context was promoted into shared ground—decisions, ownership, milestones, risks—and the agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members.',
+    copy: 'The personal system made me faster; the team still ran on meetings and hand-maintained documents. The Third Brain is the same architecture at team scope—a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context gets promoted into common ground: decisions, ownership, milestones, risks. Agendas, briefings, and weekly updates now stand on it rather than on anyone’s memory. The first implementation serves 22 members across 90+ resources and 130+ synchronized decisions.',
     principle: 'Individual context ↔ shared clarity',
     passage: [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
@@ -114,26 +115,30 @@ const variations = [
 const interests = [
   {
     id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
-    copy: 'Fiction for scale. Philosophy for friction. Notes for everything I’m not done thinking about.',
-    items: ['The Way of Kings', 'The Myth of Sisyphus', 'Meditations'],
+    copy: 'Fantasy for invention, philosophy for friction, and literary fiction for the things neither one will say directly.',
+    listLabel: 'Recent favorites',
+    items: ['The Way of Kings', 'The Myth of Sisyphus', 'Spring Snow', 'Meditations'],
     passage: [
       'At seventeen I wrote an essay about walking into a bookstore and prancing—not browsing, prancing—until a title caught my eye. That part has not changed. The shelf has.',
-      'Percy Jackson told me what a hero was and Sydney Carton complicated it. In *Lord of the Flies* I was less interested in whether people are inherently good or evil than in Simon, whose kindness failed not because goodness is powerless but because he was never charismatic enough to be heard.',
-      'Now it is *The Way of Kings* and *Meditations*—one for scale, one for friction. Each is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
+      'What I look for now is a way of thinking I have not met yet. *Meditations* and *The Myth of Sisyphus* argue directly about how to hold a life. *Spring Snow* refuses to argue and simply shows you one. *The Way of Kings* invents an entire world in order to ask the same question somewhere the answer is not already settled.',
+      'Each one is another point of view, another gap quietly closed. In this world, I seek to learn.',
     ],
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
     copy: 'What they share is authorship—somebody chose the color of that field, the length of that silence. The same taste that produced the site you are scrolling, pointed at a different medium.',
-    items: ['The Last of Us', 'Ghost of Tsushima', 'Final Fantasy VII'],
+    listLabel: 'Most memorable video games',
+    items: ['The Last of Us', 'Ghost of Tsushima', 'Final Fantasy VII', 'Destiny 2'],
     passage: [
       'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
       'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
+      'Destiny 2 is the outlier and the counterweight—a world I return to rather than finish, where the pull is the loop and the people running it with me.',
     ],
   },
   {
     id: 'movement', mark: '↗', label: 'Movement', title: 'The score needs a pulse.',
     copy: 'The gym most weeks, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
+    listLabel: 'Weekly rotation',
     items: ['Volleyball', 'Gym', 'Cycling'],
     passage: [
       'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way.',
@@ -143,6 +148,7 @@ const interests = [
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
     copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which plays either part: the floor or the melody, depending on what the room needs.',
+    listLabel: 'What I play',
     items: ['Bass clarinet', 'Orchestral & jazz', 'Piano'],
     passage: [
       'The bass clarinet is a long, bottom-heavy, faintly absurd object, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
@@ -481,7 +487,12 @@ export function ScoreBody() {
                   </>
                 )}
               </div>
-              <ul>{interest.items.map((item) => <li key={item}>{item}</li>)}</ul>
+              {/* The list used to stand unlabelled, which left the reader to infer what
+                  four proper nouns had in common. Naming it is the cheaper fix. */}
+              <div className="personal-measure__list">
+                <p className="personal-measure__list-label">{interest.listLabel}</p>
+                <ul>{interest.items.map((item) => <li key={item}>{item}</li>)}</ul>
+              </div>
             </article>
           ))}
         </div>
