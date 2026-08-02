@@ -1,7 +1,8 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
+import { PassageToggle } from './ui/passage-toggle'
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
@@ -99,6 +100,7 @@ const interests = [
     id: 'books', mark: 'Aa', label: 'Books & philosophy', title: 'Some ideas need more than a tab.',
     copy: 'Fiction for scale. Philosophy for friction. Notes for everything I’m not done thinking about.',
     items: ['The Way of Kings', 'The Myth of Sisyphus', 'Meditations'],
+    passage: '*Born a Crime* was the first book I held as a star rather than an assignment—blue, soft-covered, heavier in the hand than its size accounted for. Percy Jackson told me what a hero was; Sydney Carton complicated it; in *Lord of the Flies* I argued, loudly and to nobody, that Simon’s kindness failed not because goodness is powerless but because he was never charismatic enough to be heard. I still prance through a bookstore the same way. The shelf is only harder now. Each one is another working style, another point of view, another gap between knowledge bases quietly closed. In this world, I seek to learn.',
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds that stay after the credits.',
@@ -130,6 +132,7 @@ export function ScoreBody() {
   const careerStageRef = useRef<HTMLDivElement>(null)
   const careerTrackRef = useRef<HTMLDivElement>(null)
   const playheadRef = useRef<HTMLSpanElement>(null)
+  const [openPassage, setOpenPassage] = useState<string | null>(null)
 
   useEffect(() => {
     const id = window.location.hash.slice(1)
@@ -327,7 +330,27 @@ export function ScoreBody() {
           {interests.map((interest, index) => (
             <article className={`personal-measure personal-measure--${index + 1}`} id={interest.id} data-score-reveal key={interest.id}>
               <span className="personal-measure__mark" aria-hidden="true">{interest.mark}</span>
-              <div className="personal-measure__copy"><p>{interest.label}</p><h3>{interest.title}</h3><span>{interest.copy}</span></div>
+              <div className="personal-measure__copy">
+                <p>{interest.label}</p><h3>{interest.title}</h3><span>{interest.copy}</span>
+                {interest.passage && (
+                  <>
+                    <PassageToggle
+                      id={`${interest.id}-passage`}
+                      open={openPassage === interest.id}
+                      onToggle={() => setOpenPassage(openPassage === interest.id ? null : interest.id)}
+                    />
+                    <div className="passage" id={`${interest.id}-passage`} data-open={openPassage === interest.id} role="region" aria-label={`${interest.label}, full passage`}>
+                      <div className="passage__inner">
+                        <p>{interest.passage.split(/(\*[^*]+\*)/).map((part, i) =>
+                          part.startsWith('*') && part.endsWith('*')
+                            ? <em key={i}>{part.slice(1, -1)}</em>
+                            : part,
+                        )}</p>
+                      </div>
+                    </div>
+                  </>
+                )}
+              </div>
               <ul>{interest.items.map((item) => <li key={item}>{item}</li>)}</ul>
             </article>
           ))}

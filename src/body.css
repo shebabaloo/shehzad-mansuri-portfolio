@@ -129,3 +129,56 @@
 @media (prefers-reduced-motion: reduce) {
   [data-score-reveal], [data-measure-reveal] { opacity: 1 !important; transform: none !important; }
 }
+
+/* Passage toggle — press-depth in the site's vocabulary. The note head floats a few
+   pixels above its staff line and seats onto it under the press, leaning toward wherever
+   the pointer landed. Transform and opacity only, no dependency, no bounce.
+
+   The disclosure itself uses grid-template-rows 0fr → 1fr. That is a layout property, and
+   the brief restricts animation to transform and opacity — a deliberate exception, because
+   the rule exists to protect scroll-linked animation from layout thrash and this fires once
+   on a click. Reduced motion drops the transition entirely. */
+.passage-toggle {
+  --depth: 5px;
+  position: relative; display: inline-flex; align-items: center; gap: .85rem;
+  margin-top: 2.25rem; padding: 0 0 var(--depth); border: 0; background: none;
+  font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-soft); cursor: pointer;
+}
+.passage-toggle__staff {
+  position: absolute; left: 0; bottom: 0; width: 1.5rem; height: 1px;
+  background: var(--brass);
+}
+.passage-toggle__note {
+  position: relative; z-index: 1; width: 1.5rem; height: .72rem;
+  transform: translateY(calc(var(--depth) * -1)) rotate(-22deg);
+  transition: transform .16s var(--ease-enter);
+}
+.passage-toggle__note::before {
+  content: ""; position: absolute; inset: 0; border-radius: 50%;
+  background: var(--coral);
+}
+.passage-toggle__label { transition: color .16s var(--ease-enter); }
+.passage-toggle:hover .passage-toggle__note { transform: translateY(calc(var(--depth) * -1.5)) rotate(-22deg); }
+.passage-toggle:hover .passage-toggle__label { color: var(--ink); }
+.passage-toggle[data-pressed] .passage-toggle__note {
+  transform: translateY(0) rotate(-22deg) rotateY(var(--lean-x, 0deg)) rotateX(var(--lean-y, 0deg));
+}
+.passage-toggle[aria-expanded="true"] .passage-toggle__note::before {
+  background: none; border: 1px solid var(--coral);
+}
+
+.passage { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .42s var(--ease-enter); }
+.passage[data-open="true"] { grid-template-rows: 1fr; }
+.passage__inner { overflow: hidden; }
+.passage__inner > p {
+  max-width: 67ch; margin: 2rem 0 0; color: var(--ink-soft);
+  font: 300 .94rem/1.85 var(--body);
+  opacity: 0; transform: translateY(.6rem);
+  transition: opacity .3s var(--ease-enter) .08s, transform .3s var(--ease-enter) .08s;
+}
+.passage[data-open="true"] .passage__inner > p { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .passage, .passage__inner > p, .passage-toggle__note { transition: none; }
+}
