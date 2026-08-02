@@ -309,14 +309,20 @@ button, a { -webkit-tap-highlight-color: transparent; }
      problem. Bottom right rather than bottom left: the Coda's own links sit left, and a
      thumb reaches this corner. */
   .jump-index {
-    position: fixed; z-index: 60; right: 1rem; bottom: 1rem;
-    display: inline-flex; align-items: center; gap: .55rem;
-    min-height: 44px; padding: .7rem 1.1rem;
+    position: fixed; z-index: 60; right: .85rem; bottom: .85rem;
+    display: inline-flex; align-items: center; gap: .4rem;
+    /* Sized to the label rather than to the 44px minimum — at that height it read as a
+       primary action and collided with whatever heading happened to be beside it. The tap
+       area is restored to 44px by the pointer:coarse rule below, which grows the hit box
+       without growing the pill. */
+    padding: .5rem .8rem;
     border: 1px solid var(--coral); border-radius: 999px;
     background: var(--paper); color: var(--ink);
-    font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase;
+    /* --u-md, not a smaller one-off: the mobile audit put the floor for utility text at
+       11.7px, and a control's own label is the last place to go under it. */
+    font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
     text-decoration: none;
-    box-shadow: 0 6px 20px oklch(30% .03 60 / .2);
+    box-shadow: 0 3px 12px oklch(30% .03 60 / .16);
     opacity: 0; transform: translateY(.6rem); pointer-events: none;
     transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
   }
@@ -407,12 +413,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 
 @media (pointer: coarse) {
-  .skip-link, .monogram, .open-score, .enter-score,
+  .skip-link, .monogram, .open-score, .enter-score, .jump-index,
   .text-link, .passage-toggle, .variation__source, .coda nav a { position: relative; }
 
   .skip-link::after, .monogram::after, .open-score::after, .enter-score::after,
   .text-link::after, .passage-toggle::after, .variation__source::after,
-  .coda nav a::after {
+  .jump-index::after, .coda nav a::after {
     content: ""; position: absolute; left: 0; right: 0; top: 50%;
     min-width: 44px; height: 44px; transform: translateY(-50%);
   }
