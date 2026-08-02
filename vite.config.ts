@@ -20,14 +20,17 @@ const siteUrl = (): Plugin => {
     transformIndexHtml: {
       order: 'pre',
       handler(html, ctx) {
-        const resolved = origin || (ctx.server ? 'http://127.0.0.1:5173' : '')
-        if (!resolved) {
+        if (!origin) {
           this.warn?.(
-            'SITE_URL is not set. og:url and og:image will be emitted as relative paths, ' +
-              'which LinkedIn and X will not render as a link preview. ' +
-              'Build with: SITE_URL=https://your-domain npm run build',
+            'SITE_URL is not set, falling back to a localhost origin. Link previews will ' +
+              'not resolve for anyone but you. ' +
+              'Build for release with: SITE_URL=https://your-domain npm run build',
           )
         }
+        // The fallback must stay absolute. An empty substitution leaves href="/", which
+        // Vite's asset resolver then tries to read as a file and fails on with EISDIR,
+        // because "/" resolves to the project root.
+        const resolved = origin || (ctx.server ? 'http://127.0.0.1:5173' : 'http://localhost:4173')
         return html.replaceAll('%SITE_URL%', resolved)
       },
     },

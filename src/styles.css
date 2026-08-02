@@ -316,3 +316,25 @@ button, a { -webkit-tap-highlight-color: transparent; }
 
   input, textarea, select { cursor: text; }
 }
+
+/* Touch hit areas. Measured at 375px, eighteen controls sat under the 44px minimum, and
+   the two worst were the ones that matter most: the passage toggles that open every
+   deep-dive were 19px tall, and the Groundwork source link 20px.
+
+   The fix is a pseudo-element rather than padding, because these controls are tuned to the
+   type they sit in — the passage toggle's staff line is positioned against its own bottom
+   edge, so padding it would pull the line off the note head it seats onto. An overlay
+   changes the touch target and nothing else, and it is scoped to coarse pointers so the
+   desktop rhythm is untouched. Listed explicitly rather than applied to every link: a
+   blanket a::after would collide with the decorative ::after rules on the barlines. */
+@media (pointer: coarse) {
+  .skip-link, .monogram, .open-score, .enter-score,
+  .text-link, .passage-toggle, .variation__source, .coda nav a { position: relative; }
+
+  .skip-link::after, .monogram::after, .open-score::after, .enter-score::after,
+  .text-link::after, .passage-toggle::after, .variation__source::after,
+  .coda nav a::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 50%;
+    min-width: 44px; height: 44px; transform: translateY(-50%);
+  }
+}
