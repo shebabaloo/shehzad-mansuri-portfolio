@@ -180,7 +180,10 @@ const interests: Interest[] = [
       { name: 'Clair Obscur: Expedition 33' }, { name: 'Destiny 2' },
     ],
     listLabel2: 'Most played around the table',
-    items2: [{ name: 'Catan' }, { name: 'Codenames' }, { name: 'Rummikub' }],
+    items2: [
+      { name: 'Catan' }, { name: 'Codenames' },
+      { name: 'Rummikub' }, { name: 'Egyptian Rat Slap' },
+    ],
     passage: [
       'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
       'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
@@ -196,6 +199,22 @@ const interests: Interest[] = [
     passage: [
       'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way.',
       'What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
+    ],
+  },
+  {
+    /* A fermata holds a note longer than it is written. It is the only mark in the notation
+       that means "stay here a while", which is the whole argument of this measure. */
+    id: 'coffee', mark: '𝄐', label: 'Coffee & company', title: 'Held longer than written.',
+    copy: 'Coffee and matcha, in equal measure. The standing excuse to sit across from someone for an hour that was meant to be twenty minutes—on a patio, when the weather allows.',
+    listLabel: 'The usual',
+    items: [
+      { name: 'Coffee' }, { name: 'Matcha' },
+      { name: 'Friends & family' }, { name: 'No fixed end time' },
+    ],
+    passage: [
+      'It is the one appointment I never want to end on schedule. Coffee or matcha depending on the day and the hour—I have never seen the need to choose between them.',
+      'What I am actually after is the format: two people, one table, no agenda, and an hour that was supposed to be twenty minutes. Outside whenever the weather cooperates, which is often enough to plan around.',
+      'Half the places on my short list are there because of a conversation I had in them rather than anything on the menu.',
     ],
   },
   {

@@ -16,7 +16,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP)
 // read as one level of structure when it was two.
 const movementKey = [
   { group: 'In motion', items: ['Work', 'Systems', 'Ideas'] },
-  { group: 'Off the clock', items: ['Books', 'Games', 'Movement', 'Music'] },
+  { group: 'Off the clock', items: ['Literature', 'Games', 'Movement', 'Coffee', 'Music'] },
 ]
 
 const clamp = (value: number, min = 0, max = 1) => Math.min(max, Math.max(min, value))

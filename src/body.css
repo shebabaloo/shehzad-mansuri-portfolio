@@ -127,7 +127,8 @@
    Two marks in each colour at regular intervals keeps the two-colour system reading as a
    system rather than as one stray blue mark. */
 .personal-measure--1 .personal-measure__mark,
-.personal-measure--3 .personal-measure__mark { color: var(--cobalt-display); }
+.personal-measure--3 .personal-measure__mark,
+.personal-measure--5 .personal-measure__mark { color: var(--cobalt-display); }
 
 /* Nightfall has to finish before the text starts. The stops used to run to 36rem while the
    content began at 21.8rem, which stranded the "Coda · Still composing" label on a mid-tone
