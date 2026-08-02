@@ -126,8 +126,8 @@ const variations: Variation[] = [
   {
     number: 'Variation II', title: 'The Short List', status: 'In the sketchbook',
     icon: 'cup',
-    question: 'What if a recommendation still carried the person who made it, instead of an average of strangers?',
-    copy: 'I never took to the food-ranking apps: the number at the top is everyone’s opinion, and therefore nobody’s. This is the opposite—the places I have actually saved and the advice I keep texting, ordered by my own taste. And something you move through rather than scroll: filter by cuisine, neighborhood, price, or vibe and watch the shortlist redraw itself.',
+    question: 'What if a food guide were simply one person’s taste, stated plainly, instead of a platform waiting on everyone else’s?',
+    copy: 'I never took to the food-ranking apps: the number at the top is everyone’s opinion, and therefore nobody’s. So this is not a network for collecting other people’s ratings—it is mine. The places I have actually saved and the advice I keep texting, in my own order, with the reasons attached. And something you move through rather than scroll: filter by cuisine, neighborhood, price, or vibe and watch the list redraw.',
   },
   {
     number: 'Variation III', title: 'One-File Flight', status: 'In the sketchbook',
