@@ -9,15 +9,39 @@
   --coral: oklch(67% 0.19 34);
   --cobalt: oklch(60% 0.2 264);
   --night: oklch(18% 0.012 52);
+  /* Paper-safe accents. The bright accents above are tuned for the night field, where they
+     clear AA comfortably (coral 5.80:1, brass 6.97:1 on --night). On paper they do not:
+     coral lands at 2.89:1 and brass at 2.40:1, which failed roughly forty small-text nodes
+     across the body movements. These keep the hue and drop lightness instead, so the
+     palette reads the same while the type is legible.
+
+     Two rungs, because WCAG has two thresholds. --*-ink clears 4.5:1 on every paper field
+     (paper 5.80, paper-deep 4.83, ensemble 5.30) and is the only accent permitted on text
+     below 24px. --*-display clears 3:1 and is for display type, marks, and UI affordances
+     at that size or larger. Decorative rules, barlines, braces, and bullets keep the bright
+     accents: they carry no information a reader has to resolve. */
+  --coral-ink: oklch(50% 0.17 34);
+  --coral-display: oklch(58% 0.185 34);
+  --brass-ink: oklch(48% 0.07 72);
+  --cobalt-display: oklch(52% 0.2 264);
+  /* The focus ring is a UI affordance, so it needs 3:1 against whatever it sits on. Paper
+     is the default; the night sections opt back into the bright accent below. */
+  --focus-ring: var(--coral-display);
   --display: "Libre Caslon Display", "Bodoni 72", Didot, serif;
   --body: "Manrope", "Avenir Next", sans-serif;
   --utility: "DM Mono", "IBM Plex Mono", monospace;
   /* Utility label scale. The body movements previously drifted across eight ad-hoc sizes
-     from .55rem to .75rem; these are the only three permitted. --u-md is the floor for
-     any label a reader is expected to actually read. */
+     from .55rem to .75rem; these are the only two permitted. --u-md is the floor for any
+     label a reader is expected to actually read.
+
+     --u-sm (.6rem / 9.6px) is gone. The scale was applied to the body movements but never
+     to the overture, which kept raw values down to .52rem — 8.3px on the rail chapter, the
+     starfield legend, the scroll cue, and the movement handoff. All of those are wayfinding
+     text, not ornament, so none of them qualified for a size below the stated floor, and
+     --u-sm had exactly one remaining user. A floor with an exception below it is not a
+     floor. */
   --u-lg: .72rem;
   --u-md: .655rem;
-  --u-sm: .6rem;
   --ease-enter: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-exit: cubic-bezier(0.64, 0, 0.78, 0);
   color: var(--ink);
@@ -33,7 +57,8 @@ html::-webkit-scrollbar { width: 0; height: 0; }
 body { margin: 0; min-width: 320px; background: var(--paper); }
 a { color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-:focus-visible { outline: 2px solid var(--coral); outline-offset: 5px; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 5px; }
+.overture, .coda { --focus-ring: var(--coral); }
 
 .skip-link {
   position: fixed; z-index: 200; top: 1rem; left: 1rem; padding: .75rem 1rem;
@@ -83,7 +108,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 }
 .score-rail__chapter {
   position: absolute; z-index: 3; right: 2.35rem; top: calc(.95rem + var(--page-progress) * (100vh - 6rem));
-  font: 300 .52rem var(--utility); letter-spacing: .08em; color: var(--ink-soft);
+  font: 300 var(--u-md) var(--utility); letter-spacing: .08em; color: var(--ink-soft);
 }
 .score-rail__links { position: absolute; inset: 0; }
 .score-rail__links a { position: absolute; right: -.35rem; top: calc(1rem + var(--chapter-position) * (100% - 4.25rem)); width: 2.25rem; height: 2.25rem; display: grid; place-items: center; text-decoration: none; color: transparent; border-radius: 50%; }
@@ -144,8 +169,8 @@ button, a { -webkit-tap-highlight-color: transparent; }
   display: flex; justify-content: space-between; gap: 1rem; pointer-events: none;
 }
 .movement-key__group { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2rem); }
-.movement-key__label { margin: 0; color: var(--brass); opacity: var(--node-opacity); font: 300 var(--u-sm) var(--utility); letter-spacing: .17em; text-transform: uppercase; }
-.movement-key__item { display: flex; align-items: center; gap: .55rem; color: oklch(80% .02 78); opacity: var(--node-opacity); font: 300 .6rem var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+.movement-key__label { margin: 0; color: var(--brass); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .17em; text-transform: uppercase; }
+.movement-key__item { display: flex; align-items: center; gap: .55rem; color: oklch(80% .02 78); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .movement-key__mark { position: relative; width: 1rem; height: 1px; background: var(--brass); }
 .movement-key__mark::after { content: ""; position: absolute; right: 0; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
 /* Coral for the working register, cobalt for the personal one — the brief's counterpoint
@@ -193,13 +218,13 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .opening-title__descriptor i { opacity: var(--descriptor-opacity); }
 .opening-title__descriptor i { color: var(--coral); font-style: normal; }
 
-.movement-handoff { position: absolute; z-index: 12; left: 50%; bottom: 2.2rem; display: grid; grid-template-columns: auto 4.5rem auto auto; align-items: center; gap: .8rem; color: var(--ink-soft); opacity: var(--handoff-opacity); transform: translate(-50%, var(--handoff-y)); font: 400 .54rem var(--utility); letter-spacing: .13em; text-transform: uppercase; white-space: nowrap; }
+.movement-handoff { position: absolute; z-index: 12; left: 50%; bottom: 2.2rem; display: grid; grid-template-columns: auto 4.5rem auto auto; align-items: center; gap: .8rem; color: var(--ink-soft); opacity: var(--handoff-opacity); transform: translate(-50%, var(--handoff-y)); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; white-space: nowrap; }
 .movement-handoff i { height: 1px; background: var(--brass); }
 .movement-handoff strong { color: var(--ink); font-weight: 400; }
 .movement-handoff b { color: var(--coral); font-size: .8rem; font-weight: 400; }
 
 .scroll-cue { position: absolute; z-index: 15; left: 50%; bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: .65rem; color: oklch(80% .02 78); transform: translateX(-50%); opacity: var(--scroll-opacity); }
-.scroll-cue span { font: 300 .55rem var(--utility); letter-spacing: .18em; text-transform: uppercase; }
+.scroll-cue span { font: 300 var(--u-md) var(--utility); letter-spacing: .18em; text-transform: uppercase; }
 .scroll-cue i { display: block; width: 1px; height: 2.4rem; background: linear-gradient(var(--coral), transparent); }
 
 .first-movement { position: relative; min-height: 108svh; color: var(--ink); background: var(--paper); overflow: hidden; }
@@ -208,14 +233,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .editorial-shell { width: min(100% - 3rem, 86rem); margin: 0 auto; padding: clamp(3rem, 7vw, 8rem) 0 9rem; display: grid; grid-template-columns: .55fr 2.25fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: start; }
 .folio { padding-top: .6rem; border-top: 1px solid oklch(55% .06 65 / .5); }
 .folio p, .score-index > p, .eyebrow { margin: 0; font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
-.folio p { color: var(--coral); }.folio span { display: block; margin-top: .75rem; color: var(--ink-soft); font: 300 var(--u-md) var(--utility); }
-.eyebrow { color: var(--coral); margin-bottom: 2rem; }
+.folio p { color: var(--coral-ink); }.folio span { display: block; margin-top: .75rem; color: var(--ink-soft); font: 300 var(--u-md) var(--utility); }
+.eyebrow { color: var(--coral-ink); margin-bottom: 2rem; }
 .landing-copy h2 { margin: 0; max-width: 11ch; font: 400 clamp(4rem, 8vw, 8.2rem)/.82 var(--display); letter-spacing: -.065em; }
-.landing-copy h2 em { font-weight: 400; color: var(--coral); }
+.landing-copy h2 em { font-weight: 400; color: var(--coral-display); }
 .dek { max-width: 31ch; margin: 3rem 0 1.5rem; font: 400 clamp(1.1rem, 1.6vw, 1.45rem)/1.5 var(--body); letter-spacing: -.025em; }
 .body-copy { max-width: 67ch; margin: 0; color: var(--ink-soft); font: 300 .94rem/1.85 var(--body); }
 .landing-actions { display: flex; gap: 2rem; margin-top: 3rem; }
-.text-link { padding-bottom: .35rem; border-bottom: 1px solid var(--coral); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
+.text-link { padding-bottom: .35rem; border-bottom: 1px solid var(--coral-display); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .text-link span { display: inline-block; margin-left: .35rem; transition: transform .3s var(--ease-enter); }.text-link:hover span { transform: translateY(.18rem); }
 .text-link--quiet { border-color: oklch(48% .03 60 / .35); }
 .score-index { margin-top: clamp(6rem, 15vw, 12rem); }
@@ -223,7 +248,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .score-index ol { padding: 0; margin: 0; list-style: none; }
 .score-index li { border-bottom: 1px solid oklch(55% .06 65 / .2); }
 .score-index li > span, .score-index li > a { display: flex; gap: 1rem; padding: 1rem 0; text-decoration: none; font: 400 .76rem/1.4 var(--body); }
-.score-index li b { color: var(--coral); font: 300 var(--u-md) var(--utility); }
+.score-index li b { color: var(--coral-ink); font: 300 var(--u-md) var(--utility); }
 
 @media (max-width: 860px) {
   .site-header { grid-template-columns: 1fr auto; padding: 1rem 1.1rem; }

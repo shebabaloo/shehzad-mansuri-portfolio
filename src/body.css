@@ -3,12 +3,13 @@
 .section-staff { position: absolute; top: 4.5rem; left: 0; width: 100%; height: 5rem; }
 .section-staff path { fill: none; stroke: oklch(49% .06 69 / .23); stroke-width: .75; vector-effect: non-scaling-stroke; }
 .movement-heading { position: relative; z-index: 2; width: min(100%, 84rem); margin: 0 auto clamp(7rem, 12vw, 12rem); display: grid; grid-template-columns: .58fr 1.5fr 1fr; column-gap: clamp(2rem, 5vw, 6rem); align-items: end; }
-.movement-heading > p:first-child { align-self: start; margin: .65rem 0 0; color: var(--coral); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
-.movement-heading > p:first-child span, .coda__inner > p span { margin: 0 .45rem; color: var(--brass); }
+.movement-heading > p:first-child { align-self: start; margin: .65rem 0 0; color: var(--coral-ink); font: 400 var(--u-lg) var(--utility); letter-spacing: .15em; text-transform: uppercase; }
+.movement-heading > p:first-child span { margin: 0 .45rem; color: var(--brass-ink); }
+.coda__inner > p span { margin: 0 .45rem; color: var(--brass); }
 /* Display scale steps: 12vw lockup / 8vw chapter hero / 6.4vw section / 5vw item /
    3vw voice. Ratios 1.5, 1.25, 1.28, 1.67 — all at or above the 1.25 minimum. */
 .movement-heading h2 { margin: 0; font: 400 clamp(3.6rem, 6.4vw, 7rem)/.86 var(--display); letter-spacing: -.058em; }
-.movement-heading h2 em { color: var(--coral); font-weight: 400; }
+.movement-heading h2 em { color: var(--coral-display); font-weight: 400; }
 .movement-intro { max-width: 32ch; margin: 0; color: var(--ink-soft); font: 300 1rem/1.75 var(--body); }
 
 /* A score brace groups the staves one performer plays. This is notation, not a decorative
@@ -18,8 +19,8 @@
 .ensemble-brace__mark { position: absolute; left: 0; top: 0; bottom: 0; width: clamp(.5rem, .8vw, .72rem); border: 1px solid var(--coral); border-right: 0; opacity: .8; }
 .ensemble-brace__period { font: 300 var(--u-lg) var(--utility); letter-spacing: .09em; color: var(--ink-soft); }
 .ensemble-brace__id > p, .ensemble-brace__id > span { display: block; margin: 0 0 .45rem; font: 400 var(--u-lg) var(--utility); letter-spacing: .1em; text-transform: uppercase; }
-.ensemble-brace__id > p span { margin: 0 .45rem; color: var(--brass); text-transform: none; }
-.ensemble-brace__id > span { margin-bottom: 1.5rem; color: var(--coral); }
+.ensemble-brace__id > p span { margin: 0 .45rem; color: var(--brass-ink); text-transform: none; }
+.ensemble-brace__id > span { margin-bottom: 1.5rem; color: var(--coral-ink); }
 .ensemble-brace__id h3 { margin: 0; max-width: 12ch; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.045em; }
 .ensemble-brace__note { max-width: 46ch; margin: 0; color: var(--ink-soft); font: 300 .88rem/1.75 var(--body); }
 
@@ -30,14 +31,14 @@
 .career-progression__line { position: absolute; inset-inline: 0; top: 50%; height: 1px; background: oklch(48% .045 60 / .3); }
 .career-progression__tick { position: absolute; top: calc(50% - .7rem); width: 1px; height: 1.4rem; background: oklch(48% .045 60 / .45); }
 .career-progression__tick span { position: absolute; top: 1.85rem; left: 0; color: var(--ink-soft); font: 300 var(--u-md) var(--utility); letter-spacing: .09em; white-space: nowrap; }
-.career-progression__playhead { position: absolute; top: calc(50% - .95rem); left: 0; width: 2px; height: 1.9rem; background: var(--coral); will-change: transform; }
+.career-progression__playhead { position: absolute; top: calc(50% - .95rem); left: 0; width: 2px; height: 1.9rem; background: var(--coral-display); will-change: transform; }
 .career-measure { position: relative; min-height: 72svh; padding: clamp(3rem, 6vw, 6rem) 0; display: grid; grid-template-columns: .58fr 1.2fr 1.55fr; gap: clamp(2rem, 5vw, 6rem); border-top: 1px solid oklch(48% .045 60 / .34); align-content: center; }
 .career-measure::after { content: ""; position: absolute; top: 0; right: 0; width: 1px; height: 4.5rem; background: var(--coral); }
 .rehearsal-mark { display: flex; align-items: flex-start; gap: 1rem; }
 .rehearsal-mark > span { display: grid; place-items: center; width: 2.6rem; aspect-ratio: 1; border: 1px solid var(--coral); font: 400 .75rem var(--utility); }
 .rehearsal-mark p { margin: .85rem 0 0; font: 300 var(--u-lg) var(--utility); letter-spacing: .09em; }
 .career-measure__identity > p, .career-measure__identity > span { display: block; margin: 0 0 .45rem; font: 400 var(--u-lg) var(--utility); letter-spacing: .1em; text-transform: uppercase; }
-.career-measure__identity > span { color: var(--coral); }
+.career-measure__identity > span { color: var(--coral-ink); }
 .career-measure__identity h3 { margin: 1.8rem 0 0; max-width: 9ch; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.045em; }
 .career-lead { max-width: 36ch; margin: 0 0 2.5rem; font: 400 clamp(1.25rem, 2vw, 1.8rem)/1.4 var(--body); letter-spacing: -.025em; }
 .career-measure__score ul { padding: 0; margin: 0; list-style: none; border-top: 1px solid oklch(48% .045 60 / .25); }
@@ -50,13 +51,13 @@
    rather than min-height plus centering, which collapses to zero once a row is tall.
    Labels align to the top of the content block so tall rows read as one entry. */
 .system-voice { position: relative; z-index: 2; min-height: 11rem; display: grid; grid-template-columns: .35fr 1.15fr 1.45fr 1fr; gap: clamp(1.5rem, 4vw, 4rem); align-items: start; padding: clamp(3.25rem, 5vw, 4.75rem) 0; border-bottom: 1px solid oklch(48% .045 60 / .23); }
-.system-voice__number { color: var(--coral); font: 300 var(--u-lg) var(--utility); }
+.system-voice__number { color: var(--coral-ink); font: 300 var(--u-lg) var(--utility); }
 .system-voice__body > p { max-width: 52ch; margin: 0; color: var(--ink-soft); font: 300 .86rem/1.7 var(--body); }
 .system-voice__body ul { margin: 1.35rem 0 0; padding: 0; list-style: none; }
 .system-voice__body li { position: relative; margin: 0 0 .8rem; padding-left: 1.5rem; color: var(--ink-soft); font: 300 .82rem/1.75 var(--body); }
 .system-voice__body li:last-child { margin-bottom: 0; }
 .system-voice__body li::before { content: ""; position: absolute; left: 0; top: .68rem; width: .6rem; height: 1px; background: var(--brass); }
-.system-voice__status { margin: 0 0 .55rem; color: var(--brass); font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
+.system-voice__status { margin: 0 0 .55rem; color: var(--brass-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
 .system-voice h3 { margin: 0; font: 400 clamp(1.8rem, 3vw, 3.4rem)/1 var(--display); letter-spacing: -.035em; }
 .system-voice strong { color: var(--ink); font: 400 var(--u-md)/1.5 var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .counterpoint__chord { position: absolute; right: 19%; top: 0; bottom: 0; width: 2.2rem; pointer-events: none; }
@@ -68,7 +69,7 @@
 .variation { position: relative; min-height: 26rem; display: grid; grid-template-columns: .58fr 1.5fr 1fr; gap: clamp(2rem, 5vw, 6rem); padding: 4.5rem 0; border-top: 1px solid oklch(48% .045 60 / .32); align-items: start; overflow: hidden; }
 .variation:last-child { border-bottom: 1px solid oklch(48% .045 60 / .2); }
 .variation__meta span, .variation__meta b { display: block; font: 400 var(--u-md) var(--utility); letter-spacing: .12em; text-transform: uppercase; }
-.variation__meta b { margin-top: 1rem; color: var(--coral); font-weight: 400; }
+.variation__meta b { margin-top: 1rem; color: var(--coral-ink); font-weight: 400; }
 .variation h3 { margin: 0; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.048em; }
 .variation__question { max-width: 34ch; margin: 2rem 0 0; font: 400 1.15rem/1.62 var(--body); letter-spacing: -.02em; }
 .variation__copy { max-width: 39ch; margin: 1rem 0 0; color: var(--ink-soft); font: 300 .9rem/1.75 var(--body); }
@@ -78,15 +79,24 @@
 .ensemble-movement { padding-top: clamp(9rem, 14vw, 14rem); background: linear-gradient(to bottom, var(--paper) 0, oklch(93% .028 78) 13rem, oklch(93% .028 78) 100%); }
 .ensemble-score { width: min(100%, 84rem); margin: 0 auto; }
 .personal-measure { min-height: 29rem; padding: 4rem 0; display: grid; grid-template-columns: .58fr 1.5fr 1fr; gap: clamp(2rem, 5vw, 6rem); align-items: center; border-top: 1px solid oklch(48% .045 60 / .28); }
-.personal-measure__mark { font: 400 clamp(4rem, 8vw, 9rem)/1 var(--display); color: var(--coral); opacity: .82; }
-.personal-measure__copy > p { margin: 0 0 1.25rem; color: var(--coral); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+/* The mark carries the display accent at full strength. It used to sit at .82 opacity,
+   which composited down to 3.04:1 on the ensemble field — inside the margin of error for a
+   3:1 requirement. The token is already the muted value; dimming it twice was the bug. */
+.personal-measure__mark { font: 400 clamp(4rem, 8vw, 9rem)/1 var(--display); color: var(--coral-display); }
+.personal-measure__copy > p { margin: 0 0 1.25rem; color: var(--coral-ink); font: 400 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 .personal-measure__copy h3 { margin: 0; max-width: 12ch; font: 400 clamp(2.7rem, 5vw, 5.6rem)/.9 var(--display); letter-spacing: -.05em; }
 .personal-measure__copy > span { display: block; max-width: 48ch; margin-top: 2rem; color: var(--ink-soft); font: 300 .9rem/1.75 var(--body); }
 .personal-measure ul { padding: 0; margin: 0; list-style: none; }
 .personal-measure li { padding: 1rem 0; border-bottom: 1px solid oklch(48% .045 60 / .2); font: 400 var(--u-lg) var(--utility); letter-spacing: .06em; }
-.personal-measure--2 .personal-measure__mark { color: var(--cobalt); }
+.personal-measure--2 .personal-measure__mark { color: var(--cobalt-display); }
 
-.coda { position: relative; min-height: 130svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(10rem, 15vw, 15rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 12rem, oklch(34% .026 55) 24rem, var(--night) 36rem); color: var(--paper); }
+/* Nightfall has to finish before the text starts. The stops used to run to 36rem while the
+   content began at 21.8rem, which stranded the "Coda · Still composing" label on a mid-tone
+   band at 3.02:1 — the label looked washed out and it was, measurably. Night now arrives at
+   18rem, just inside the 19rem floor of the padding below, so every line of the coda sits on
+   a settled field at any viewport. The transition reads faster, which is also better: the
+   gradient is the approach, and the words land after dark. */
+.coda { position: relative; min-height: 130svh; padding: clamp(19rem, 24vw, 25rem) max(2rem, 5vw) clamp(10rem, 15vw, 15rem); display: grid; place-items: center; overflow: hidden; background: linear-gradient(to bottom, oklch(93% .028 78) 0, oklch(63% .04 62) 7rem, oklch(34% .026 55) 13rem, var(--night) 18rem); color: var(--paper); }
 .coda .section-staff { top: 50%; opacity: .3; transform: translateY(-50%); }
 .coda .section-staff path { stroke: var(--brass); }
 .coda__inner { position: relative; z-index: 2; width: min(100%, 76rem); }
@@ -147,7 +157,12 @@
   position: relative; display: inline-flex; align-items: center; gap: .85rem;
   margin-top: 2.25rem; padding: 0 0 var(--depth); border: 0; background: none;
   font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
-  color: var(--ink-soft); cursor: pointer;
+  color: var(--ink-soft);
+  /* No `cursor` here on purpose. The musical cursor is set on `a, button, summary,
+     [role="button"]` — specificity (0,0,1). A `cursor: pointer` on this class scores
+     (0,1,0) and wins, which knocked the clef back to the system arrow on every passage
+     toggle. Any future component that wants a pointer is already getting one from the
+     element selector; overriding it by class silently opts out of the cursor. */
 }
 .passage-toggle__staff {
   position: absolute; left: 0; bottom: 0; width: 1.5rem; height: 1px;
@@ -160,7 +175,7 @@
 }
 .passage-toggle__note::before {
   content: ""; position: absolute; inset: 0; border-radius: 50%;
-  background: var(--coral);
+  background: var(--coral-display);
 }
 .passage-toggle__label { transition: color .16s var(--ease-enter); }
 .passage-toggle:hover .passage-toggle__note { transform: translateY(calc(var(--depth) * -1.5)) rotate(-22deg); }
@@ -169,7 +184,7 @@
   transform: translateY(0) rotate(-22deg) rotateY(var(--lean-x, 0deg)) rotateX(var(--lean-y, 0deg));
 }
 .passage-toggle[aria-expanded="true"] .passage-toggle__note::before {
-  background: none; border: 1px solid var(--coral);
+  background: none; border: 1px solid var(--coral-display);
 }
 
 .passage { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .42s var(--ease-enter); }
@@ -206,8 +221,8 @@
    it, which is what keeps Groundwork evidence rather than assertion. */
 .variation__source {
   display: inline-block; margin-top: 1.5rem; padding-bottom: .35rem;
-  border-bottom: 1px solid var(--coral); text-decoration: none;
+  border-bottom: 1px solid var(--coral-display); text-decoration: none;
   color: var(--ink); font: 400 var(--u-md) var(--utility);
   letter-spacing: .08em; text-transform: uppercase;
 }
-.variation__source span { color: var(--coral); }
+.variation__source span { color: var(--coral-ink); }
