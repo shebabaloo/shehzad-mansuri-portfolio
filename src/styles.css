@@ -226,12 +226,18 @@ button, a { -webkit-tap-highlight-color: transparent; }
   position: absolute; z-index: 14; left: 50%; bottom: 3.4%; width: max-content; max-width: 92vw; transform: translateX(-50%);
   display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem clamp(1.8rem, 4.5vw, 4rem); pointer-events: none;
 }
-.movement-key__group { display: flex; align-items: center; gap: .75rem; }
-.movement-key__label { margin: 0; color: var(--brass); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .17em; text-transform: uppercase; }
+/* The fade belongs on the group, so everything in it goes together. It used to sit on each
+   item, and the mark inherited it by being a child of one; promoting the mark to a sibling
+   left it with nothing to inherit, and the two dots stayed at full strength on the paper
+   long after their words had gone — two coloured pins floating at the bottom of the screen.
+   One rule on the parent cannot come apart that way. Note the children must not repeat it:
+   nested opacity multiplies. */
+.movement-key__group { display: flex; align-items: center; gap: .75rem; opacity: var(--node-opacity); }
+.movement-key__label { margin: 0; color: var(--brass); font: 300 var(--u-md) var(--utility); letter-spacing: .17em; text-transform: uppercase; }
 /* A wider gap after the register label than inside it, so the label reads as the heading
    of the run rather than the first item in it. */
 .movement-key__items { display: flex; align-items: center; gap: .5rem; margin-left: .5rem; }
-.movement-key__item { color: oklch(80% .02 78); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+.movement-key__item { color: oklch(80% .02 78); font: 300 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
 /* Separators as generated content, so the items are one run and not five chips. */
 .movement-key__item + .movement-key__item::before { content: "·"; margin-right: .5rem; color: var(--brass); opacity: .55; }
 .movement-key__mark { position: relative; width: 1rem; height: 1px; background: var(--brass); }

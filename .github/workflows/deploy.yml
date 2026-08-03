@@ -47,6 +47,20 @@ jobs:
           SITE_URL: ${{ vars.SITE_URL }}
           BASE_PATH: ${{ vars.BASE_PATH }}
 
+      # The gate. This site is almost entirely canvas work driven by scroll, and an
+      # exception inside a requestAnimationFrame loop is silent — the loop survives, because
+      # the next frame was already scheduled, and the canvas simply holds its last good
+      # frame. That is how the starfield once shipped frozen through its whole
+      # night-to-paper transition: a screenshot at rest looked perfect.
+      #
+      # So the smoke test asserts what a screenshot cannot — that nothing throws, and that
+      # the animation actually changes while the page is moving. Verified against the real
+      # defect: reintroducing it fails five checks and exits non-zero.
+      #
+      # It runs on the built site, and before upload, so a broken build is never published.
+      - run: npx playwright install chromium --only-shell --with-deps
+      - run: node scripts/smoke.mjs
+
       - uses: actions/configure-pages@v6
 
       - uses: actions/upload-pages-artifact@v5
