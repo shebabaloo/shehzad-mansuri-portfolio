@@ -53,7 +53,17 @@ function makeParticles(count: number): Particle[] {
 export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_, ref) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const progressRef = useRef(0)
-  const particlesRef = useRef(makeParticles(1200))
+  /* Scaled to the viewport rather than fixed at 1,200. A count tuned for a desktop canvas
+     is not a constant, it is a density — and dropped onto a 375px phone it becomes roughly
+     half again as dense while running on a fraction of the GPU. Scaling by area keeps the
+     field looking the same and cuts the per-frame work on the device that needs it most:
+     about 420 particles on a phone against 1,200 on a large display. The floor keeps small
+     windows from looking empty. */
+  const particlesRef = useRef(makeParticles((() => {
+    const area = window.innerWidth * window.innerHeight
+    const reference = 1440 * 900
+    return Math.round(Math.min(1200, Math.max(400, 1200 * (area / reference))))
+  })()))
 
   useEffect(() => {
     const canvas = canvasRef.current
