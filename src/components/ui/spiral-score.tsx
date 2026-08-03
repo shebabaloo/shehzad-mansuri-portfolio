@@ -66,6 +66,33 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
     let frame = 0
     let animationFrame = 0
     const pointer = { x: 0.5, y: 0.5, targetX: 0.5, targetY: 0.5, active: 0 }
+
+    /* Two allocation caches, both for the same reason: the field is 1,200 particles and
+       everything below runs sixty times a second, so anything built per particle is built
+       72,000 times a second.
+
+       Colours were the worse of the two. Each particle set a fill and a stroke, and every
+       one of those built a fresh `rgba(...)` string — 2,400 strings per frame, all of them
+       garbage a moment later. Alpha is quantised to 1/64 before lookup, which is finer than
+       the eye resolves at these sizes and bounds the table at a few hundred entries. */
+    const colorCache = new Map<string, string>()
+    const rgbaCached = (values: readonly number[], alpha = 1) => {
+      const a = Math.round(alpha * 64) / 64
+      const key = `${values[0]},${values[1]},${values[2]},${a}`
+      let hit = colorCache.get(key)
+      if (hit === undefined) {
+        hit = `rgba(${values[0]}, ${values[1]}, ${values[2]}, ${a})`
+        colorCache.set(key, hit)
+      }
+      return hit
+    }
+
+    /* And the two full-canvas gradients, which were rebuilt every frame though they only
+       change when the scene tone moves. Keyed on height and a quantised paperMix, so a
+       gradient is constructed on a tone step rather than on a frame. */
+    let gradKey = ''
+    let risingPaperCached: CanvasGradient | null = null
+    let glowCached: CanvasGradient | null = null
     const finePointer = window.matchMedia('(pointer: fine)').matches
 
     const resize = () => {
@@ -131,17 +158,23 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
       pointer.x += (pointer.targetX - pointer.x) * 0.075
       pointer.y += (pointer.targetY - pointer.y) * 0.075
 
-      const risingPaper = context.createLinearGradient(0, 0, 0, height)
-      risingPaper.addColorStop(0, paperTransition(paperMix * 0.9))
-      risingPaper.addColorStop(0.56, paperTransition(paperMix * 0.97))
-      risingPaper.addColorStop(1, paperTransition(paperMix))
-      context.fillStyle = risingPaper
-      context.fillRect(0, 0, width, height)
+      // Rebuilt on a tone step, not on a frame. 1/256 of paperMix is far below the
+      // threshold where a gradient stop shifts visibly across a viewport-sized fill.
+      const key = `${width}x${height}:${Math.round(paperMix * 256)}`
+      if (key !== gradKey || !risingPaperCached || !glowCached) {
+        gradKey = key
+        risingPaperCached = context.createLinearGradient(0, 0, 0, height)
+        risingPaperCached.addColorStop(0, paperTransition(paperMix * 0.9))
+        risingPaperCached.addColorStop(0.56, paperTransition(paperMix * 0.97))
+        risingPaperCached.addColorStop(1, paperTransition(paperMix))
 
-      const glow = context.createRadialGradient(width * 0.46, height * 0.56, 0, width * 0.46, height * 0.56, width * 0.44)
-      glow.addColorStop(0, paperMix < 0.5 ? 'rgba(118,88,64,.13)' : 'rgba(255,250,236,.3)')
-      glow.addColorStop(1, 'rgba(0,0,0,0)')
-      context.fillStyle = glow
+        glowCached = context.createRadialGradient(width * 0.46, height * 0.56, 0, width * 0.46, height * 0.56, width * 0.44)
+        glowCached.addColorStop(0, paperMix < 0.5 ? 'rgbaCached(118,88,64,.13)' : 'rgbaCached(255,250,236,.3)')
+        glowCached.addColorStop(1, 'rgbaCached(0,0,0,0)')
+      }
+      context.fillStyle = risingPaperCached
+      context.fillRect(0, 0, width, height)
+      context.fillStyle = glowCached
       context.fillRect(0, 0, width, height)
 
       const pathVisibility = range(progress, 0.22, 0.5) * (1 - range(progress, 0.91, 0.95))
@@ -187,8 +220,8 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
         const base = paperMix > 0.45 ? colors.ink : colors.ivory
         const tone = particle.signal > 0.975 ? colors.cobalt : particle.signal > 0.91 ? colors.coral : base
         const size = particle.size * (0.72 + gather * 0.44)
-        context.fillStyle = rgba(tone, alpha)
-        context.strokeStyle = rgba(tone, alpha * 0.8)
+        context.fillStyle = rgbaCached(tone, alpha)
+        context.strokeStyle = rgbaCached(tone, alpha * 0.8)
 
         if (gather < 0.24) {
           context.beginPath()
@@ -196,7 +229,7 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
           context.fill()
           if (particle.kind > 0.86) {
             const twinkle = (1 - gather / 0.24) * (0.35 + Math.sin(time * 1.2 + particle.drift) * 0.18)
-            context.strokeStyle = rgba(tone, alpha * twinkle)
+            context.strokeStyle = rgbaCached(tone, alpha * twinkle)
             context.lineWidth = 0.65
             context.beginPath()
             context.moveTo(x - size * 2.8, y); context.lineTo(x + size * 2.8, y)
@@ -205,7 +238,7 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
           } else if (particle.kind > 0.74) {
             const tangentX = -Math.sin(fieldAngle) * (3 + particle.size * 2.4)
             const tangentY = Math.cos(fieldAngle) * (2 + particle.size * 1.5)
-            context.strokeStyle = rgba(tone, alpha * 0.22)
+            context.strokeStyle = rgbaCached(tone, alpha * 0.22)
             context.lineWidth = 0.55
             context.beginPath()
             context.moveTo(x - tangentX, y - tangentY)
