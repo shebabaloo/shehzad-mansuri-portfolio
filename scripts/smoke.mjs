@@ -90,8 +90,10 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
   const page = await context.newPage()
 
   const errors = []
+  const notFound = []
   page.on('pageerror', (error) => errors.push(String(error.message)))
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`) })
+  page.on('response', (response) => { if (response.status() === 404) notFound.push(new URL(response.url()).pathname) })
 
   await page.goto(BASE, { waitUntil: 'load' })
 
@@ -111,7 +113,10 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
     }, { timeout: 20000 })
     await page.waitForTimeout(600)
   } catch (error) {
-    check(v('app mounts'), false, String(error.message).split('\n')[0])
+    // Say *why* it did not mount. A bare timeout sent me looking at render performance when
+    // the real answer was that every asset had 404'd on a base-path mismatch.
+    const missing = notFound.length ? ` — ${notFound.length} asset(s) 404'd, first: ${notFound[0]}` : ''
+    check(v('app mounts'), false, `${String(error.message).split('\n')[0]}${missing}`)
     await context.close()
     continue
   }

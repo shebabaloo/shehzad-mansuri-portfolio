@@ -59,7 +59,11 @@ jobs:
       #
       # It runs on the built site, and before upload, so a broken build is never published.
       - run: npx playwright install chromium --only-shell --with-deps
+      # BASE_PATH must match the build's. The artifact has the prefix baked into every asset
+      # URL, so a smoke server that does not strip it serves 404s and the app never mounts.
       - run: node scripts/smoke.mjs
+        env:
+          BASE_PATH: ${{ vars.BASE_PATH }}
 
       - uses: actions/configure-pages@v6
 
