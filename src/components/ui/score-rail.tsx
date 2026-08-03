@@ -69,8 +69,18 @@ export const ScoreRail = forwardRef<ScoreRailHandle>(function ScoreRail(_, ref) 
     updateChapter()
     window.addEventListener('scroll', onScroll, { passive: true })
     window.addEventListener('resize', onResize, { passive: true })
+
+    /* Resize is not the only thing that moves a section. Fonts finish loading, GSAP builds
+       its pin spacers, images settle — all of which relayout the page without a resize
+       event, and a cache keyed only to resize would quietly point at the wrong places. The
+       observer catches every cause at the moment it happens, off the scroll path and off
+       the main thread, so the reads stay where they were moved to. */
+    const layoutWatch = new ResizeObserver(onResize)
+    layoutWatch.observe(document.body)
+
     return () => {
       cancelAnimationFrame(frame)
+      layoutWatch.disconnect()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onResize)
     }
