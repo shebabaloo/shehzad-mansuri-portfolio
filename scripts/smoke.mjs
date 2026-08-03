@@ -94,9 +94,29 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
   page.on('console', (message) => { if (message.type() === 'error') errors.push(`console: ${message.text()}`) })
 
   await page.goto(BASE, { waitUntil: 'load' })
-  await page.waitForTimeout(1200)
 
+  /* Wait for the app to exist, not for a guessed number of milliseconds. A fixed delay is
+     tuned to whichever machine it was written on: 1.2s was ample locally and too short on a
+     cold CI runner, where the canvas had not mounted yet and the first check died on a null.
+     A timing failure that looks like a product failure is worse than no test. */
   const v = (name) => `[${viewport.label}] ${name}`
+  try {
+    await page.waitForSelector('.spiral-canvas', { timeout: 20000 })
+    await page.waitForSelector('#coda', { timeout: 20000 })
+    // Mounted is not the same as sized and painted; the canvas gets its backing store from a
+    // measured rect, and GSAP needs a frame to lay its triggers out.
+    await page.waitForFunction(() => {
+      const canvas = document.querySelector('.spiral-canvas')
+      return canvas && canvas.width > 0 && document.documentElement.scrollHeight > window.innerHeight * 4
+    }, { timeout: 20000 })
+    await page.waitForTimeout(600)
+  } catch (error) {
+    check(v('app mounts'), false, String(error.message).split('\n')[0])
+    await context.close()
+    continue
+  }
+
+  try {
 
   /* The overture, stepped frame by frame the way a reader scrolls it. Sampling one pixel of
      the starfield each frame and counting distinct values is the whole point: with the
@@ -254,6 +274,10 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
   // Anything thrown anywhere above.
   check(v('no uncaught errors'), errors.length === 0, errors.slice(0, 3).join(' | '))
 
+  } catch (error) {
+    // A throw in the harness itself is a failure to report, not a stack trace to decode.
+    check(v('smoke run completed'), false, String(error.message).split('\n')[0])
+  }
   await context.close()
 }
 
