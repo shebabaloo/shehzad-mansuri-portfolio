@@ -105,11 +105,18 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
     let glowCached: CanvasGradient | null = null
     const finePointer = window.matchMedia('(pointer: fine)').matches
 
+    /* Assigning canvas.width reallocates the backing store and blanks the canvas, so it
+       must not happen for a resize that did not change anything. Mobile browsers fire
+       resize liberally — URL bar, keyboard, orientation settling — and an unguarded
+       reallocation turns each of those into a dropped frame with a visible flash. */
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
-      canvas.width = Math.max(1, Math.round(bounds.width * dpr))
-      canvas.height = Math.max(1, Math.round(bounds.height * dpr))
+      const w = Math.max(1, Math.round(bounds.width * dpr))
+      const h = Math.max(1, Math.round(bounds.height * dpr))
+      if (canvas.width === w && canvas.height === h) return
+      canvas.width = w
+      canvas.height = h
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 

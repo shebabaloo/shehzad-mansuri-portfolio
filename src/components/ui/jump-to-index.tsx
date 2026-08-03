@@ -24,26 +24,38 @@ export function JumpToIndex() {
     const coda = document.getElementById('coda')
     if (!intro) return
 
-    // Scroll fires far more often than this needs to run, and it runs alongside
-    // ScrollTrigger — so reads are coalesced into one frame rather than done per event.
-    let queued = 0
-    const update = () => {
-      queued = 0
-      const pastIntro = intro.getBoundingClientRect().bottom < 0
-      const inCoda = coda ? coda.getBoundingClientRect().top < window.innerHeight * 0.6 : false
-      setShown(pastIntro && !inCoda)
-    }
-    const onScroll = () => {
-      if (!queued) queued = requestAnimationFrame(update)
-    }
+    /* Observers rather than scroll reads. This needs two booleans — is Movement I behind
+       us, is the Coda here — and it was answering them by measuring two rects on every
+       scroll frame of the whole page. Those reads land between the overture's style writes,
+       and a read after a write forces the browser to lay out synchronously; doing it every
+       frame is what turns a scroll into a stutter. IntersectionObserver reports the same two
+       facts off the main thread, at the moments they change. */
+    let pastIntro = false
+    let inCoda = false
+    const apply = () => setShown(pastIntro && !inCoda)
 
-    update()
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
+    const introGate = new IntersectionObserver(
+      ([entry]) => {
+        // Past it when it has left upward, rather than merely being off screen.
+        pastIntro = !entry.isIntersecting && entry.boundingClientRect.bottom < 0
+        apply()
+      },
+      { threshold: 0 },
+    )
+    introGate.observe(intro)
+
+    const codaGate = coda
+      ? new IntersectionObserver(
+          ([entry]) => { inCoda = entry.isIntersecting; apply() },
+          // Fires while the Coda's own return link is still a scroll away.
+          { rootMargin: '0px 0px -40% 0px' },
+        )
+      : null
+    codaGate?.observe(coda!)
+
     return () => {
-      cancelAnimationFrame(queued)
-      window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      introGate.disconnect()
+      codaGate?.disconnect()
     }
   }, [])
 

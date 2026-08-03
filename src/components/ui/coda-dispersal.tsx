@@ -62,8 +62,12 @@ export function CodaDispersal() {
       dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = rect.width
       height = rect.height
-      canvas.width = Math.round(width * dpr)
-      canvas.height = Math.round(height * dpr)
+      const w = Math.round(width * dpr)
+      const h = Math.round(height * dpr)
+      // Skip no-op resizes: assigning width reallocates and blanks the canvas.
+      if (canvas.width === w && canvas.height === h) return
+      canvas.width = w
+      canvas.height = h
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 

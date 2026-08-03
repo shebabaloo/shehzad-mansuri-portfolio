@@ -162,16 +162,21 @@ button, a { -webkit-tap-highlight-color: transparent; }
   --paper-tone: 0; --descriptor-opacity: 0; --descriptor-y: 1.2rem;
   --descriptor-1: 0; --descriptor-2: 0; --descriptor-3: 0; --extract: 0;
   --handoff-opacity: 0; --handoff-y: 1.4rem; --scroll-opacity: 1;
-  /* dvh, not svh. svh is the viewport with the browser chrome fully expanded — the
-     smallest it ever gets — so on iOS, once the URL bar collapses on scroll, the viewport
-     grows past this element and exposes a band of bare --night beneath the starfield,
-     which stops at the canvas edge. dvh tracks the viewport as the bar moves, so there is
-     nothing to expose.
-     lvh would also close the gap, but it pins the element to the largest viewport, and
-     .scroll-cue is anchored bottom: 2rem — it would sit below the fold on first paint,
-     hidden at the one moment it is doing its job. The svh line stays as the fallback for
-     engines without dvh. */
-  position: sticky; top: 0; height: 100svh; height: 100dvh; overflow: hidden; isolation: isolate;
+  /* lvh — the largest viewport, chrome collapsed — and the reasoning here has been wrong
+     twice, so it is worth stating plainly.
+     svh is the viewport with chrome expanded, the smallest it gets, so on iOS the
+     collapsing URL bar grows the viewport past this element and exposes a band of bare
+     --night below the starfield.
+     dvh closes that gap but is far worse: it tracks the bar continuously, so the element
+     resizes throughout the scroll, firing window resize on every step. Five listeners
+     answer that, three of which reallocate a canvas backing store — and reallocating
+     blanks the canvas. The result was a starfield that stuttered and dropped out during
+     the exact scroll it exists for.
+     lvh is stable. No gap, because the element is always as tall as the viewport can get,
+     and no resizing, because the value never moves. The cost is that the element is taller
+     than the visible area while the bar is expanded, which .scroll-cue corrects for
+     below. */
+  position: sticky; top: 0; height: 100svh; height: 100lvh; overflow: hidden; isolation: isolate;
   background: radial-gradient(circle at 50% 57%, oklch(27% .024 48), transparent 34%), linear-gradient(145deg, oklch(21% .014 53), var(--night));
 }
 .overture__sticky::after { content: ""; position: absolute; z-index: 30; inset: 0; pointer-events: none; box-shadow: inset 0 0 0 1px oklch(87% .03 80 / .08); }
@@ -270,7 +275,7 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .movement-handoff strong { color: var(--ink); font-weight: 400; }
 .movement-handoff b { color: var(--coral); font-size: .8rem; font-weight: 400; }
 
-.scroll-cue { position: absolute; z-index: 15; left: 50%; bottom: 2rem; display: flex; flex-direction: column; align-items: center; gap: .65rem; color: oklch(80% .02 78); transform: translateX(-50%); opacity: var(--scroll-opacity); }
+.scroll-cue { position: absolute; z-index: 15; left: 50%; bottom: calc(2rem + (100lvh - 100svh)); display: flex; flex-direction: column; align-items: center; gap: .65rem; color: oklch(80% .02 78); transform: translateX(-50%); opacity: var(--scroll-opacity); }
 .scroll-cue span { font: 300 var(--u-md) var(--utility); letter-spacing: .18em; text-transform: uppercase; }
 .scroll-cue i { display: block; width: 1px; height: 2.4rem; background: linear-gradient(var(--coral), transparent); }
 

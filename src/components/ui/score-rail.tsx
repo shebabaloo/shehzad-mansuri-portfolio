@@ -31,13 +31,32 @@ export const ScoreRail = forwardRef<ScoreRailHandle>(function ScoreRail(_, ref) 
 
   useEffect(() => {
     let frame = 0
-    const updateChapter = () => {
-      let activeChapter = chapters[0]
-      for (const chapter of chapters) {
+
+    /* Section offsets are measured on resize, not on scroll.
+       This used to call getBoundingClientRect once per chapter inside the scroll handler —
+       seven forced layouts every frame, to answer a question whose inputs only change when
+       the page is laid out again. Reading geometry after the overture has written its style
+       properties makes the browser lay out synchronously to answer, and it did that seven
+       times a frame for the entire length of the page. Cached, the scroll path touches no
+       geometry at all: it compares scrollY against numbers. */
+    let offsets: number[] = []
+    const measureOffsets = () => {
+      offsets = chapters.map((chapter) => {
         const element = document.getElementById(chapter.id)
-        const documentTop = element ? element.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY
-        if (window.scrollY + window.innerHeight * 0.42 >= documentTop) activeChapter = chapter
+        return element ? element.getBoundingClientRect().top + window.scrollY : Number.POSITIVE_INFINITY
+      })
+    }
+
+    let lastChapter = ''
+    const updateChapter = () => {
+      const line = window.scrollY + window.innerHeight * 0.42
+      let activeChapter = chapters[0]
+      for (let i = 0; i < chapters.length; i++) {
+        if (line >= offsets[i]) activeChapter = chapters[i]
       }
+      // Writing the same text back every frame is a needless invalidation of its own.
+      if (activeChapter.short === lastChapter) return
+      lastChapter = activeChapter.short
       if (chapterRef.current) chapterRef.current.textContent = activeChapter.short
       if (thumbRef.current) thumbRef.current.dataset.movement = activeChapter.label
     }
@@ -45,13 +64,15 @@ export const ScoreRail = forwardRef<ScoreRailHandle>(function ScoreRail(_, ref) 
       cancelAnimationFrame(frame)
       frame = requestAnimationFrame(updateChapter)
     }
+    const onResize = () => { measureOffsets(); updateChapter() }
+    measureOffsets()
     updateChapter()
     window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
+    window.addEventListener('resize', onResize, { passive: true })
     return () => {
       cancelAnimationFrame(frame)
       window.removeEventListener('scroll', onScroll)
-      window.removeEventListener('resize', onScroll)
+      window.removeEventListener('resize', onResize)
     }
   }, [])
 

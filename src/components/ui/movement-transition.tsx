@@ -100,8 +100,12 @@ export function MovementTransition() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       width = rect.width
       height = rect.height
-      canvas.width = Math.round(width * dpr)
-      canvas.height = Math.round(height * dpr)
+      const w = Math.round(width * dpr)
+      const h = Math.round(height * dpr)
+      // Skip no-op resizes: assigning width reallocates and blanks the canvas.
+      if (canvas.width === w && canvas.height === h) return
+      canvas.width = w
+      canvas.height = h
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
@@ -158,9 +162,23 @@ export function MovementTransition() {
       ctx.globalAlpha = 1
     }
 
-    /* Progress comes from the band's own rect. ScrollTrigger would do this too, but it
-       would also join the refresh ordering that the pinned Movement II already owns, and
-       this needs no timeline — it is one scalar read per frame. */
+    /* Progress comes from the band's own rect — but only while the band is anywhere near
+       the screen.
+       Without the gate this measured and redrew on every scroll frame of the entire page,
+       including the whole overture, where the band is thousands of pixels away. That is a
+       forced layout per frame interleaved with the overture's own style writes, which is
+       the read-write-read-write pattern that makes a browser lay out synchronously over and
+       over. The starfield paid for a band nobody could see. */
+    let onScreen = false
+    const gate = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting
+        if (onScreen) measure()
+      },
+      { rootMargin: '100% 0px' },
+    )
+    gate.observe(host)
+
     let queued = 0
     const measure = () => {
       queued = 0
@@ -170,7 +188,8 @@ export function MovementTransition() {
       draw()
     }
     const onScroll = () => {
-      if (!queued) queued = requestAnimationFrame(measure)
+      if (!onScreen || queued) return
+      queued = requestAnimationFrame(measure)
     }
 
     resize()
@@ -197,6 +216,7 @@ export function MovementTransition() {
     window.addEventListener('resize', onResize, { passive: true })
     return () => {
       cancelAnimationFrame(queued)
+      gate.disconnect()
       window.removeEventListener('scroll', onScroll)
       window.removeEventListener('resize', onResize)
     }
