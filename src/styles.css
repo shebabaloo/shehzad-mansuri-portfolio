@@ -216,13 +216,24 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .enter-score:hover { transform: translateY(-2px); box-shadow: 0 15px 42px oklch(4% 0 0 / .3); }
 .enter-score span { color: var(--coral); }
 
+/* Centred as a pair, rather than pushed to opposite edges of 82vw. Spanning the full width
+   made the two registers read as two unrelated things pinned to the corners; brought
+   together they read as one line of contents, and the composition keeps its margins. */
 .movement-key {
-  position: absolute; z-index: 14; left: 50%; bottom: 5%; width: min(82vw, 70rem); transform: translateX(-50%);
-  display: flex; justify-content: space-between; gap: 1rem; pointer-events: none;
+  /* width: max-content is load-bearing. An absolutely positioned box shrinks to fit the
+     space available from its offset, and left: 50% leaves only half the viewport — so the
+     key wrapped at 720px on a 1440px screen while its content was 782px wide. */
+  position: absolute; z-index: 14; left: 50%; bottom: 3.4%; width: max-content; max-width: 92vw; transform: translateX(-50%);
+  display: flex; justify-content: center; flex-wrap: wrap; gap: .7rem clamp(1.8rem, 4.5vw, 4rem); pointer-events: none;
 }
-.movement-key__group { display: flex; align-items: center; gap: clamp(1rem, 2.2vw, 2rem); }
+.movement-key__group { display: flex; align-items: center; gap: .75rem; }
 .movement-key__label { margin: 0; color: var(--brass); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .17em; text-transform: uppercase; }
-.movement-key__item { display: flex; align-items: center; gap: .55rem; color: oklch(80% .02 78); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+/* A wider gap after the register label than inside it, so the label reads as the heading
+   of the run rather than the first item in it. */
+.movement-key__items { display: flex; align-items: center; gap: .5rem; margin-left: .5rem; }
+.movement-key__item { color: oklch(80% .02 78); opacity: var(--node-opacity); font: 300 var(--u-md) var(--utility); letter-spacing: .13em; text-transform: uppercase; }
+/* Separators as generated content, so the items are one run and not five chips. */
+.movement-key__item + .movement-key__item::before { content: "·"; margin-right: .5rem; color: var(--brass); opacity: .55; }
 .movement-key__mark { position: relative; width: 1rem; height: 1px; background: var(--brass); }
 .movement-key__mark::after { content: ""; position: absolute; right: 0; top: -2px; width: 5px; height: 5px; border-radius: 50%; background: var(--coral); }
 /* Coral for the working register, cobalt for the personal one — the brief's counterpoint
@@ -275,7 +286,10 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .movement-handoff strong { color: var(--ink); font-weight: 400; }
 .movement-handoff b { color: var(--coral); font-size: .8rem; font-weight: 400; }
 
-.scroll-cue { position: absolute; z-index: 15; left: 50%; bottom: calc(2rem + (100lvh - 100svh)); display: flex; flex-direction: column; align-items: center; gap: .65rem; color: oklch(80% .02 78); transform: translateX(-50%); opacity: var(--scroll-opacity); }
+/* Lifted clear of the key. The cue used to sit in the same band, and its descending line
+   ran straight through the middle — invisible while the key was pushed to opposite edges
+   and the centre was empty, obvious the moment the key became a centred pair. */
+.scroll-cue { position: absolute; z-index: 15; left: 50%; bottom: calc(5.2rem + (100lvh - 100svh)); display: flex; flex-direction: column; align-items: center; gap: .65rem; color: oklch(80% .02 78); transform: translateX(-50%); opacity: var(--scroll-opacity); }
 .scroll-cue span { font: 300 var(--u-md) var(--utility); letter-spacing: .18em; text-transform: uppercase; }
 .scroll-cue i { display: block; width: 1px; height: 2.4rem; background: linear-gradient(var(--coral), transparent); }
 

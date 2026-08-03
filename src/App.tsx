@@ -198,16 +198,20 @@ export function App() {
               </a>
             </div>
 
+            {/* One mark per register, not one per item. Eight separately-ticked chips strung
+                edge to edge read as eight peers competing for the same attention; the marks
+                were the noise, not the words. A single mark introduces the register and the
+                items run behind it as one phrase, which is what they always were. */}
             <div className="movement-key" aria-label="What is in The Living Score">
               {movementKey.map(({ group, items }) => (
-                <div className="movement-key__group" role="list" aria-label={group} key={group}>
+                <div className="movement-key__group" key={group}>
+                  <span className="movement-key__mark" aria-hidden="true" />
                   <p className="movement-key__label">{group}</p>
-                  {items.map((item) => (
-                    <span className={`movement-key__item movement-key__item--${item.toLowerCase()}`} role="listitem" key={item}>
-                      <span className="movement-key__mark" />
-                      <span>{item}</span>
-                    </span>
-                  ))}
+                  <span className="movement-key__items" role="list" aria-label={group}>
+                    {items.map((item) => (
+                      <span className="movement-key__item" role="listitem" key={item}>{item}</span>
+                    ))}
+                  </span>
                 </div>
               ))}
             </div>

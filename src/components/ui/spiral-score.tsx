@@ -185,9 +185,14 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
         risingPaperCached.addColorStop(0.56, paperTransition(paperMix * 0.97))
         risingPaperCached.addColorStop(1, paperTransition(paperMix))
 
+        /* These are CSS colour strings, not calls. The rename that introduced rgbaCached
+           rewrote them too, which made them invalid colours — and addColorStop throws on an
+           invalid colour rather than ignoring it. The throw landed before every fill and
+           every particle, so the whole field stopped painting on any frame that rebuilt the
+           gradient. That is exactly the paper transition, where paperMix moves each frame. */
         glowCached = context.createRadialGradient(width * 0.46, height * 0.56, 0, width * 0.46, height * 0.56, width * 0.44)
-        glowCached.addColorStop(0, paperMix < 0.5 ? 'rgbaCached(118,88,64,.13)' : 'rgbaCached(255,250,236,.3)')
-        glowCached.addColorStop(1, 'rgbaCached(0,0,0,0)')
+        glowCached.addColorStop(0, paperMix < 0.5 ? 'rgba(118,88,64,.13)' : 'rgba(255,250,236,.3)')
+        glowCached.addColorStop(1, 'rgba(0,0,0,0)')
       }
       context.fillStyle = risingPaperCached
       context.fillRect(0, 0, width, height)
