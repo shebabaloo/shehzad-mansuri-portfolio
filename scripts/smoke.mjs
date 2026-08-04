@@ -242,6 +242,49 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
     check(v(`${selector} fades out by the end of the overture`), opacity <= 0.02, `effective opacity ${opacity}`)
   }
 
+  /* The index menu: the site's only persistent navigation, so it has to open, land, and
+     close. Landing is the part worth asserting — an anchor that resolves is not the same as
+     an anchor that arrives, and these jump across GSAP-pinned sections. */
+  const menu = await page.evaluate(async () => {
+    const root = document.querySelector('.jump-index')
+    const toggle = root.querySelector('.jump-index__toggle')
+    const panel = root.querySelector('.jump-index__panel')
+    const settle = (ms) => new Promise((r) => setTimeout(r, ms))
+    // Get somewhere the pill is shown.
+    const experiments = document.getElementById('experiments')
+    window.scrollTo({ top: Math.round(experiments.getBoundingClientRect().top + window.scrollY), behavior: 'instant' })
+    await settle(500)
+
+    const out = { shown: root.dataset.shown, entries: panel.querySelectorAll('a').length }
+    out.closedInert = panel.hasAttribute('inert')
+    toggle.click(); await settle(400)
+    out.opens = root.dataset.open === 'true' && parseFloat(getComputedStyle(panel).opacity) > 0.9
+    out.openNotInert = !panel.hasAttribute('inert')
+
+    // Every destination must exist and be reachable.
+    out.targets = [...panel.querySelectorAll('a')].map((a) => {
+      const target = document.querySelector(a.getAttribute('href'))
+      return { href: a.getAttribute('href'), exists: !!target }
+    })
+
+    // Pick one and confirm we actually arrive.
+    const link = [...panel.querySelectorAll('a')].find((a) => a.getAttribute('href') === '#work')
+    link.click(); await settle(1400)
+    const workTop = document.getElementById('work').getBoundingClientRect().top
+    out.landedOnWork = Math.abs(workTop) < window.innerHeight * 0.9
+    out.closesOnPick = document.querySelector('.jump-index').dataset.open === 'false'
+
+    window.scrollTo({ top: 0, behavior: 'instant' })
+    return out
+  })
+  check(v('index menu lists every movement'), menu.entries === 6, `${menu.entries} entries`)
+  check(v('index menu opens'), menu.opens === true)
+  check(v('index menu closed is inert'), menu.closedInert === true && menu.openNotInert === true)
+  check(v('index menu targets all exist'), menu.targets.every((t) => t.exists),
+    menu.targets.filter((t) => !t.exists).map((t) => t.href).join(', '))
+  check(v('index menu actually lands on its target'), menu.landedOnWork === true)
+  check(v('index menu closes after a pick'), menu.closesOnPick === true)
+
   // The score rail has to name the section the reader is actually in.
   const rail = await page.evaluate(async () => {
     const chapters = [['overture', 'P'], ['first-movement', 'I'], ['work', 'II'], ['systems', 'III'], ['experiments', 'IV'], ['off-clock', 'V'], ['coda', 'VI']]

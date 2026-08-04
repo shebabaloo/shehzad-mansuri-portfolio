@@ -136,21 +136,66 @@ button, a { -webkit-tap-highlight-color: transparent; }
    Sized to its label rather than to the 44px touch floor; the pointer:coarse rule restores
    that as a hit area without inflating the pill. Cleared of the rail, which occupies the
    right edge at .75rem plus 2rem of width on a desktop. */
+/* The wrapper is the fixed thing now; the pill is a button inside it and the index hangs
+   above. Keeping position: fixed on the outer element preserves the containing block the
+   touch-target rule at the foot of this sheet depends on. */
 .jump-index {
   position: fixed; z-index: 60; right: 3.75rem; bottom: 1.2rem;
+  display: flex; flex-direction: column; align-items: flex-end; gap: .5rem;
+  opacity: 0; transform: translateY(.6rem); pointer-events: none;
+  transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
+}
+.jump-index[data-shown="true"] { opacity: 1; transform: none; pointer-events: auto; }
+
+.jump-index__toggle {
+  position: relative; order: 2;
   display: inline-flex; align-items: center; gap: .4rem;
   padding: .5rem .8rem;
   border: 1px solid var(--coral); border-radius: 999px;
   background: var(--paper); color: var(--ink);
   font: 400 var(--u-md) var(--utility); letter-spacing: .1em; text-transform: uppercase;
-  text-decoration: none;
   box-shadow: 0 3px 12px oklch(30% .03 60 / .16);
-  opacity: 0; transform: translateY(.6rem); pointer-events: none;
-  transition: opacity .3s var(--ease-enter), transform .3s var(--ease-enter);
+  cursor: pointer;
 }
-.jump-index[data-shown="true"] { opacity: 1; transform: none; pointer-events: auto; }
-.jump-index span { color: var(--coral); }
-.jump-index b { font-weight: 400; }
+.jump-index__toggle span { color: var(--coral); display: inline-block; transition: transform .3s var(--ease-enter); }
+.jump-index__toggle b { font-weight: 400; }
+/* The panel opens upward, so the arrow points the way it will travel and turns over once
+   it has. */
+.jump-index__toggle[aria-expanded="true"] span { transform: rotate(180deg); }
+
+/* The index itself. Ordered above the pill and anchored to the same right edge, so it grows
+   away from the corner rather than across the reading column. */
+.jump-index__panel {
+  order: 1; overflow: hidden;
+  min-width: 15rem; max-width: min(21rem, calc(100vw - 2.4rem));
+  padding: .85rem .95rem;
+  border: 1px solid var(--paper-deep); border-radius: .7rem;
+  background: var(--paper);
+  box-shadow: 0 10px 34px oklch(25% .03 60 / .2);
+  opacity: 0; transform: translateY(.4rem) scale(.985); transform-origin: bottom right;
+  pointer-events: none;
+  transition: opacity .22s var(--ease-enter), transform .22s var(--ease-enter);
+}
+/* Driven from the wrapper rather than from the toggle's aria-expanded: the panel sits
+   before the toggle in the DOM (it is reordered visually), and a sibling combinator only
+   looks forwards, so keying off the button could never have reached it. */
+.jump-index[data-open="true"] .jump-index__panel { opacity: 1; transform: none; pointer-events: auto; }
+.jump-index__caption {
+  margin: 0 0 .55rem; color: var(--brass);
+  font: 300 var(--u-sm, .78rem) var(--utility); letter-spacing: .17em; text-transform: uppercase;
+}
+.jump-index__panel ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+.jump-index__panel a {
+  display: flex; align-items: baseline; gap: .6rem;
+  padding: .42rem .3rem; border-radius: .3rem;
+  text-decoration: none; color: var(--ink);
+  font: 300 var(--t-sm) var(--body);
+}
+.jump-index__panel a b { min-width: 1.6rem; color: var(--coral); font: 400 var(--u-sm, .78rem) var(--utility); letter-spacing: .1em; }
+.jump-index__panel a:hover, .jump-index__panel a:focus-visible { background: var(--paper-deep); }
+/* The Coda is the invitation, so it gets the counterpoint accent the rest of the site
+   reserves for the personal register. */
+.jump-index__panel li:last-child a b { color: var(--cobalt); }
 
 .overture { position: relative; height: 420svh; background: var(--night); }
 .overture__sticky {
@@ -451,9 +496,14 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .skip-link, .monogram, .open-score, .enter-score,
   .text-link, .passage-toggle, .variation__source, .coda nav a { position: relative; }
 
+  /* The index's own rows are real tap targets, so they get the height directly rather than
+     a pseudo-element — they are stacked, and overlapping 44px pseudo-elements would steal
+     each other's taps. */
+  .jump-index__panel a { min-height: 44px; align-items: center; }
+
   .skip-link::after, .monogram::after, .open-score::after, .enter-score::after,
   .text-link::after, .passage-toggle::after, .variation__source::after,
-  .jump-index::after, .coda nav a::after {
+  .jump-index__toggle::after, .coda nav a::after {
     content: ""; position: absolute; left: 0; right: 0; top: 50%;
     min-width: 44px; height: 44px; transform: translateY(-50%);
   }
