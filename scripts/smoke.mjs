@@ -85,8 +85,25 @@ if (!probe || !probe.ok) {
 
 const browser = await chromium.launch()
 
-for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width: 390, height: 844, label: 'phone' }]) {
-  const context = await browser.newContext({ viewport: { width: viewport.width, height: viewport.height } })
+/* The phone context emulates touch properly — isMobile and hasTouch, which is what makes
+   `@media (pointer: coarse)` match in Chromium. That matters more than it sounds: the site
+   has a whole block of touch-target rules that no tool in this project could previously
+   verify, because the interactive browser reports `pointer: fine` at every width. Anything
+   guarded by a coarse-pointer query was, until now, shipped on faith. */
+const viewports = [
+  { width: 1440, height: 900, label: 'desktop', touch: false },
+  { width: 390, height: 844, label: 'phone', touch: true },
+  // Landscape is where a bottom-anchored panel runs out of room; barely 390px of height.
+  { width: 844, height: 390, label: 'phone-landscape', touch: true },
+]
+
+for (const viewport of viewports) {
+  const context = await browser.newContext({
+    viewport: { width: viewport.width, height: viewport.height },
+    hasTouch: viewport.touch,
+    isMobile: viewport.touch,
+    deviceScaleFactor: viewport.touch ? 3 : 1,
+  })
   const page = await context.newPage()
 
   const errors = []
@@ -274,6 +291,18 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
     out.landedOnWork = Math.abs(workTop) < window.innerHeight * 0.9
     out.closesOnPick = document.querySelector('.jump-index').dataset.open === 'false'
 
+    // Reopen to measure geometry: a panel that works but hangs off the screen is not working.
+    window.scrollTo({ top: Math.round(experiments.getBoundingClientRect().top + window.scrollY), behavior: 'instant' })
+    await settle(500)
+    toggle.click(); await settle(400)
+    const box = panel.getBoundingClientRect()
+    out.panel = { w: Math.round(box.width), h: Math.round(box.height), left: Math.round(box.left), top: Math.round(box.top) }
+    out.fitsHorizontally = box.left >= 0 && box.right <= window.innerWidth + 1
+    out.fitsVertically = box.top >= 0 && box.bottom <= window.innerHeight + 1
+    out.rowHeights = [...panel.querySelectorAll('a')].map((a) => Math.round(a.getBoundingClientRect().height))
+    out.coarse = window.matchMedia('(pointer: coarse)').matches
+    toggle.click()
+
     window.scrollTo({ top: 0, behavior: 'instant' })
     return out
   })
@@ -284,6 +313,48 @@ for (const viewport of [{ width: 1440, height: 900, label: 'desktop' }, { width:
     menu.targets.filter((t) => !t.exists).map((t) => t.href).join(', '))
   check(v('index menu actually lands on its target'), menu.landedOnWork === true)
   check(v('index menu closes after a pick'), menu.closesOnPick === true)
+  check(v('index menu fits the screen'), menu.fitsHorizontally && menu.fitsVertically,
+    `panel ${menu.panel.w}x${menu.panel.h} at (${menu.panel.left},${menu.panel.top}) in ${viewport.width}x${viewport.height}`)
+  check(v('coarse-pointer media query is in effect'), menu.coarse === viewport.touch,
+    `matchMedia(pointer: coarse) = ${menu.coarse}`)
+
+  /* Focus behaviour, driven through real input rather than element.click(). A programmatic
+     click reports detail 0 — indistinguishable from Enter or Space, which is exactly the
+     signal the component uses to decide whether to move focus. Testing it from inside
+     evaluate() would have asserted the opposite of the truth. */
+  await page.evaluate(() => {
+    const el = document.getElementById('experiments')
+    window.scrollTo({ top: Math.round(el.getBoundingClientRect().top + window.scrollY), behavior: 'instant' })
+  })
+  await page.waitForTimeout(500)
+
+  await page.click('.jump-index__toggle')
+  await page.waitForTimeout(350)
+  const afterPointer = await page.evaluate(() => ({
+    open: document.querySelector('.jump-index').dataset.open === 'true',
+    onToggle: document.activeElement === document.querySelector('.jump-index__toggle'),
+    where: document.activeElement.className || document.activeElement.tagName,
+  }))
+  check(v('pointer-opened menu leaves focus on the button'), afterPointer.open && afterPointer.onToggle,
+    `open=${afterPointer.open}, focus on ${afterPointer.where}`)
+
+  // Escape returns focus to the button, so Enter from there reopens by keyboard.
+  await page.keyboard.press('Escape')
+  await page.waitForTimeout(250)
+  await page.keyboard.press('Enter')
+  await page.waitForTimeout(350)
+  const afterKeyboard = await page.evaluate(() => ({
+    open: document.querySelector('.jump-index').dataset.open === 'true',
+    inPanel: !!document.activeElement.closest('.jump-index__panel'),
+  }))
+  check(v('keyboard-opened menu places focus in the list'), afterKeyboard.open && afterKeyboard.inPanel,
+    `open=${afterKeyboard.open}, focus in panel=${afterKeyboard.inPanel}`)
+  await page.keyboard.press('Escape')
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }))
+  if (viewport.touch) {
+    check(v('index menu rows meet the 44px touch minimum'), Math.min(...menu.rowHeights) >= 44,
+      `rows ${menu.rowHeights.join('/')}`)
+  }
 
   // The score rail has to name the section the reader is actually in.
   const rail = await page.evaluate(async () => {

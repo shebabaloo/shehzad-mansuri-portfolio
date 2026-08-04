@@ -168,6 +168,12 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .jump-index__panel {
   order: 1; overflow: hidden;
   min-width: 15rem; max-width: min(21rem, calc(100vw - 2.4rem));
+  /* Capped against the *visible* viewport, not the layout one. svh is the height with the
+     browser chrome expanded — the smallest the reader ever actually has — so the panel can
+     never grow past the screen. It otherwise would: touch viewports give every row a 44px
+     minimum, which takes six rows from 192px to 264px, and a landscape phone has barely
+     340px of usable height to put them in. */
+  max-height: calc(100svh - 7rem); overflow-y: auto; overscroll-behavior: contain;
   padding: .85rem .95rem;
   border: 1px solid var(--paper-deep); border-radius: .7rem;
   background: var(--paper);

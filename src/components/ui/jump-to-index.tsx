@@ -38,6 +38,7 @@ export function JumpToIndex() {
   const rootRef = useRef<HTMLDivElement>(null)
   const toggleRef = useRef<HTMLButtonElement>(null)
   const panelRef = useRef<HTMLElement>(null)
+  const openedByKeyboard = useRef(false)
 
   useEffect(() => {
     const overture = document.getElementById('overture')
@@ -113,8 +114,13 @@ export function JumpToIndex() {
     document.addEventListener('keydown', onKeyDown)
     document.addEventListener('pointerdown', onPointerDown)
 
-    // Move focus into the list, so opening with a keyboard actually arrives somewhere.
-    panelRef.current?.querySelector('a')?.focus()
+    /* Move focus into the list only when the menu was opened from the keyboard. Doing it
+       unconditionally put a focus ring on the first movement the instant a thumb opened the
+       menu, which reads as "this one is selected" rather than "you are here" — the panel
+       came up with Movement I apparently chosen. A pointer user is already looking at the
+       list and does not need to be placed in it; a keyboard user does, or opening the menu
+       leaves them nowhere. */
+    if (openedByKeyboard.current) panelRef.current?.querySelector('a')?.focus()
 
     return () => {
       document.removeEventListener('keydown', onKeyDown)
@@ -150,7 +156,12 @@ export function JumpToIndex() {
         type="button"
         className="jump-index__toggle"
         ref={toggleRef}
-        onClick={() => setOpen((value) => !value)}
+        // detail is 0 for a click synthesised from Enter or Space, and the click count for a
+        // real press — which is the cheapest honest way to tell the two apart.
+        onClick={(event) => {
+          openedByKeyboard.current = event.detail === 0
+          setOpen((value) => !value)
+        }}
         aria-expanded={open}
         aria-controls="jump-index-panel"
         // Hidden from the tab order while off screen, so a keyboard reader is not sent to a
