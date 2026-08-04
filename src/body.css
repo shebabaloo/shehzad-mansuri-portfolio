@@ -283,6 +283,9 @@
   color: var(--ink-soft); font: 300 var(--t-md)/1.85 var(--body);
 }
 .counterpoint__check em { color: var(--ink); font-style: normal; }
+/* The continuation takes normal paragraph spacing; the large margin above is the gap that
+   separates the whole passage from the cards, and it should only be paid once. */
+.counterpoint__check + .counterpoint__check { margin-top: 1.15em; }
 
 /* The invitation and the confession do different jobs, so they are separated rather than
    stacked at the same weight. A short brass rule marks this one as an aside — notation,

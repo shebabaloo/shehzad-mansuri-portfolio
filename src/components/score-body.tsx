@@ -600,12 +600,27 @@ export function ScoreBody() {
               <strong>{principle}</strong>
             </article>
           ))}
+          {/* Two beats rather than one. The first is the argument — hallucination as a
+              property to engineer around rather than a defect to patch, and the compounding
+              that makes it worse in a system that reads its own output. The second is what
+              was actually built, and the number that makes it a measurement instead of a
+              claim. Splitting them lets the first land before the second starts listing. */}
           <p className="counterpoint__check" data-score-reveal>
-            Given enough context and too few guardrails, these systems will state something
-            false with perfect composure. The work I care about most was the checks: every
-            output cross-verified against multiple sources, every closure traceable to a
-            specific signal, everything stale flagged as stale. <em>I built it, and then I
-            refused to trust it.</em>
+            Hallucination is not a defect you patch out. It is what these systems do when
+            they have plenty of context and nothing anchoring it, and they do it with perfect
+            composure. The harder problem is the second order: a system that reads its own
+            output will eventually read its own mistakes. One stale fact does not stay one
+            fact — it gets summarised, carried forward, and comes back wearing more
+            confidence than it left with.
+          </p>
+          <p className="counterpoint__check" data-score-reveal>
+            So most of what I built is refusal. Intake is gated. Every claim traces to a
+            specific signal and is cross-verified across sources, weighted toward the ones
+            with the authority to be right. What survives is reconciled against the record,
+            and anything stale is marked stale rather than quietly kept. The thresholds came
+            out of an eval set rather than a guess: roughly 14% of the action items it
+            drafted were fabricated, and the checks caught them before they became work.
+            {' '}<em>I built it, and then I refused to trust it.</em>
           </p>
           <span className="counterpoint__chord" aria-hidden="true"><i /><i /><i /></span>
         </div>
