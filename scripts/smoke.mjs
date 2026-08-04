@@ -326,9 +326,26 @@ for (const viewport of viewports) {
     const el = document.getElementById('experiments')
     window.scrollTo({ top: Math.round(el.getBoundingClientRect().top + window.scrollY), behavior: 'instant' })
   })
-  await page.waitForTimeout(500)
 
-  await page.click('.jump-index__toggle')
+  /* Wait for the pill to actually be interactive before clicking it. While hidden it carries
+     pointer-events: none, and Playwright's click waits for the element to receive events —
+     so clicking too early does not fail fast, it hangs for the full timeout and then reports
+     something that looks like a broken control instead of a race in the test. */
+  const interactive = await page.waitForFunction(() => {
+    const root = document.querySelector('.jump-index')
+    return root?.dataset.shown === 'true' && getComputedStyle(root).pointerEvents !== 'none'
+  }, { timeout: 8000 }).then(() => true).catch(() => false)
+
+  if (!interactive) {
+    const why = await page.evaluate(() => {
+      const root = document.querySelector('.jump-index')
+      const s = getComputedStyle(root)
+      return `shown=${root?.dataset.shown}, pointerEvents=${s.pointerEvents}, opacity=${s.opacity}, scrollY=${Math.round(window.scrollY)}`
+    })
+    check(v('jump pill becomes interactive past Movement I'), false, why)
+  }
+
+  await page.click('.jump-index__toggle', { timeout: 8000 })
   await page.waitForTimeout(350)
   const afterPointer = await page.evaluate(() => ({
     open: document.querySelector('.jump-index').dataset.open === 'true',
@@ -385,6 +402,43 @@ for (const viewport of viewports) {
       .filter((h) => h !== '#' && !document.querySelector(h)),
     h1Count: document.querySelectorAll('h1').length,
   }))
+  /* The skip link must be off screen until it is focused. It is hidden by being translated
+     above a fixed position, which is exactly the kind of hiding that a stray `position`
+     declaration undoes — and one did, for every touch visitor the site ever had. */
+  const skip = await page.evaluate(async () => {
+    const el = document.querySelector('.skip-link')
+    const at = () => { const b = el.getBoundingClientRect(); return { top: Math.round(b.top), visible: b.bottom > 0 && b.top < window.innerHeight } }
+    const resting = at()
+    el.focus()
+    // It slides in over .25s, so measuring on the same tick reads the resting position and
+    // reports a working control as broken.
+    await new Promise((r) => setTimeout(r, 420))
+    const focused = at()
+    el.blur()
+    await new Promise((r) => setTimeout(r, 420))
+    return { resting, focused, position: getComputedStyle(el).position }
+  })
+  check(v('skip link hides until focused'), !skip.resting.visible,
+    `position: ${skip.position}, top ${skip.resting.top}`)
+  check(v('skip link appears when focused'), skip.focused.visible, `top ${skip.focused.top}`)
+
+  /* The musical cursor, and specifically that the 2x asset is reaching the browser. It is
+     offered through a second `cursor` declaration using image-set(), which a browser may
+     legally drop — and if it does, the computed value silently falls back to the 1x URL and
+     the cursor goes soft again on every Retina display with nothing to show for it. */
+  const cursor = await page.evaluate(() => {
+    const body = getComputedStyle(document.body).cursor
+    const link = document.querySelector('a[href^="#"]')
+    return { body, hasImageSet: body.includes('image-set'), isAuto: body === 'auto',
+      linkHasImageSet: link ? getComputedStyle(link).cursor.includes('image-set') : null }
+  })
+  if (viewport.touch) {
+    check(v('touch keeps the native cursor'), cursor.isAuto, `cursor: ${cursor.body.slice(0, 40)}`)
+  } else {
+    check(v('cursor offers a 2x asset'), cursor.hasImageSet && cursor.linkHasImageSet,
+      `body image-set=${cursor.hasImageSet}, link image-set=${cursor.linkHasImageSet}`)
+  }
+
   check(v('no horizontal overflow'), !structure.overflow, `${structure.scrollWidth} vs ${structure.clientWidth}`)
   check(v('no duplicate ids'), structure.duplicateIds.length === 0, structure.duplicateIds.join(', '))
   check(v('no dead internal anchors'), structure.deadAnchors.length === 0, structure.deadAnchors.join(', '))
