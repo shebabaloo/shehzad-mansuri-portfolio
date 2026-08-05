@@ -108,17 +108,38 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
     /* Assigning canvas.width reallocates the backing store and blanks the canvas, so it
        must not happen for a resize that did not change anything. Mobile browsers fire
        resize liberally — URL bar, keyboard, orientation settling — and an unguarded
-       reallocation turns each of those into a dropped frame with a visible flash. */
+       reallocation turns each of those into a dropped frame with a visible flash.
+
+       But the guard belongs on the assignment only, never on the transform. Browser zoom
+       changes devicePixelRatio while the device-pixel size stays identical — their product
+       is the physical window — so an early return left the context scaled for the old ratio.
+       Every frame then filled less than the full backing store, the uncovered band never
+       cleared, and the field smeared into arcs with a hard seam where the coverage stopped.
+       setTransform is a few floats; run it every time. */
     const resize = () => {
       const bounds = canvas.getBoundingClientRect()
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       const w = Math.max(1, Math.round(bounds.width * dpr))
       const h = Math.max(1, Math.round(bounds.height * dpr))
-      if (canvas.width === w && canvas.height === h) return
-      canvas.width = w
-      canvas.height = h
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w
+        canvas.height = h
+      }
+      // After the assignment, which resets it.
       context.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
+
+    /* Zoom does not reliably fire a resize event — trackpad pinch on macOS changes the
+       ratio without one — so the ratio is watched directly. A resolution query only matches
+       the value it was built with, so it is rebuilt each time it fires. */
+    let dprQuery: MediaQueryList | null = null
+    const onDprChange = () => { resize(); watchDpr() }
+    const watchDpr = () => {
+      dprQuery?.removeEventListener('change', onDprChange)
+      dprQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio}dppx)`)
+      dprQuery.addEventListener('change', onDprChange)
+    }
+    watchDpr()
 
     const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting })
     observer.observe(canvas)
@@ -304,6 +325,7 @@ export const SpiralScore = forwardRef<SpiralScoreHandle>(function SpiralScore(_,
 
     return () => {
       observer.disconnect()
+      dprQuery?.removeEventListener('change', onDprChange)
       window.removeEventListener('resize', resize)
       window.removeEventListener('pointermove', onPointerMove)
       document.documentElement.removeEventListener('pointerleave', onPointerLeave)

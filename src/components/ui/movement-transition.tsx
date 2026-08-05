@@ -102,10 +102,14 @@ export function MovementTransition() {
       height = rect.height
       const w = Math.round(width * dpr)
       const h = Math.round(height * dpr)
-      // Skip no-op resizes: assigning width reallocates and blanks the canvas.
-      if (canvas.width === w && canvas.height === h) return
-      canvas.width = w
-      canvas.height = h
+      // Skip no-op resizes: assigning width reallocates and blanks the canvas. The guard
+      // covers the assignment only — zoom changes the ratio while the device-pixel size
+      // holds, and returning early there strands the old scale and stops the clear from
+      // covering the full canvas.
+      if (canvas.width !== w || canvas.height !== h) {
+        canvas.width = w
+        canvas.height = h
+      }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 

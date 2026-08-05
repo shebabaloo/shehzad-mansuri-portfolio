@@ -29,7 +29,7 @@ const career: { period: string; org: string; team: string; role: string; lead: s
       [
         'A financial platform tracking multi-billion-dollar spend, where I steered the roadmap, the releases, and the documentation—and covered the client program manager through a ninety-day absence.',
         'A seven-page executive dashboard—the VP-level read on how the whole organization was performing. I co-led its rebuild onto a new stack at feature parity, with existing users carried across automatically, then took it over outright when a colleague left ahead of schedule: a seven-workstream roadmap, a 25-editor commentary process, and an access matrix for a 30-person working group.',
-        'A business-wide intelligence product, pushed from a quarterly review tool toward a daily insights engine. Its metrics-management table took 80% off engineering reporting support, roughly a third off monthly review prep, and 70% off the clicks it took to manage a metric—and on top of it I helped define the internal AI assistant: dual-agent validation, LLM-powered metric search, analytics-agent integration, and a six-dimension lead-scoring model that reached demo in under two weeks.',
+        'A business-wide intelligence product, pushed from a quarterly review tool toward a daily insights engine. Its metrics-management table took 80% off engineering reporting support, roughly a third off monthly review prep, and 70% off the clicks it took to manage a metric for cross-org teams. On top of that, I helped drive the internal AI assistant: dual-agent validation, LLM-powered metric search, analytics-agent integration, and a six-dimension lead-scoring model that reached demo to leadership in under two weeks.',
         'Program management stood up from scratch for a data-science team that had neither intake nor a sprint process—43 roadmap projects and 450+ closed tasks later, running on a cadence that finally held.',
       ],
       'What carries across is the practice, not the subject matter: PRDs, prototypes, user testing, and 50+ stakeholder journeys mapped across these programs—closing the distance between a question and something real enough to react to.',
@@ -75,7 +75,7 @@ const systems = [
     number: '01', title: 'Second Brain', status: 'Active pattern', diagram: 'ingest' as const,
     copy: [
       'In the chaos before launch there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was rebuilding the context, again, at every switch.',
-      'So I built a system to do the rebuilding and hand it back—three agents, thirty-something commands, and scheduled jobs watching every source that matters: chat, AI meeting notes, docs, calendar, tasks. All of it plain markdown on disk, in Obsidian.',
+      'So I built a system to do the rebuilding and hand it back—three agents, thirty-something commands, and scheduled jobs watching every source that matters: chat, AI meeting notes, docs, calendar, tasks. All of it plain markdown on disk, leveraging Claude Code, Codex, and Obsidian.',
       'Twenty minutes of morning assembly instantly became two. Then, as it scaled, this growing context started doing everything else: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     ],
     principle: `Context ${ARROW_RIGHT} synthesis ${ARROW_RIGHT} next move`,

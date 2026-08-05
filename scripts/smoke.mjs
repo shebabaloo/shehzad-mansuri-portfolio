@@ -167,6 +167,54 @@ for (const viewport of viewports) {
     `${tone.distinct} distinct tones, ${tone.frozenPct}% frozen frames, ${tone.first}->${tone.last}`)
   check(v('starfield reaches paper'), tone.last > 200, `ends at ${tone.last}`)
 
+  /* Zoom must not strand the canvas transform. devicePixelRatio changes while the
+     device-pixel size stays identical — their product is the physical window — so a resize
+     guard placed before setTransform leaves the context scaled for the old ratio. The clear
+     then covers less than the backing store, the uncovered band never repaints, and the
+     starfield smears into arcs with a hard seam. Asserting the transform matches the ratio
+     catches it directly; asserting the field still changes catches the consequence. */
+  const zoom = await page.evaluate(async () => {
+    const ctx = document.querySelector('.spiral-canvas').getContext('2d')
+    const scale = () => +ctx.getTransform().a.toFixed(3)
+    const settle = () => new Promise((r) => setTimeout(r, 350))
+    const native = window.devicePixelRatio
+    const before = scale()
+
+    /* Move the ratio without touching layout — which is exactly what zoom does, since the
+       element's device-pixel size is the product of the two and stays put. A guard placed
+       before setTransform sees identical width/height, returns, and strands the old scale.
+       Styling the element instead would not reproduce it: devicePixelRatio never moves, so
+       there is nothing for the handler to get wrong. */
+    const canvas = document.querySelector('.spiral-canvas')
+    const deviceW = canvas.width
+    const deviceH = canvas.height
+    const fake = native === 1.5 ? 2 : 1.5
+    Object.defineProperty(window, 'devicePixelRatio', { configurable: true, get: () => fake })
+    // Shrink the CSS box by exactly the ratio's increase, so the backing store lands on the
+    // same device-pixel size it already has. Faking the ratio alone is not enough: it moves
+    // the computed width too, the guard sees a change, and the buggy path never runs.
+    canvas.style.width = `${deviceW / fake}px`
+    canvas.style.height = `${deviceH / fake}px`
+    window.dispatchEvent(new Event('resize'))
+    await settle()
+    const after = scale()
+    const sizeHeld = canvas.width === deviceW && canvas.height === deviceH
+    canvas.style.width = ''
+    canvas.style.height = ''
+
+    // Redefine rather than delete: under device emulation the ratio is an own property, so
+    // deleting it drops to 1 instead of restoring what the device reports.
+    Object.defineProperty(window, 'devicePixelRatio', { configurable: true, get: () => native })
+    window.dispatchEvent(new Event('resize'))
+    await settle()
+    const restored = scale()
+    return { native, fake, before, after, restored, sizeHeld, wantAfter: Math.min(fake, 2), wantBack: Math.min(native, 2) }
+  })
+  const near = (a, b) => Math.abs(a - b) < 0.01
+  check(v('canvas transform follows the pixel ratio through a zoom'),
+    zoom.sizeHeld && near(zoom.after, zoom.wantAfter) && near(zoom.restored, zoom.wantBack),
+    `ratio ${zoom.native}→${zoom.fake}, device size held: ${zoom.sizeHeld}; scale ${zoom.before}→${zoom.after} (want ${zoom.wantAfter}), back to ${zoom.restored} (want ${zoom.wantBack})`)
+
   // Every canvas has to have painted something rather than sitting blank.
   const canvases = await page.evaluate(async () => {
     const out = {}
