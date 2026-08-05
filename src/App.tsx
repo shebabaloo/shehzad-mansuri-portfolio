@@ -190,8 +190,8 @@ export function App() {
               <p>Welcome to</p>
               <h1 id="overture-title">The Living <em>Score</em></h1>
               <p className="overture-copy__note">
-                Shez’s evolving composition of work, systems, experiments,
-                and the things that keep the whole score human.
+                My evolving composition of work, systems, side quests,
+                and the random things keeping the whole thing human.
               </p>
               <a className="enter-score" href="#first-movement" onClick={advanceScore}>
                 Set it in motion <span>{ARROW_RIGHT}</span>

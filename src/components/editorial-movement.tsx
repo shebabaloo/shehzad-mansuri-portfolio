@@ -28,15 +28,23 @@ export function EditorialMovement() {
             program manager at Deloitte, embedded within FAANG data-center
             infrastructure teams.
           </p>
+          {/* Three paragraphs rather than one 95-word block. The content is unchanged; the
+              original packed three distinct moves into a single breath and the reader lost
+              the subject somewhere in the second clause. */}
           <p className="body-copy">
-            Most of what I do happens in the space between things—between a team that has
-            decided something and a team that has not yet heard it, between what a system
-            can be told and what it can be trusted to say. The work I keep returning to is
-            the layer underneath: consolidating what is scattered, naming which source is
-            actually authoritative, carrying context across a gap it would not otherwise
-            cross. It is quieter than the work that sits on top of it, and it is the part I
-            want to keep doing—increasingly as product, where the question stops being what
-            is already owed and becomes what should exist at all.
+            Most of what I do happens in the gaps. Between a team that has decided something
+            and a team that has not heard it yet. Between what a system can be told and what
+            it can be trusted to say.
+          </p>
+          <p className="body-copy">
+            The work I keep coming back to is the layer underneath: pulling together what is
+            scattered, working out what’s credible, carrying information across a gap it would
+            not cross on its own. It is quieter than the work sitting on top of it.
+          </p>
+          <p className="body-copy">
+            It is also the part I want to keep doing—increasingly as product, where the
+            question stops being <em>what did we already promise</em> and starts being
+            {' '}<em>what should exist at all.</em>
           </p>
           <div className="landing-actions">
             <a className="text-link" href="#score-index">Read the score <span>{ARROW_DOWN}</span></a>

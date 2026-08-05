@@ -10,7 +10,7 @@ import { ARROW_BOTH_WAYS, ARROW_RIGHT, ARROW_UP, ARROW_UP_RIGHT } from '@/lib/gl
 
 gsap.registerPlugin(ScrollTrigger, useGSAP)
 
-const career = [
+const career: { period: string; org: string; team: string; role: string; lead: string; beats: string[]; passage: PassageBlock[] }[] = [
   {
     period: '2025—Now',
     org: 'Deloitte · FAANG company',
@@ -19,14 +19,20 @@ const career = [
     lead: 'Turning complex infrastructure work into products and programs people can actually operate.',
     beats: [
       'Stood up a cross-functional program and launched its MVP in under three weeks from conception—replacing spreadsheet workflows as the source of truth for a $60B+ investment portfolio.',
-      'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, 50+ stakeholder journeys, prototypes, user testing, and tangible enhancements shipped to production apps.',
+      'Compressed the product loop and accelerated team execution with proprietary AI tooling—PRDs, prototypes, user testing, 50+ stakeholder journeys mapped across five programs, and tangible enhancements shipped to production apps.',
       'Owned the roadmap, releases, and documentation for a seven-module financial platform tracking multi-billion-dollar spend, and covered the client program manager through a 90-day absence.',
     ],
     passage: [
-      'I have supported six programs in this space over two years. The one I am on now is a data-center site-selection platform, and it did not exist when I arrived: the portfolio lived in sixteen spreadsheets, and no two people read them the same way.',
-      'Concept to production took three weeks, which sounds like speed and was really scope discipline: deciding early, and out loud, what the first version would refuse to do. It now carries a $60B+ investment portfolio and peaks near 290 monthly users. The program underneath it was built from zero on the same clock—four parallel workstreams, twelve milestones across three delivery phases, an access-control matrix, and a decision log separating MVP from V1.',
-      'Before it came three more platforms: a seven-module financial platform tracking multi-billion-dollar spend, where I owned the roadmap, the releases, and the documentation and covered the client program manager through a ninety-day absence; a seven-page executive dashboard rebuilt on a new stack at feature parity, its existing users migrated across automatically; and a business-wide intelligence and metrics product, where I drove metrics management and a single table cut engineering reporting support by 80% while taking roughly a third off the monthly review prep. Alongside them I stood up program management for a data-science team that had neither intake nor sprint process—43 roadmap projects and 450+ closed tasks later, it was running on a cadence that finally held.',
-      'What carries across all of them is the practice rather than the subject matter. I use proprietary AI tooling to author PRDs, map 50+ stakeholder journeys, stand up prototypes, and run user testing—compressing the distance between a question and something real enough to react to.',
+      'Six programs in this space over two years. The one I’m on now is a data-center site-selection platform, and it did not exist when I arrived—the portfolio lived in sixteen spreadsheets and no two people read them the same way.',
+      'Concept to production took three weeks. That sounds like speed (and it was). But it was really scope discipline: deciding early, and out loud, what the first version would refuse to do. Fast forward a few months: the product has evolved to encompass a broader scope, supplemented by a broader team—now tracking a $60B+ investment portfolio with ~290 monthly active users (and only growing). The original program underneath it was built from zero at the same tempo: a foundation of unique but interconnected workstreams, clear(ish) delivery milestones & owners, and the expectation to move fast and break things.',
+      '*Before it, a few more programs:*',
+      [
+        'A financial platform tracking multi-billion-dollar spend, where I steered the roadmap, the releases, and the documentation—and covered the client program manager through a ninety-day absence.',
+        'A seven-page executive dashboard—the VP-level read on how the whole organization was performing. I co-led its rebuild onto a new stack at feature parity, with existing users carried across automatically, then took it over outright when a colleague left ahead of schedule: a seven-workstream roadmap, a 25-editor commentary process, and an access matrix for a 30-person working group.',
+        'A business-wide intelligence product, pushed from a quarterly review tool toward a daily insights engine. Its metrics-management table took 80% off engineering reporting support, roughly a third off monthly review prep, and 70% off the clicks it took to manage a metric—and on top of it I helped define the internal AI assistant: dual-agent validation, LLM-powered metric search, analytics-agent integration, and a six-dimension lead-scoring model that reached demo in under two weeks.',
+        'Program management stood up from scratch for a data-science team that had neither intake nor a sprint process—43 roadmap projects and 450+ closed tasks later, running on a cadence that finally held.',
+      ],
+      'What carries across is the practice, not the subject matter: PRDs, prototypes, user testing, and 50+ stakeholder journeys mapped across these programs—closing the distance between a question and something real enough to react to.',
     ],
   },
   {
@@ -40,9 +46,9 @@ const career = [
       'Synthesized risk trends and briefed 40+ product, legal, and policy stakeholders to align on roadmap and mitigation.',
     ],
     passage: [
-      'GenAI products ship fast and privacy reviews do not. The tension is structural: product teams measure in sprints, legal measures in precedent, and privacy measures in risk that compounds quietly. My job was to make those three clocks legible to each other.',
-      'In practice that meant triaging 140+ releases for pattern rather than only for compliance—noticing where the same question kept surfacing across different products, and which mitigations could be shared instead of rebuilt each time.',
-      'The briefings were not status updates. They were trend synthesis: turning individual review outcomes into a picture of where the portfolio was heading, early enough that something could still change.',
+      'GenAI products ship fast. Privacy reviews do not. Product teams measure in sprints, legal measures in precedent, and privacy measures in risk that compounds quietly—my job was to make those three clocks readable to each other.',
+      'In practice: triaging 140+ releases for pattern, not just for compliance. Noticing where the same question kept coming up across different products, and which fixes could be shared instead of rebuilt every time.',
+      'What was important in these briefings wasn’t what happened last week, but where the portfolio was heading—early enough that something could still change.',
     ],
   },
   {
@@ -59,7 +65,7 @@ const career = [
     passage: [
       'Three industries in twelve months, and the hardest part was never the framework. It was working out which questions matter in a domain you are still learning.',
       'In cybersecurity the question was sizing—where a $10M+ opportunity actually sits across customer-partner and outcomes programs. In entertainment it was execution: carrying a $2M ERP MVP through user stories, a RAID log, and the status reporting that keeps a build honest. In healthcare it was compliance—documenting supplier scope for a Medicare divestiture without breaking the regulatory chain.',
-      'Each asked for a different kind of rigor. The through-line was learning to ask before reaching for a template.',
+      'Three kinds of rigor. What I actually learned was to ask before reaching for a template.',
     ],
   },
 ]
@@ -68,31 +74,32 @@ const systems = [
   {
     number: '01', title: 'Second Brain', status: 'Active pattern', diagram: 'ingest' as const,
     copy: [
-      'By the middle of the day there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was the reconstruction, performed again at every switch.',
-      'So I built a program-management system that does the reconstruction and hands it back: three agents, twenty-two commands, and scheduled jobs watching thirty-odd sources—chat, docs, calendar, tasks—all of it plain files on disk.',
-      'Twenty minutes of morning assembly became two. Then the same context started doing the rest: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
+      'In the chaos before launch there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was rebuilding the context, again, at every switch.',
+      'So I built a system to do the rebuilding and hand it back—three agents, thirty-something commands, and scheduled jobs watching every source that matters: chat, AI meeting notes, docs, calendar, tasks. All of it plain markdown on disk, in Obsidian.',
+      'Twenty minutes of morning assembly instantly became two. Then, as it scaled, this growing context started doing everything else: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     ],
     principle: `Context ${ARROW_RIGHT} synthesis ${ARROW_RIGHT} next move`,
     passage: [
-      'It holds project state, decisions and the reasoning behind them, dependencies, open commitments, and which source is actually authoritative.',
-      'It prepares a meeting by answering what changed and what is still unresolved, rather than summarizing the last one. It notices what is approaching a deadline, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart.',
+      'My Second Brain holds project state, the decisions and the reasoning behind them, dependencies, open commitments, and which source is actually the real one.',
+      'It preps a meeting by answering what changed and what is still unresolved—not by summarizing the last one. It notices what is coming due, what is blocked, what has quietly stopped moving, and where two workstreams are drifting apart. As cross-workstream dependencies became the priority to watch, it has been instrumental in maintaining our rhythm (ha).',
       'Because it starts from the history of the work instead of a blank prompt, a draft or a risk assessment arrives already grounded. It is files-first underneath—plain text, plain folders, no lock-in—so the thinking outlives whichever tool is fashionable.',
-      'In practice it takes back eight to eleven hours a week, roughly three-quarters of the recurring program overhead. The number I care about more is that it was adopted across my team rather than staying a personal trick—which meant it had to survive contact with people who had not built it.',
+      // ~10 hrs/week supersedes the earlier 8–11 and 5–7 figures, confirmed 2026-08-04.
+      'It takes back about ten hours a week, roughly three-quarters of the recurring program overhead. The number I care about more: my team adopted it. Which meant it had to survive contact with people who had not built it.',
     ],
   },
   {
     number: '02', title: 'Team Third Brain', status: 'Active pattern', diagram: 'share' as const,
     copy: [
-      'The personal system made me faster. The team still ran on meetings and hand-maintained documents.',
-      'So the Third Brain is the same architecture at team scope: a shared knowledge base the whole group reads from, where the verified, team-relevant part of my context is promoted into common ground—decisions, ownership, milestones, risks.',
-      'Agendas, briefings, and weekly updates now stand on that rather than on anyone’s memory. The first implementation served 22 members and routed 90+ sources into a defined structure—decisions, backlogs, a folder per workstream—with 130+ decisions kept in sync. It has grown since.',
+      'The personal system made me faster. The team still ran on trying to remember meetings, hand-maintained documents, and outdated context.',
+      'So the Third Brain is the same idea at team scale: a shared knowledge base everyone reads from, where the verified part of my (and everyone else’s) context gets promoted into common ground—decisions, ownership, milestones, risks.',
+      'Agendas, briefings, and weekly updates now stand on that instead of on somebody’s individual memory. The first version served 22 people and routed 90+ sources into a defined structure, keeping 130+ decisions in sync, and it has only grown since.',
     ],
     principle: `Individual context ${ARROW_BOTH_WAYS} shared clarity`,
     passage: [
       'Private context stays private. Only what the team has agreed on is promoted, which is what makes the shared layer trustworthy enough to build on.',
       'It powers meeting agendas, workstream and leadership briefings, weekly updates, onboarding material, and proactive risk signals—and it delivers them on a schedule, into the chats and documents people already work in, so they benefit from it without ever having to operate it themselves.',
       'What it removes is the coordination tax: faster time to context, fewer repeated conversations, earlier risk detection, and handoffs that survive someone leaving.',
-      'What I am building now is the push and the pull. Each person’s brain contributes what the rest of the team needs to know, and draws back what has changed elsewhere—so the shared context stays current and aware of itself, rather than waiting for someone to go collect it.',
+      'What I am refining now is the push and the pull: each person’s brain contributes what the rest of the team needs, and pulls back what changed elsewhere. The shared context stays current on its own, instead of waiting for someone to go refresh it.',
     ],
   },
 ]
@@ -114,11 +121,11 @@ const variations: Variation[] = [
     number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
     icon: 'strawberry',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
-    copy: 'Millions of tons of specialty crops go unharvested every year—labor shortages, rising costs, and harvest windows that keep narrowing—and the value rots in the field. Groundwork OS was our four-day answer.',
+    copy: 'Millions of tons of specialty crops go unharvested every year. Labor shortages, rising costs, harvest windows that keep narrowing—and the value rots in the field. Groundwork OS was our four-day answer.',
     passage: [
       'The shortage is not machinery. Autonomous harvesters exist and they work. What does not exist is everything a farm would need around them: a way to decide which blocks to run and when, an operator who trusts the fleet enough to leave it running, a financial case that survives a bad season, and a workforce being reorganized around equipment nobody asked for.',
       'So we scoped the platform to that gap rather than to the hardware—a human-machine fleet intelligence layer that advises a deployment, plans the labor around it, and turns one season of field data into a better decision the next.',
-      'A concept and an argument, built in a week that did not have one.',
+      'A concept and an argument, built in four days.',
     ],
     // Shehzad's own public LinkedIn post about SUD '26. Tracking parameters stripped:
     // utm_* are share attribution, and rcm= is a member token tied to his account.
@@ -129,7 +136,7 @@ const variations: Variation[] = [
     number: 'Variation II', title: 'The Short List', status: 'In the sketchbook',
     icon: 'cup',
     question: 'What if a food guide were simply one person’s taste, stated plainly, instead of a platform waiting on everyone else’s?',
-    copy: 'I am the friend people text for a local recommendation, and I never took to the food-ranking apps: the number at the top is everyone’s opinion, and therefore nobody’s. So this is not a network for collecting other people’s ratings—it is mine. The places I have actually eaten at and keep sending on, in my own order, with the reasons attached. And something you move through rather than scroll: filter by cuisine, neighborhood, price, or vibe and watch the list redraw.',
+    copy: 'I’m the friend people text for every food, cafe, and life recommendation, and I never took to the ranking apps—a 4.3 is everyone’s opinion, which doesn’t really feel like anybody’s I can vouch for. So this one is just mine! Places I have actually eaten at and keep sending people to, in my order, with the reasons attached. Filter by cuisine, neighborhood, price, or vibe, and watch the list redraw.',
   },
   {
     number: 'Variation III', title: 'One-File Flight', status: 'In the sketchbook',
@@ -153,13 +160,20 @@ type Interest = {
   // A second list, where one measure holds two kinds of the same interest.
   listLabel2?: string
   items2?: { name: string }[]
-  passage: string[]
 }
+
+/* No passages here, deliberately.
+   Every measure used to carry a disclosure, and a disclosure is an invitation to keep
+   writing — which is how a section called "Off the clock" ended up with four of five
+   passages closing on what the hobby proved about the working day. Games signed off with
+   "which is, more or less, what I spend the working day on"; volleyball became a control
+   tower. Removing the toggles removes the temptation rather than just this round of its
+   output. Depth belongs in Movements II–IV, where a reader actually wants it. */
 
 const interests: Interest[] = [
   {
     id: 'books', mark: 'Aa', label: 'Literature', title: 'Some ideas need more than a tab.',
-    copy: 'Fantasy for invention, philosophy for friction, and literary fiction for the things neither one will say directly.',
+    copy: 'Fantasy, philosophy, and everything in between. The shelf is subject to change. The passion is not.',
     listLabel: 'Recent favorites',
     items: [
       { name: 'The Way of Kings', by: 'Brandon Sanderson' },
@@ -167,15 +181,10 @@ const interests: Interest[] = [
       { name: 'Spring Snow', by: 'Yukio Mishima' },
       { name: 'Meditations', by: 'Marcus Aurelius' },
     ],
-    passage: [
-      'My college application essay was about a bookstore—about walking in with no title in mind and waiting to be caught by one. I still choose books that way. The shelf has changed somewhat.',
-      'What I look for now is a way of thinking I have not met yet. *Meditations* and *The Myth of Sisyphus* argue directly about how to hold a life. *Spring Snow* refuses to argue and simply shows you one. *The Way of Kings* invents an entire world in order to ask the same question somewhere the answer is not already settled.',
-      'Each one is another point of view, another gap quietly closed. In this world, I seek to learn.',
-    ],
   },
   {
     id: 'games', mark: '◇', label: 'Games', title: 'Worlds, and the people in them.',
-    copy: 'Two pleasures, not one. Narrative worlds you enter alone—somebody chose the color of that field, the length of that silence. And the collaborative kind, on a screen or across a table, where the rules matter less than who is playing.',
+    copy: 'Story games where every pause, frame, and soundtrack was somebody’s decision; table games where the rules matter far less than who showed up.',
     listLabel: 'Most memorable on screen',
     items: [
       { name: 'The Last of Us' }, { name: 'Ghost of Tsushima' },
@@ -186,22 +195,12 @@ const interests: Interest[] = [
       { name: 'Catan' }, { name: 'Codenames' },
       { name: 'Rummikub' }, { name: 'Egyptian Rat Slap' },
     ],
-    passage: [
-      'Somebody chose the exact moment control is taken away from you, and the exact moment it is handed back.',
-      'I play them the way I read a building: as design objects, outputs of imagination that someone had to argue for before anyone could stand inside them. Story-rich worlds, difficult choices, and the strange intimacy of learning a place by moving through it.',
-      'Destiny 2 has been the outlier for the last decade, and it is the hinge between the two: a world I return to rather than finish, where the pull is not the ending but the loop, and the people running it with me.',
-      'Board games are that second pleasure with the screen removed. Catan is a negotiation engine wearing the costume of a farming game; Codenames takes all of its difficulty from one brutal constraint, a single word. What I like is watching a small set of rules produce behavior nobody wrote down—which is, more or less, what I spend the working day on.',
-    ],
   },
   {
     id: 'movement', mark: `${ARROW_UP_RIGHT}`, label: 'Movement', title: 'The score needs a pulse.',
-    copy: 'The gym most days, a bike when the weather allows, and volleyball twelve hours a week, ideally across three sessions.',
+    copy: 'The gym most days, a bike when the weather allows, and volleyball (ideally twelve hours a week). If all else fails, a neighborhood stroll never hurt anyone.',
     listLabel: 'Weekly rotation',
     items: [{ name: 'Volleyball' }, { name: 'Gym' }, { name: 'Cycling' }],
-    passage: [
-      'On the court I set. The setter takes the second touch and is almost never the one who scores: you read the court mid-air, decide whose play this is, and put the ball exactly where their best swing already lives. A control tower—define the play, then get out of its way.',
-      'What brings me back is not the point. It is the moment someone starts arriving where I put the ball before I have finished putting it there.',
-    ],
   },
   {
     /* A fermata holds a note longer than it is written. It is the only mark in the notation
@@ -213,21 +212,12 @@ const interests: Interest[] = [
       { name: 'Coffee' }, { name: 'Matcha' },
       { name: 'Friends & family' }, { name: 'No fixed end time' },
     ],
-    passage: [
-      'It is the one appointment I never want to end on schedule. Coffee or matcha depending on the day and the hour—I have never seen the need to choose between them.',
-      'What I am actually after is the format: two people, one table, no agenda, and an hour that was supposed to be twenty minutes. Outside whenever the weather cooperates, which is often enough to plan around.',
-      'Half the places on my short list are there because of a conversation I had in them rather than anything on the menu.',
-    ],
   },
   {
     id: 'music', mark: '♭', label: 'Music', title: 'Before systems, there were ensembles.',
-    copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which plays either part: the floor or the melody, depending on what the room needs.',
+    copy: 'Seven years of bass clarinet—the line nobody listens for, holding up the ones they do. There is a piano now, which can play either part: the floor or the melody, depending on what the room needs.',
     listLabel: 'What I play',
-    items: [{ name: 'Bass clarinet' }, { name: 'Orchestral & jazz' }, { name: 'Piano' }],
-    passage: [
-      'The bass clarinet is a long, bottom-heavy, faintly absurd mix between a clarinet and a saxophone, and nobody in an audience is listening for it. That is more or less the point of it. It lays the floor; the flutes and the clarinets come in above, and what a listener actually hears is not the low line but a fullness they cannot locate.',
-      'What I remember is not any performance. It is the rehearsals—working out where everyone’s strength sat and what they needed underneath them. Time passed. The interest never went anywhere.',
-    ],
+    items: [{ name: 'Bass clarinet' }, { name: 'Orchestral & jazz' }, { name: 'Piano', by: 'work in progress' }],
   },
 ]
 
@@ -246,16 +236,29 @@ const renderEmphasis = (text: string) =>
       : part,
   )
 
+/* A passage entry is either a paragraph or, when it is an array, a list. Three platforms
+   described one after another in prose is the shape that produced a 135-word sentence
+   nobody finished; as a list each keeps its own line and its own number, and a reader
+   scanning for scale can find it without reading the prose around it. */
+export type PassageBlock = string | string[]
+
 function Passage({ id, open, label, paragraphs }: {
   id: string
   open: boolean
   label: string
-  paragraphs: string[]
+  paragraphs: PassageBlock[]
 }) {
   return (
     <div className="passage" id={id} data-open={open} role="region" aria-label={label}>
       <div className="passage__inner">
-        {paragraphs.map((paragraph, i) => <p key={i}>{renderEmphasis(paragraph)}</p>)}
+        {paragraphs.map((block, i) => Array.isArray(block)
+          ? (
+            <ul className="passage__list" key={i}>
+              {block.map((item, j) => <li key={j}>{renderEmphasis(item)}</li>)}
+            </ul>
+          )
+          : <p key={i}>{renderEmphasis(block)}</p>,
+        )}
       </div>
     </div>
   )
@@ -619,8 +622,11 @@ export function ScoreBody() {
             with the authority to be right. What survives is reconciled against the record,
             and anything stale is marked stale rather than quietly kept. The thresholds came
             out of an eval set rather than a guess: roughly 14% of the action items it
-            drafted were fabricated, and the checks caught them before they became work.
-            {' '}<em>I built it, and then I refused to trust it.</em>
+            drafted were fabricated, and the checks started catching them before they became
+            actionable work.
+          </p>
+          <p className="counterpoint__check counterpoint__check--close" data-score-reveal>
+            <em>I built it, and then I refused to trust it.</em>
           </p>
           <span className="counterpoint__chord" aria-hidden="true"><i /><i /><i /></span>
         </div>
@@ -685,21 +691,6 @@ export function ScoreBody() {
               <span className="personal-measure__mark" aria-hidden="true">{interest.mark}</span>
               <div className="personal-measure__copy">
                 <p>{interest.label}</p><h3>{interest.title}</h3><span>{interest.copy}</span>
-                {interest.passage && (
-                  <>
-                    <PassageToggle
-                      id={`${interest.id}-passage`}
-                      open={openPassage === interest.id}
-                      onToggle={() => setOpenPassage(openPassage === interest.id ? null : interest.id)}
-                    />
-                    <Passage
-                      id={`${interest.id}-passage`}
-                      open={openPassage === interest.id}
-                      label={`${interest.label}, full passage`}
-                      paragraphs={interest.passage}
-                    />
-                  </>
-                )}
               </div>
               {/* The list used to stand unlabelled, which left the reader to infer what
                   four proper nouns had in common. Naming it is the cheaper fix. */}
@@ -732,7 +723,7 @@ export function ScoreBody() {
           <p>Coda <span>·</span> Still composing</p>
           <h2 id="coda-title">The next movement is <em>still unwritten.</em></h2>
           <p>If any of this sounds like a conversation worth having, say hello!</p>
-          <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years; the first is what I am building toward.</p>
+          <p className="coda__honest">What I have not done yet is carry a product alone: the deciding, the saying no, the long argument with what users actually need rather than what they asked for. I have been the second voice in that room for two years. The first is what I am building toward.</p>
           {/* The sign-off shares the nav's row rather than sitting a screen below it. It is
               the same gesture a score uses: the composer's name sits on the final system,
               not on a page of its own. Collapsing the two rows is also what lets the whole

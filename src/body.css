@@ -22,7 +22,10 @@
 .ensemble-brace__id > p span { margin: 0 .45rem; color: var(--brass-ink); text-transform: none; }
 .ensemble-brace__id > span { margin-bottom: 1.5rem; color: var(--coral-ink); }
 .ensemble-brace__id h3 { margin: 0; max-width: 12ch; font: 400 clamp(3rem, 5vw, 5.5rem)/.9 var(--display); letter-spacing: -.045em; }
-.ensemble-brace__note { max-width: 46ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-sm)/1.75 var(--body); }
+/* Same size as the movement intro above it. It was set a step down, which made the section's
+   only piece of orienting context read as a footnote to the heading rather than as part of
+   the same thought. */
+.ensemble-brace__note { max-width: 46ch; margin: 0; color: var(--ink-soft); font: 300 var(--t-lg)/1.75 var(--body); }
 
 .career-score { width: min(100%, 84rem); margin: 0 auto; }
 /* The progression rail is the conductor's view of Movement II: three measures, one
@@ -271,8 +274,29 @@
 .passage__inner > p:nth-child(n+4) { transition-delay: .26s; }
 .passage[data-open="true"] .passage__inner > p { opacity: 1; transform: none; }
 
+/* A list inside a passage. Three platforms described one after another in prose is what
+   produced a 135-word sentence nobody finished; as a list each keeps its own line and its
+   own number, and a reader scanning for scale can find it without reading the prose around
+   it. Marked with a brass rule rather than a bullet, so it reads as a stave of entries
+   rather than a checklist. */
+.passage__list {
+  max-width: 67ch; margin: 1.15rem 0 0; padding: 0; list-style: none;
+  color: var(--ink-soft); font: 300 var(--t-md)/1.85 var(--body);
+  opacity: 0; transform: translateY(.6rem);
+  transition: opacity .3s var(--ease-enter) .2s, transform .3s var(--ease-enter) .2s;
+}
+.passage__list li { position: relative; padding-left: 1.35rem; }
+.passage__list li + li { margin-top: .85rem; }
+.passage__list li::before {
+  content: ""; position: absolute; left: 0; top: .92em;
+  width: .75rem; height: 1px; background: var(--brass);
+}
+.passage[data-open="true"] .passage__list { opacity: 1; transform: none; }
+/* The paragraph after a list closes the thought, so it keeps the tighter spacing. */
+.passage__inner > .passage__list + p { margin-top: 1.15rem; }
+
 @media (prefers-reduced-motion: reduce) {
-  .passage, .passage__inner > p, .passage-toggle__note { transition: none; }
+  .passage, .passage__inner > p, .passage__list, .passage-toggle__note { transition: none; }
 }
 
 /* The verification note closes Movement III. It sits outside the voices because it is
@@ -286,6 +310,11 @@
 /* The continuation takes normal paragraph spacing; the large margin above is the gap that
    separates the whole passage from the cards, and it should only be paid once. */
 .counterpoint__check + .counterpoint__check { margin-top: 1.15em; }
+/* The closing line stands alone. Nothing on this site is bold — the heaviest weight anywhere
+   is 400 — so a paragraph break is the loudest emphasis available that still sounds like the
+   rest of the page. A sentence about refusing to trust something reads better after a pause
+   than tacked onto the one that earned it. */
+.counterpoint__check--close { margin-top: 1.9em; }
 
 /* The invitation and the confession do different jobs, so they are separated rather than
    stacked at the same weight. A short brass rule marks this one as an aside — notation,

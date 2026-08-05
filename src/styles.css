@@ -362,6 +362,16 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .landing-copy h2 em { font-weight: 400; color: var(--coral-display); }
 .dek { max-width: 31ch; margin: 3rem 0 1.5rem; font: 400 clamp(1.1rem, 1.6vw, 1.45rem)/1.5 var(--body); letter-spacing: -.025em; }
 .body-copy { max-width: 67ch; margin: 0; color: var(--ink-soft); font: 300 .94rem/1.85 var(--body); }
+/* These were three paragraphs with margin: 0 between them, which is to say one wall of text
+   with line breaks in it — the split did nothing a reader could see. Spacing separates them;
+   the step in size and ink gives them an order.
+   The first paragraph carries the thesis and is set up a step in full ink. The two after it
+   elaborate and sit back, so the eye lands on the claim first and the qualification second.
+   Keyed off .dek rather than :first-of-type, because the first <p> in this article is the
+   eyebrow and :first-of-type would match nothing. */
+.body-copy + .body-copy { margin-top: 1.5rem; }
+.dek + .body-copy { color: var(--ink); font-size: 1.08rem; }
+.body-copy em { font-style: normal; color: var(--ink); }
 .landing-actions { display: flex; gap: 2rem; margin-top: 3rem; }
 .text-link { padding-bottom: .35rem; border-bottom: 1px solid var(--coral-display); text-decoration: none; font: 400 var(--u-lg) var(--utility); letter-spacing: .08em; text-transform: uppercase; }
 .text-link span { display: inline-block; margin-left: .35rem; transition: transform .3s var(--ease-enter); }.text-link:hover span { transform: translateY(.18rem); }
