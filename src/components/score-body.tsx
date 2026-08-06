@@ -4,6 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useGSAP } from '@gsap/react'
 import { CodaDispersal } from './ui/coda-dispersal'
 import { MailLink } from './ui/mail-link'
+import { InterludeTransition } from './ui/interlude-transition'
 import { MovementTransition } from './ui/movement-transition'
 import { PassageToggle } from './ui/passage-toggle'
 import { ARROW_BOTH_WAYS, ARROW_RIGHT, ARROW_UP, ARROW_UP_RIGHT } from '@/lib/glyphs'
@@ -679,6 +680,8 @@ export function ScoreBody() {
           ))}
         </div>
       </section>
+
+      <InterludeTransition />
 
       <section className="score-section ensemble-movement" id="off-clock" aria-labelledby="ensemble-title">
         <header className="movement-heading movement-heading--compact" data-score-reveal>

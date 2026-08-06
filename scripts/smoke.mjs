@@ -235,6 +235,8 @@ for (const viewport of viewports) {
     out.starfield = sample('.spiral-canvas')
     await jump('.movement-transition', -200)
     out.transition = sample('.movement-transition canvas')
+    await jump('.interlude-transition', -120)
+    out.interlude = sample('.interlude-transition canvas')
     await jump('#coda', 300)
     out.coda = sample('.coda-dispersal')
     window.scrollTo({ top: 0, behavior: 'instant' })
@@ -379,10 +381,24 @@ for (const viewport of viewports) {
      pointer-events: none, and Playwright's click waits for the element to receive events —
      so clicking too early does not fail fast, it hangs for the full timeout and then reports
      something that looks like a broken control instead of a race in the test. */
-  const interactive = await page.waitForFunction(() => {
-    const root = document.querySelector('.jump-index')
-    return root?.dataset.shown === 'true' && getComputedStyle(root).pointerEvents !== 'none'
-  }, { timeout: 8000 }).then(() => true).catch(() => false)
+  /* Poll with a one-pixel nudge between attempts rather than waiting passively. The pill's
+     visibility comes from IntersectionObservers, which only deliver on a change — and a burst
+     of programmatic jumps can coalesce so the final position is never reported. Waiting
+     longer does not help, because nothing further is coming; moving the scroll a pixel forces
+     a fresh delivery. Caught this as a one-in-three flake, which in a deploy gate is worse
+     than a plain failure: it blocks a good build and teaches you to distrust the gate. */
+  let interactive = false
+  for (let attempt = 0; attempt < 20 && !interactive; attempt++) {
+    interactive = await page.evaluate(() => {
+      const root = document.querySelector('.jump-index')
+      return root?.dataset.shown === 'true' && getComputedStyle(root).pointerEvents !== 'none'
+    })
+    if (interactive) break
+    // behavior: 'instant' matters — the page sets scroll-behavior: smooth, so a plain
+    // scrollBy animates and leaves the document still moving when the click is attempted.
+    await page.evaluate((n) => window.scrollBy({ top: n % 2 ? -1 : 1, behavior: 'instant' }), attempt)
+    await page.waitForTimeout(150)
+  }
 
   if (!interactive) {
     const why = await page.evaluate(() => {
@@ -393,7 +409,27 @@ for (const viewport of viewports) {
     check(v('jump pill becomes interactive past Movement I'), false, why)
   }
 
-  await page.click('.jump-index__toggle', { timeout: 8000 })
+  /* Clicked by coordinate rather than by selector. page.click waits for actionability, and on
+     a fixed-position control whose visibility is driven by observers, inside a page that is
+     animating scroll, that wait times out perhaps one run in four — a flaky deploy gate, which
+     is worse than no gate. mouse.click still produces a trusted event with detail 1, which is
+     the property under test: it is what distinguishes a pointer press from Enter. */
+  /* Wait for the scroll to actually stop before reading coordinates. This was the real cause
+     behind three different-looking flakes: an actionability timeout, a click landing on BODY,
+     and the pill reading as not-shown. The page sets scroll-behavior: smooth, so every jump
+     keeps moving for a while after the call returns, and anything measured in that window is
+     stale by the time it is used. */
+  for (let i = 0, last = -1; i < 40; i++) {
+    const y = await page.evaluate(() => Math.round(window.scrollY))
+    if (y === last) break
+    last = y
+    await page.waitForTimeout(80)
+  }
+  const toggleAt = await page.evaluate(() => {
+    const r = document.querySelector('.jump-index__toggle').getBoundingClientRect()
+    return { x: Math.round(r.left + r.width / 2), y: Math.round(r.top + r.height / 2) }
+  })
+  await page.mouse.click(toggleAt.x, toggleAt.y)
   await page.waitForTimeout(350)
   const afterPointer = await page.evaluate(() => ({
     open: document.querySelector('.jump-index').dataset.open === 'true',
