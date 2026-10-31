@@ -158,14 +158,24 @@ for (const viewport of viewports) {
       await new Promise((r) => requestAnimationFrame(r))
       seen.push(read())
     }
+    // Keep the frame sweep above intact: it detects a canvas that stops painting.
+    // The opening deliberately scrubs for 1.1 seconds, so a fast browser can finish
+    // the sweep before the final colour catches up. Check that separate outcome
+    // with a bounded wait, retaining the same paper-tone threshold.
+    const deadline = performance.now() + 2000
+    let settledLast = read()
+    while (settledLast <= 200 && performance.now() < deadline) {
+      await new Promise((r) => requestAnimationFrame(r))
+      settledLast = read()
+    }
     window.scrollTo({ top: 0, behavior: 'instant' })
     let frozen = 0
     for (let i = 1; i < seen.length; i++) if (seen[i] === seen[i - 1]) frozen++
-    return { distinct: new Set(seen).size, frozenPct: Math.round((frozen / (seen.length - 1)) * 100), first: seen[0], last: seen[seen.length - 1] }
+    return { distinct: new Set(seen).size, frozenPct: Math.round((frozen / (seen.length - 1)) * 100), first: seen[0], last: seen[seen.length - 1], settledLast }
   })
   check(v('starfield animates through the paper transition'), tone.distinct >= 20,
     `${tone.distinct} distinct tones, ${tone.frozenPct}% frozen frames, ${tone.first}->${tone.last}`)
-  check(v('starfield reaches paper'), tone.last > 200, `ends at ${tone.last}`)
+  check(v('starfield reaches paper'), tone.settledLast > 200, `frame sweep ends at ${tone.last}, settled at ${tone.settledLast}`)
 
   /* Zoom must not strand the canvas transform. devicePixelRatio changes while the
      device-pixel size stays identical — their product is the physical window — so a resize
