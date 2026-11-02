@@ -77,7 +77,7 @@ const systems = [
     copy: [
       'In the chaos before launch there were nine conversations open and no honest way to say which one deserved the next hour. The cost was never finding information. It was rebuilding the context, again, at every switch.',
       'So I built a system to do the rebuilding and hand it back—three agents, thirty-something commands, and scheduled jobs watching every source that matters: chat, AI meeting notes, docs, calendar, tasks. All of it plain markdown on disk, leveraging Claude Code, Codex, and Obsidian.',
-      'Twenty minutes of morning assembly instantly became two. Then, as it scaled, this growing context started doing everything else: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
+      'Daily meeting preparation previously took about 20 minutes of manual work and is now prepared automatically before the call. Then, as it scaled, this growing context started doing everything else: the briefs, the follow-ups, the decisions I would otherwise have rebuilt from scratch each time.',
     ],
     principle: `Context ${ARROW_RIGHT} synthesis ${ARROW_RIGHT} next move`,
     passage: [
