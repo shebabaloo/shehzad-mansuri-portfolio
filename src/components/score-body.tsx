@@ -109,7 +109,7 @@ type Variation = {
   number: string
   title: string
   status: string
-  icon: 'strawberry' | 'cup' | 'plane'
+  icon: keyof typeof variationMarks
   question: string
   copy: string
   passage?: string[]
@@ -117,9 +117,48 @@ type Variation = {
   sourceLabel?: string
 }
 
+/* Refreshed 2026-11-22. The sketchbook entries gave way to built work: The Short List
+   shipped as Saturday Guide, One-File Flight was dropped, and Vinyl Scene and Muse were
+   added. Facts trace to each project's STATUS.md in the vault — Saturday Guide's recall
+   figures to "(C) Retrieval Architecture & Experiment.md", Muse's scores to
+   Research/(C) interrogate-eval-results-v1.md and -confirmation-results-v1.1.md. */
 const variations: Variation[] = [
   {
-    number: 'Variation I', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
+    number: 'Variation I', title: 'Vinyl Scene', status: 'Public beta · macOS',
+    icon: 'record',
+    question: 'What if my wallpaper knew what I was listening to?',
+    copy: 'I got a 45-inch ultrawide and needed something to fill it. Vinyl Scene is a Mac app that puts an illustrated listening room behind my windows. When the song changes on Spotify or Apple Music, the board flips to the new title and the record and lamp change with it.',
+    passage: [
+      'It runs on my monitor all day. Anyone with an Apple Silicon Mac can download the free beta from GitHub: two rooms to choose from, and setup takes two questions.',
+      'My own copy has a few childhood-inspired rooms that stay off the public version. I built it with Codex and Claude Code, and most of my time went into small things, like how fast the record should spin.',
+    ],
+    source: 'https://github.com/shebabaloo/vinyl-scene',
+    sourceLabel: 'See it on GitHub',
+  },
+  {
+    number: 'Variation II', title: 'Saturday Guide', status: 'Live on the web',
+    icon: 'cup',
+    question: 'What if a food guide were simply one person’s taste, stated plainly, instead of a platform waiting on everyone else’s?',
+    copy: 'I’m the friend people text for every food, cafe, and life recommendation, and I never took to the ranking apps—a 4.3 is everyone’s opinion, which doesn’t really feel like anybody’s I can vouch for. So this one is just mine: 500+ places, Orange County first, with my notes and a map.',
+    passage: [
+      'You can search it the way you’d text me. “Matcha and a croissant in Tustin” brings up places that have both on the menu. Every dish it suggests comes from the restaurant’s own menu, not from me guessing.',
+      'I tried AI search first. It found more matches on my first test questions (93% against 60%), but on harder ones it made things up, like sugar-free matcha nobody sells. A guide that invents answers is worse than one that says it doesn’t know, so I shipped the simpler search. It costs nothing to run.',
+    ],
+    source: 'https://shebabaloo.github.io/saturday-guide/',
+    sourceLabel: 'Open the guide',
+  },
+  {
+    number: 'Variation III', title: 'Muse', status: 'Skill · evaluated',
+    icon: 'branch',
+    question: 'Can an AI help you think something through without doing the thinking for you?',
+    copy: 'Most AI brainstorming tools hand you ideas. Muse is a skill for Claude Code and Codex that asks questions instead: what you’re assuming, and what would prove you wrong. It also keeps the ideas you set aside, so you can come back to them.',
+    passage: [
+      'It was tested against a plain “ask me Socratic questions” prompt before it shipped. The first version scored higher (9.3 against 6.0) but kept giving away the answer at the end of a conversation, so it didn’t ship. The fixed version scored 10 against 5.6 across 48 new test conversations.',
+      'AI models did the scoring, so this shows how it behaves, not that it helps people think better. That needs a test with real people, which hasn’t happened yet.',
+    ],
+  },
+  {
+    number: 'Variation IV', title: 'Groundwork OS', status: 'StartUp Deloitte ’26',
     icon: 'strawberry',
     question: 'What has to exist around autonomous machinery before a farm can actually use it?',
     copy: 'Millions of tons of specialty crops go unharvested every year. Labor shortages, rising costs, harvest windows that keep narrowing—and the value rots in the field. Groundwork OS was our four-day answer.',
@@ -132,18 +171,6 @@ const variations: Variation[] = [
     // utm_* are share attribution, and rcm= is a member token tied to his account.
     source: 'https://www.linkedin.com/posts/shehzadmansuri_figured-this-was-a-good-time-to-startup-ugcPost-7456178859080708096-iNgw/',
     sourceLabel: 'Read the post',
-  },
-  {
-    number: 'Variation II', title: 'The Short List', status: 'In the sketchbook',
-    icon: 'cup',
-    question: 'What if a food guide were simply one person’s taste, stated plainly, instead of a platform waiting on everyone else’s?',
-    copy: 'I’m the friend people text for every food, cafe, and life recommendation, and I never took to the ranking apps—a 4.3 is everyone’s opinion, which doesn’t really feel like anybody’s I can vouch for. So this one is just mine! Places I have actually eaten at and keep sending people to, in my order, with the reasons attached. Filter by cuisine, neighborhood, price, or vibe, and watch the list redraw.',
-  },
-  {
-    number: 'Variation III', title: 'One-File Flight', status: 'In the sketchbook',
-    icon: 'plane',
-    question: 'How much world can you fit inside a single HTML file?',
-    copy: 'A flight simulator with no build step and no dependencies—terrain generated procedurally at load, flown in the browser, and passed around as one file that still works in ten years.',
   },
 ]
 
@@ -294,8 +321,28 @@ const variationMarks = {
       <path d="M13.5 7.6c0-1.1 1-1.6 1-2.7s-1-1.6-1-1.6" />
     </>
   ),
-  plane: (
-    <path d="M12 2.6c.75 0 1.3.85 1.3 1.9v4.4l7.2 4.2v1.9l-7.2-2.2v4.4l2.1 1.5v1.4L12 19.4l-3.4.7v-1.4l2.1-1.5v-4.4L3.5 15v-1.9l7.2-4.2V4.5c0-1.05.55-1.9 1.3-1.9Z" />
+  /* A record seen from above, with the tonearm resting on it: one groove, not several,
+     for the same reason the strawberry has three seeds — fine rings close up at 34px. */
+  record: (
+    <>
+      <path d="M2.5 13a8.5 8.5 0 1 0 17 0a8.5 8.5 0 1 0 -17 0Z" />
+      <path d="M8.5 13a2.5 2.5 0 1 0 5 0a2.5 2.5 0 1 0 -5 0Z" />
+      <path d="M6 9.2a6 6 0 0 1 3.4-2.1" />
+      <path d="M21 3.2v6.4l-4.6 4.2" />
+      <path d="M15.2 13.1l1.9 1.9" />
+    </>
+  ),
+  /* Muse keeps every branch — parked and rejected ones included — so the mark is a fork:
+     one stem, three directions, one carried through to a resolved point. */
+  branch: (
+    <>
+      <path d="M12 21.4v-7.6" />
+      <path d="M12 13.8L5.8 6.4" />
+      <path d="M12 13.8l6.2-7.4" />
+      <path d="M12 13.8V5" />
+      <path d="M10.4 3.4a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0 -3.2 0Z" />
+      <path d="M4.6 4.6l1.6 1.6M18.6 4.8l-1.2 1.2" />
+    </>
   ),
 }
 
@@ -639,7 +686,7 @@ export function ScoreBody() {
         <header className="movement-heading movement-heading--compact" data-score-reveal>
           <p>Movement IV <span>·</span> Variations</p>
           <h2 id="variations-title">Ideas worth giving a <em>first playable form.</em></h2>
-          <p className="movement-intro">Things nobody assigned—one taken as far as a pitch, the rest still questions I would like to test by making something small and real.</p>
+          <p className="movement-intro">Things nobody assigned—one taken as far as a pitch, the rest built far enough to actually use.</p>
         </header>
         <div className="variation-score">
           {variations.map((variation) => (
