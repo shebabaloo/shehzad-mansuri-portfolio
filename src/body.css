@@ -331,6 +331,8 @@
   letter-spacing: .08em; text-transform: uppercase;
 }
 .variation__source span { color: var(--coral-ink); }
+/* A second link (his LinkedIn post beside the artifact) sits on the same line. */
+.variation__source + .variation__source { margin-left: 1.75rem; }
 
 /* The rest between Movement III and Movement IV. Both sections resolve to paper at this
    edge, so the join was a plain butt — one movement stopped and the next began. The band

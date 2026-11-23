@@ -115,6 +115,9 @@ type Variation = {
   passage?: string[]
   source?: string
   sourceLabel?: string
+  // His own LinkedIn post about the project, set beside the artifact link. Tracking
+  // parameters stripped: utm_* are share attribution, and rcm= is a member token.
+  post?: string
 }
 
 /* Refreshed 2026-11-22. The sketchbook entries gave way to built work: The Short List
@@ -134,6 +137,7 @@ const variations: Variation[] = [
     ],
     source: 'https://github.com/shebabaloo/vinyl-scene',
     sourceLabel: 'See it on GitHub',
+    post: 'https://www.linkedin.com/posts/shehzadmansuri_short-story-short-got-a-ultrawide-monitor-ugcPost-7523562216399499264-yYHD/',
   },
   {
     number: 'Variation II', title: 'Saturday Guide', status: 'Live on the web',
@@ -701,6 +705,11 @@ export function ScoreBody() {
                 {variation.source && (
                   <a className="variation__source" href={variation.source} target="_blank" rel="noreferrer">
                     {variation.sourceLabel} <span aria-hidden="true">{ARROW_UP_RIGHT}</span>
+                  </a>
+                )}
+                {variation.post && (
+                  <a className="variation__source" href={variation.post} target="_blank" rel="noreferrer">
+                    Read the post <span aria-hidden="true">{ARROW_UP_RIGHT}</span>
                   </a>
                 )}
               </div>
